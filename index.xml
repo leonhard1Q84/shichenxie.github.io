@@ -87,7 +87,7 @@ www      CNAME    username.github.io.
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>&lt;p&gt;谢士晨，汉族人，乙丑年生于江西玉山。2014年底毕业于名古屋大学，博士研究方向为能源环境经济学。之后在北京从事数据分析师工作。&lt;/p&gt;
+      <description>&lt;p&gt;谢士晨，汉族人，乙丑年生于江西玉山。2014年底从名古屋大学获得博士学位，研究方向为能源环境经济学。之后在北京从事数据分析师工作。&lt;/p&gt;
 
 &lt;p&gt;本博客基于blogdown包，部署在Github。搭建博客是为了记录与分享在数据科学相关领域的学习与研究。&lt;/p&gt;
 </description>
@@ -106,7 +106,7 @@ www      CNAME    username.github.io.
 &lt;h2 id=&#34;联系方式&#34;&gt;联系方式&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;邮件: xie@shichen.name&lt;/li&gt;
+&lt;li&gt;邮件: &lt;a href=&#34;mailto:xie@shichen.name&#34;&gt;xie@shichen.name&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;主页: &lt;a href=&#34;http://shichen.name&#34;&gt;http://shichen.name&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;地址: 北京市朝阳区惠新东街&lt;/li&gt;
 &lt;/ul&gt;
@@ -148,7 +148,7 @@ www      CNAME    username.github.io.
 &lt;li&gt;2010.03 ~ 2010.04 上海市标准研究院&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&#34;参与项目&#34;&gt;参与项目&lt;/h3&gt;
+&lt;h3 id=&#34;项目&#34;&gt;项目&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;2010.01 ~ 2010.04 上海2010低碳世博策略研究. 上海世博局 (2010). 第三完成人.&lt;/li&gt;
