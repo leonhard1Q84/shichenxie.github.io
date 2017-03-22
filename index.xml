@@ -82,12 +82,101 @@ www      CNAME    username.github.io.
     </item>
     
     <item>
-      <title>About</title>
+      <title>关于</title>
       <link>/about/</link>
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>&lt;p&gt;This is a &amp;ldquo;hello world&amp;rdquo; example website for the &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;&lt;strong&gt;blogdown&lt;/strong&gt;&lt;/a&gt; package. The theme was forked from &lt;a href=&#34;https://github.com/jrutheiser/hugo-lithium-theme&#34;&gt;@jrutheiser/hugo-lithium-theme&lt;/a&gt; and modified by &lt;a href=&#34;https://github.com/yihui/hugo-lithium-theme&#34;&gt;Yihui Xie&lt;/a&gt;.&lt;/p&gt;
+      <description>&lt;p&gt;谢士晨，汉族人，乙丑年生于江西玉山。2014年底毕业于名古屋大学，博士研究方向为能源环境经济学。之后在北京从事数据分析师工作。&lt;/p&gt;
+
+&lt;p&gt;本博客基于blogdown包，部署在Github。搭建博客是为了记录与分享在数据科学相关领域的学习与研究。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>简历</title>
+      <link>/cn-vitae/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cn-vitae/</guid>
+      <description>
+
+&lt;h1 id=&#34;谢士晨&#34;&gt;谢士晨&lt;/h1&gt;
+
+&lt;h2 id=&#34;联系方式&#34;&gt;联系方式&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;邮件: xie@shichen.name&lt;/li&gt;
+&lt;li&gt;主页: &lt;a href=&#34;http://shichen.name&#34;&gt;http://shichen.name&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;地址: 北京市朝阳区惠新东街&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;研究兴趣&#34;&gt;研究兴趣&lt;/h2&gt;
+
+&lt;p&gt;数据可视化、宏观经济与金融投资&lt;/p&gt;
+
+&lt;h2 id=&#34;教育背景&#34;&gt;教育背景&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2010.10 ~ 2014.11 &lt;a href=&#34;http://www.nagoya-u.ac.jp&#34;&gt;名古屋大学&lt;/a&gt;, &lt;a href=&#34;http://www.gsid.nagoya-u.ac.jp/global/&#34;&gt;国际开发研究科&lt;/a&gt;, 国际开发学博士&lt;/li&gt;
+&lt;li&gt;2007.09 ~ 2010.03 &lt;a href=&#34;http://www.ecust.edu.cn&#34;&gt;华东理工大学&lt;/a&gt;, &lt;a href=&#34;http://zhxy.ecust.edu.cn&#34;&gt;资源与环境工程学院&lt;/a&gt;, 环境工程硕士&lt;/li&gt;
+&lt;li&gt;2002.09 ~ 2006.07 &lt;a href=&#34;http://www.hzau.edu.cn/2014/ch/&#34;&gt;华中农业大学&lt;/a&gt;, &lt;a href=&#34;http://zyhj.hzau.edu.cn&#34;&gt;资源与环境学院&lt;/a&gt;, 环境科学学士&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;奖励荣誉&#34;&gt;奖励荣誉&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;作品登记证书: 中国能源流通图, 09–2009–J–002. 上海市版权局, 2009.&lt;/li&gt;
+&lt;li&gt;上海市科技进步三等奖, 9312008Y1253. 上海市科学技术委员会, 2008.   优秀毕业生. 华东理工大学, 2010.&lt;/li&gt;
+&lt;li&gt;科技创新积极分子. 华中农业大学, 2005.
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;工作经历&#34;&gt;工作经历&lt;/h2&gt;
+
+&lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2010.10 至今, 久其龙信 高级数据分析师&lt;/li&gt;
+&lt;li&gt;2010.05 ~ 2010.09, 远大能源 政策研究员&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;实习&#34;&gt;实习&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2010.05 ~ 2010.09 上海世博会南非馆&lt;/li&gt;
+&lt;li&gt;2010.03 ~ 2010.04 上海市标准研究院&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;参与项目&#34;&gt;参与项目&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2010.01 ~ 2010.04 上海2010低碳世博策略研究. 上海世博局 (2010). 第三完成人.&lt;/li&gt;
+&lt;li&gt;2008.02 ~ 2008.12 上海市二氧化碳排放基准的初步测算. 上海市科学技术委员会 (2008). 第三完成人.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;计算机水平&#34;&gt;计算机水平&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;语言: &lt;a href=&#34;http://www.r-project.org/&#34;&gt;R&lt;/a&gt;(熟练), &lt;a href=&#34;https://www.python.org&#34;&gt;Python&lt;/a&gt;, SQL&lt;/li&gt;
+&lt;li&gt;统计软件: &lt;a href=&#34;http://www.r-project.org/&#34;&gt;R&lt;/a&gt;, &lt;del&gt;STATA, Eviews, SPSS&lt;/del&gt;&lt;/li&gt;
+&lt;li&gt;应用程序: MS Office, LaTeX, SQLite, MySQL, ArcGis, GTAP&lt;/li&gt;
+&lt;li&gt;操作系统: MacOS, Windows&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;外语水平&#34;&gt;外语水平&lt;/h2&gt;
+
+&lt;p&gt;英语熟练、日语基础&lt;/p&gt;
+
+&lt;h2 id=&#34;著作论文&#34;&gt;著作论文&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Xie, Shichen. (2014). An Empirical Study on Energy Use, Carbon Emissions and Economic Growth in China (Doctoral dissertation).&lt;/li&gt;
+&lt;li&gt;Xie, Shichen. (2014). The driving forces of China’s energy use from 1992 to 2010: An empirical study of input–output and structural decomposition analysis. Energy Policy, 73, 401–415. (SCI, IF=2.696)&lt;/li&gt;
+&lt;li&gt;Li, L., Chen, C., Xie, Shichen., et al. (2010). Energy demand and carbon emissions under different development scenarios for Shanghai, China. Energy Policy, 38 (9), 4797–4807. (SCI, IF=2.696)&lt;/li&gt;
+&lt;li&gt;谢士晨, 陈长虹, 李莉, 等. (2009). 上海市能源消费CO2排放清单与碳流通图. 中国环境科学, 29(11), 1215–1220. (中国自然科学重点核心, EI)&lt;/li&gt;
+&lt;li&gt;谢士晨, 陈长虹, 李莉, 等. (2009). 2006年中国能流图. 中国能源, 31(3), 21–23. (中国科技核心)&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
