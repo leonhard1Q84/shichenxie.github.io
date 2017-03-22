@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.19" />
+
+
+<title>博客搭建过程 - 谢士晨 | Shichen Xie</title>
+<meta property="og:title" content="博客搭建过程 - 谢士晨 | Shichen Xie">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css' rel='stylesheet' type='text/css'>
+
+
+
+<link rel="stylesheet" href="../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../" class="nav-logo">
+    <img src="../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/rstudio">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">博客搭建过程</h1>
+
+    
+    <span class="article-date">2017/03/21</span>
+    
+
+    <div class="article-content">
+      
+
+<p>在“我网故我在”的召唤下，我用<a href="https://github.com/rstudio/blogdown">blogdown</a><sup class="footnote-ref" id="fnref:blogdown-Creatin"><a rel="footnote" href="#fn:blogdown-Creatin">1</a></sup>和<a href="https://pages.github.com">GitHubPages</a>在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。</p>
+
+<h2 id="编辑网站文件">编辑网站文件</h2>
+
+<p>首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。<a href="https://yihui.name">益辉</a>造的<a href="https://github.com/rstudio/blogdown">blogdown</a>让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用<a href="https://www.rstudio.com">RStudio</a>新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码</p>
+
+<pre><code class="language-r">setwd(path) # path为新建的项目文件夹路径
+# 或者直接用rstudio打开*.Rproj文件
+
+# 安装blogdown包
+devtools::install_github('rstudio/blogdown') 
+
+# 创建网站文件
+blogdown::new_site() 
+
+# &gt; sessionInfo()
+# R version 3.3.2 (2016-10-31)
+# Platform: x86_64-apple-darwin13.4.0 (64-bit)
+# Running under: macOS Sierra 10.12.3
+</code></pre>
+
+<h2 id="创建github-pages仓库">创建GitHub Pages仓库</h2>
+
+<p>登录github主页（<code>https://github.com/shichenxie</code>，其中<code>shichenxie</code>为我的github账号），新建名为<code>shichenxie.github.io</code>的项目仓库(repository)。</p>
+
+<p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码</p>
+
+<pre><code>cd path \\path为public文件地址
+
+git init \\初始化git
+
+git add -A \\git中添加所有文件
+
+git commit -m 'init site'
+
+git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
+
+git push -u origin master
+</code></pre>
+
+<h2 id="绑定域名">绑定域名</h2>
+
+<p>首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为<code>shichen.name</code>)。上传CNAME文件到github之后，打开<code>shichenxie.github.io</code>自动定位到<code>shichen.name</code>，但是并不能显示网站内容，需要设置DNS解析。</p>
+
+<p>我的网站域名是从阿里云购买的(也有推荐使用<a href="http://jingyan.baidu.com/article/546ae1857c4ee81149f28cbe.html">DNSPOD</a>服务的)，故用阿里云的云解析DNS，添加如下三条记录：<sup class="footnote-ref" id="fnref:Using-a-custom-d"><a rel="footnote" href="#fn:Using-a-custom-d">2</a></sup></p>
+
+<pre><code>@        A        192.30.252.153
+@        A        192.30.252.154
+www      CNAME    username.github.io.
+</code></pre>
+
+<p>最后在浏览器中打开<a href="http://shichen.name"><code>shichen.name</code></a>，个人网站上线了。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:blogdown-Creatin">参考<a href="https://bookdown.org/yihui/blogdown/">blogdown: Creating Websites with R Markdown</a> <a class="footnote-return" href="#fnref:blogdown-Creatin"><sup>[return]</sup></a></li>
+<li id="fn:Using-a-custom-d">参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/">Using a custom domain with GitHub Pages</a>与<a href="https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D">域名 CNAME 解析设置方法</a> <a class="footnote-return" href="#fnref:Using-a-custom-d"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<script async type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+    
+  </body>
+</html>
+

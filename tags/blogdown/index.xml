@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>谢士晨 | Shichen Xie</title>
-    <link>/index.xml</link>
-    <description>Recent content on 谢士晨 | Shichen Xie</description>
+    <title>Blogdown on 谢士晨 | Shichen Xie</title>
+    <link>/tags/blogdown/index.xml</link>
+    <description>Recent content in Blogdown on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Mar 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/blogdown/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>博客搭建过程</title>
@@ -78,16 +77,6 @@ www      CNAME    username.github.io.
 &lt;li id=&#34;fn:Using-a-custom-d&#34;&gt;参考&lt;a href=&#34;https://help.github.com/articles/using-a-custom-domain-with-github-pages/&#34;&gt;Using a custom domain with GitHub Pages&lt;/a&gt;与&lt;a href=&#34;https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D&#34;&gt;域名 CNAME 解析设置方法&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Using-a-custom-d&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>&lt;p&gt;This is a &amp;ldquo;hello world&amp;rdquo; example website for the &lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;&lt;strong&gt;blogdown&lt;/strong&gt;&lt;/a&gt; package. The theme was forked from &lt;a href=&#34;https://github.com/jrutheiser/hugo-lithium-theme&#34;&gt;@jrutheiser/hugo-lithium-theme&lt;/a&gt; and modified by &lt;a href=&#34;https://github.com/yihui/hugo-lithium-theme&#34;&gt;Yihui Xie&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
