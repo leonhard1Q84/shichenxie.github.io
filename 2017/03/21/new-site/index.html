@@ -98,16 +98,13 @@ blogdown::new_site()
 
 <p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码</p>
 
-<pre><code>cd path \\path为public文件地址
+<pre><code class="language-bash">cd path \\path为public文件地址
 
 git init \\初始化git
-
-git add -A \\git中添加所有文件
-
-git commit -m 'init site'
-
 git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
 
+git add -A \\git中添加所有文件
+git commit -m 'init site' 
 git push -u origin master
 </code></pre>
 
