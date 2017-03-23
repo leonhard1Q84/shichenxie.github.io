@@ -17,7 +17,7 @@
       <guid>/2017/03/21/new-site/</guid>
       <description>
 
-&lt;p&gt;在“我网故我在”的召唤下，我用&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:blogdown-Creatin&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:blogdown-Creatin&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;和&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHubPages&lt;/a&gt;在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。&lt;/p&gt;
+&lt;p&gt;在“我网故我在”的召唤下，我用&lt;a href=&#34;https://www.r-project.org&#34;&gt;R语言&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown包&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:blogdown-Creatin&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:blogdown-Creatin&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;和&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHubPages&lt;/a&gt;在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。&lt;/p&gt;
 
 &lt;h2 id=&#34;编辑网站文件&#34;&gt;编辑网站文件&lt;/h2&gt;
 
@@ -40,7 +40,7 @@ blogdown::new_site()
 
 &lt;h2 id=&#34;创建github-pages仓库&#34;&gt;创建GitHub Pages仓库&lt;/h2&gt;
 
-&lt;p&gt;登录github主页（&lt;code&gt;https://github.com/shichenxie&lt;/code&gt;，其中&lt;code&gt;shichenxie&lt;/code&gt;为我的github账号），新建名为&lt;code&gt;shichenxie.github.io&lt;/code&gt;的项目仓库(repository)。&lt;/p&gt;
+&lt;p&gt;登录自己的github主页（&lt;code&gt;https://github.com/shichenxie&lt;/code&gt;，其中&lt;code&gt;shichenxie&lt;/code&gt;为我的github账号），新建名为&lt;code&gt;shichenxie.github.io&lt;/code&gt;的项目仓库(repository)。&lt;/p&gt;
 
 &lt;p&gt;然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码&lt;/p&gt;
 
@@ -89,7 +89,7 @@ www      CNAME    username.github.io.
       <guid>/about/</guid>
       <description>&lt;p&gt;谢士晨，汉族人，乙丑年生于江西玉山。2014年底从名古屋大学获得博士学位，研究方向为能源环境经济学。之后在北京从事数据分析师工作。&lt;/p&gt;
 
-&lt;p&gt;本博客基于blogdown包，部署在Github。搭建博客是为了记录与分享在数据科学相关领域的学习与研究。&lt;/p&gt;
+&lt;p&gt;本博客基于&lt;a href=&#34;http://github.com/rstudio/blogdown&#34;&gt;blogdown包&lt;/a&gt;，部署在&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHub Pages&lt;/a&gt;。搭建博客是为了记录与分享在数据科学相关领域的学习与研究。&lt;/p&gt;
 </description>
     </item>
     
@@ -129,7 +129,7 @@ www      CNAME    username.github.io.
 &lt;li&gt;2010.10 国家留学基金委 公费留学奖学金&lt;/li&gt;
 &lt;li&gt;2010.03 华东理工大学 优秀毕业生&lt;/li&gt;
 &lt;li&gt;2009.06 华东理工大学 科研实践奖&lt;/li&gt;
-&lt;li&gt;2009.09 上海市版权局 作品登记证书：中国能源流通图(09-2009-J-002)&lt;/li&gt;
+&lt;li&gt;2009.09 上海市版权局 作品登记证书: 中国能源流通图(09-2009-J-002)&lt;/li&gt;
 &lt;li&gt;2008.12 上海市科学技术委员会 上海市科技进步三等奖(9312008Y1253)&lt;/li&gt;
 &lt;li&gt;2005.12 华中农业大学 科技创新经济分子&lt;/li&gt;
 &lt;li&gt;2004.12 全国大学生数学建模大赛湖北省二等奖
@@ -175,11 +175,11 @@ www      CNAME    username.github.io.
 &lt;h2 id=&#34;著作论文&#34;&gt;著作论文&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Xie, Shichen. (2014). An Empirical Study on Energy Use, Carbon Emissions and Economic Growth in China (Doctoral dissertation).&lt;/li&gt;
-&lt;li&gt;Xie, Shichen. (2014). The driving forces of China’s energy use from 1992 to 2010: An empirical study of input–output and structural decomposition analysis. Energy Policy, 73, 401–415. (SCI, IF=2.696)&lt;/li&gt;
-&lt;li&gt;Li, L., Chen, C., Xie, Shichen., et al. (2010). Energy demand and carbon emissions under different development scenarios for Shanghai, China. Energy Policy, 38 (9), 4797–4807. (SCI, IF=2.696)&lt;/li&gt;
-&lt;li&gt;谢士晨, 陈长虹, 李莉, 等. (2009). 上海市能源消费CO2排放清单与碳流通图. 中国环境科学, 29(11), 1215–1220. (中国自然科学重点核心, EI)&lt;/li&gt;
-&lt;li&gt;谢士晨, 陈长虹, 李莉, 等. (2009). 2006年中国能流图. 中国能源, 31(3), 21–23. (中国科技核心)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Xie, Shichen&lt;/strong&gt; (2014). &lt;a href=&#34;http://hdl.handle.net/2237/21226&#34;&gt;An Empirical Study on Energy Use, Carbon Emissions and Economic Growth in China (Doctoral dissertation).&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Xie, Shichen&lt;/strong&gt;. (2014). &lt;a href=&#34;http://dx.doi.org/10.1016/j.enpol.2014.05.035&#34;&gt;The driving forces of China’s energy use from 1992 to 2010: An empirical study of input–output and structural decomposition analysis.&lt;/a&gt; Energy Policy, 73, 401–415. (SCI, IF=2.696)&lt;/li&gt;
+&lt;li&gt;Li, L., Chen, C., &lt;strong&gt;Xie, Shichen&lt;/strong&gt;, et al. (2010). &lt;a href=&#34;http://dx.doi.org/10.1016/j.enpol.2009.08.048&#34;&gt;Energy demand and carbon emissions under different development scenarios for Shanghai, China.&lt;/a&gt; Energy Policy, 38 (9), 4797–4807. (SCI, IF=2.696)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;谢士晨&lt;/strong&gt;, 陈长虹, 李莉, 等. (2009). &lt;a href=&#34;http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&amp;amp;longsign=be81b707246cfe6c7d5b1f943d8d812b&amp;amp;title=上海市能源消费CO_2排放清单与碳流通图&#34;&gt;上海市能源消费CO2排放清单与碳流通图.&lt;/a&gt; 中国环境科学, 29(11), 1215–1220. (中国自然科学重点核心, EI)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;谢士晨&lt;/strong&gt;, 陈长虹, 李莉, 等. (2009). &lt;a href=&#34;http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&amp;amp;longsign=883fce3829ea8205e21f523ced2e272b&amp;amp;title=2006年中国能流图&#34;&gt;2006年中国能流图.&lt;/a&gt; 中国能源, 31(3), 21–23. (中国科技核心)&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
