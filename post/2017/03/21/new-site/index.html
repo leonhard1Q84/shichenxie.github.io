@@ -96,7 +96,7 @@ blogdown::new_site()
 
 <p>登录自己的github主页（<code>https://github.com/shichenxie</code>，其中<code>shichenxie</code>为我的github账号），新建名为<code>shichenxie.github.io</code>的项目仓库(repository)。</p>
 
-<p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码</p>
+<p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码<sup class="footnote-ref" id="fnref:GitHub-Pages-htt"><a rel="footnote" href="#fn:GitHub-Pages-htt">2</a></sup></p>
 
 <pre><code class="language-bash">cd path \\path为public文件地址
 
@@ -112,7 +112,7 @@ git push -u origin master
 
 <p>首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为<code>shichen.name</code>)。上传CNAME文件到github之后，打开<code>shichenxie.github.io</code>自动定位到<code>shichen.name</code>，但是并不能显示网站内容，需要设置DNS解析。</p>
 
-<p>我的网站域名是从阿里云购买的(也有推荐使用<a href="http://jingyan.baidu.com/article/546ae1857c4ee81149f28cbe.html">DNSPOD</a>服务的)，故用阿里云的云解析DNS，添加如下三条记录：<sup class="footnote-ref" id="fnref:Using-a-custom-d"><a rel="footnote" href="#fn:Using-a-custom-d">2</a></sup></p>
+<p>我的网站域名是从阿里云购买的(也可从<a href="https://www.godaddy.com">GoDaddy</a>购买)，故用阿里云的云解析DNS(也可用<a href="https://www.dnspod.cn">DNSPOD</a>提供的DNS解析服务)，添加如下三条记录：<sup class="footnote-ref" id="fnref:Using-a-custom-d"><a rel="footnote" href="#fn:Using-a-custom-d">3</a></sup></p>
 
 <pre><code>@        A        192.30.252.153
 @        A        192.30.252.154
@@ -126,6 +126,7 @@ www      CNAME    username.github.io.
 
 <ol>
 <li id="fn:blogdown-Creatin">参考<a href="https://bookdown.org/yihui/blogdown/">blogdown: Creating Websites with R Markdown</a> <a class="footnote-return" href="#fnref:blogdown-Creatin"><sup>[return]</sup></a></li>
+<li id="fn:GitHub-Pages-htt">更详细的中文参考见<a href="http://alfred-sun.github.io/blog/2014/12/05/github-pages/">GitHub Pages 静态博客 - 个人建站实录</a> <a class="footnote-return" href="#fnref:GitHub-Pages-htt"><sup>[return]</sup></a></li>
 <li id="fn:Using-a-custom-d">参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/">Using a custom domain with GitHub Pages</a>与<a href="https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D">域名 CNAME 解析设置方法</a> <a class="footnote-return" href="#fnref:Using-a-custom-d"><sup>[return]</sup></a></li>
 </ol>
 </div>
@@ -135,20 +136,21 @@ www      CNAME    username.github.io.
 
   <div id="disqus_thread"></div>
 <script type="text/javascript">
-    var disqus_shortname = 'shichen';
-    var disqus_identifier = '\/post\/2017\/03\/21\/new-site\/';
-    var disqus_title = '博客搭建过程';
-    var disqus_url = '\/post\/2017\/03\/21\/new-site\/';
 
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'shichen';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 </main>
 

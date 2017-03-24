@@ -42,7 +42,7 @@ blogdown::new_site()
 
 &lt;p&gt;登录自己的github主页（&lt;code&gt;https://github.com/shichenxie&lt;/code&gt;，其中&lt;code&gt;shichenxie&lt;/code&gt;为我的github账号），新建名为&lt;code&gt;shichenxie.github.io&lt;/code&gt;的项目仓库(repository)。&lt;/p&gt;
 
-&lt;p&gt;然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码&lt;/p&gt;
+&lt;p&gt;然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:GitHub-Pages-htt&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:GitHub-Pages-htt&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd path \\path为public文件地址
 
@@ -58,7 +58,7 @@ git push -u origin master
 
 &lt;p&gt;首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为&lt;code&gt;shichen.name&lt;/code&gt;)。上传CNAME文件到github之后，打开&lt;code&gt;shichenxie.github.io&lt;/code&gt;自动定位到&lt;code&gt;shichen.name&lt;/code&gt;，但是并不能显示网站内容，需要设置DNS解析。&lt;/p&gt;
 
-&lt;p&gt;我的网站域名是从阿里云购买的(也有推荐使用&lt;a href=&#34;http://jingyan.baidu.com/article/546ae1857c4ee81149f28cbe.html&#34;&gt;DNSPOD&lt;/a&gt;服务的)，故用阿里云的云解析DNS，添加如下三条记录：&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Using-a-custom-d&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Using-a-custom-d&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;我的网站域名是从阿里云购买的(也可从&lt;a href=&#34;https://www.godaddy.com&#34;&gt;GoDaddy&lt;/a&gt;购买)，故用阿里云的云解析DNS(也可用&lt;a href=&#34;https://www.dnspod.cn&#34;&gt;DNSPOD&lt;/a&gt;提供的DNS解析服务)，添加如下三条记录：&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Using-a-custom-d&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Using-a-custom-d&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;@        A        192.30.252.153
 @        A        192.30.252.154
@@ -72,6 +72,7 @@ www      CNAME    username.github.io.
 
 &lt;ol&gt;
 &lt;li id=&#34;fn:blogdown-Creatin&#34;&gt;参考&lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown: Creating Websites with R Markdown&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:blogdown-Creatin&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:GitHub-Pages-htt&#34;&gt;更详细的中文参考见&lt;a href=&#34;http://alfred-sun.github.io/blog/2014/12/05/github-pages/&#34;&gt;GitHub Pages 静态博客 - 个人建站实录&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:GitHub-Pages-htt&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;li id=&#34;fn:Using-a-custom-d&#34;&gt;参考&lt;a href=&#34;https://help.github.com/articles/using-a-custom-domain-with-github-pages/&#34;&gt;Using a custom domain with GitHub Pages&lt;/a&gt;与&lt;a href=&#34;https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D&#34;&gt;域名 CNAME 解析设置方法&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Using-a-custom-d&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
