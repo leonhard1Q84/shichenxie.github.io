@@ -11,10 +11,10 @@
     
     <item>
       <title>博客搭建过程</title>
-      <link>/2017/03/21/new-site/</link>
+      <link>/post/2017/03/21/new-site/</link>
       <pubDate>Tue, 21 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/03/21/new-site/</guid>
+      <guid>/post/2017/03/21/new-site/</guid>
       <description>
 
 &lt;p&gt;在“我网故我在”的召唤下，我用&lt;a href=&#34;https://www.r-project.org&#34;&gt;R语言&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown包&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:blogdown-Creatin&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:blogdown-Creatin&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;和&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHubPages&lt;/a&gt;在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。&lt;/p&gt;
@@ -80,10 +80,10 @@ www      CNAME    username.github.io.
     
     <item>
       <title>关于</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
+      <link>/post/about/</link>
+      <pubDate>Sun, 12 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>/post/about/</guid>
       <description>&lt;p&gt;谢士晨，汉族人，乙丑年生于江西玉山。2014年底从名古屋大学获得博士学位，研究方向为能源环境经济学。毕业之后在北京从事数据分析师工作。&lt;/p&gt;
 
 &lt;p&gt;本博客基于&lt;a href=&#34;http://github.com/rstudio/blogdown&#34;&gt;blogdown包&lt;/a&gt;，部署在&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHub Pages&lt;/a&gt;。搭建博客是为了记录与分享在数据科学相关领域的学习与研究。&lt;/p&gt;
@@ -92,10 +92,10 @@ www      CNAME    username.github.io.
     
     <item>
       <title>简历</title>
-      <link>/cn-vitae/</link>
+      <link>/post/cn-vitae/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/cn-vitae/</guid>
+      <guid>/post/cn-vitae/</guid>
       <description>
 
 &lt;h1 id=&#34;谢士晨&#34;&gt;谢士晨&lt;/h1&gt;
@@ -138,8 +138,8 @@ www      CNAME    username.github.io.
 &lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;2010.10 至今 久其龙信(&lt;a href=&#34;http://www.jiuqi.com.cn&#34;&gt;久其软件&lt;/a&gt;) 高级数据分析师&lt;/li&gt;
-&lt;li&gt;2010.05 ~ 2010.09 远大能源 政策研究员&lt;/li&gt;
+&lt;li&gt;2010.10 至今 &lt;a href=&#34;http://www.jiuqi.com.cn&#34;&gt;久其龙信&lt;/a&gt; 高级数据分析师&lt;/li&gt;
+&lt;li&gt;2010.05 ~ 2010.09 &lt;a href=&#34;http://www.broad.com&#34;&gt;远大能源&lt;/a&gt; 政策研究员&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;实习&#34;&gt;实习&lt;/h3&gt;

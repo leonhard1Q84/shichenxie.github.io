@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/2017/03/21/new-site/</loc>
+    <loc>/post/2017/03/21/new-site/</loc>
     <lastmod>2017-03-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
-    <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+    <loc>/post/about/</loc>
+    <lastmod>2017-03-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -18,7 +18,7 @@
   </url>
   
   <url>
-    <loc>/cn-vitae/</loc>
+    <loc>/post/cn-vitae/</loc>
   </url>
   
   <url>
