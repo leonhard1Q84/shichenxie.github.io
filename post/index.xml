@@ -56,7 +56,7 @@ git push -u origin master \\push
 
 &lt;h2 id=&#34;绑定域名&#34;&gt;绑定域名&lt;/h2&gt;
 
-&lt;p&gt;首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为&lt;code&gt;shichen.name&lt;/code&gt;)。上传CNAME文件到github之后，打开&lt;code&gt;shichenxie.github.io&lt;/code&gt;自动定位到&lt;code&gt;shichen.name&lt;/code&gt;，但是并不能显示网站内容，需要设置DNS解析。&lt;/p&gt;
+&lt;p&gt;首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为&lt;code&gt;shichen.site&lt;/code&gt;)。上传CNAME文件到github之后，打开&lt;code&gt;shichenxie.github.io&lt;/code&gt;自动定位到&lt;code&gt;shichen.site&lt;/code&gt;，但是并不能显示网站内容，需要设置DNS解析。&lt;/p&gt;
 
 &lt;p&gt;我的网站域名是从阿里云购买的(也可从&lt;a href=&#34;https://www.godaddy.com&#34;&gt;GoDaddy&lt;/a&gt;购买)，故用阿里云的云解析DNS(也可用&lt;a href=&#34;https://www.dnspod.cn&#34;&gt;DNSPOD&lt;/a&gt;提供的DNS解析服务)，添加如下三条记录：&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Using-a-custom-d&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Using-a-custom-d&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
@@ -65,7 +65,7 @@ git push -u origin master \\push
 www      CNAME    username.github.io.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;最后在浏览器中打开&lt;a href=&#34;http://shichen.name&#34;&gt;&lt;code&gt;shichen.name&lt;/code&gt;&lt;/a&gt;，个人网站上线了。&lt;/p&gt;
+&lt;p&gt;最后在浏览器中打开&lt;a href=&#34;http://shichen.site&#34;&gt;&lt;code&gt;shichen.site&lt;/code&gt;&lt;/a&gt;，个人网站上线了。&lt;/p&gt;
 &lt;div class=&#34;footnotes&#34;&gt;
 
 &lt;hr /&gt;
