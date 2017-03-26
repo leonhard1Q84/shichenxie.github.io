@@ -21,7 +21,7 @@
 
 &lt;h2 id=&#34;编辑网站文件&#34;&gt;编辑网站文件&lt;/h2&gt;
 
-&lt;p&gt;首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。&lt;a href=&#34;https://yihui.name&#34;&gt;益辉&lt;/a&gt;造的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用&lt;a href=&#34;https://www.rstudio.com&#34;&gt;RStudio&lt;/a&gt;新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码&lt;/p&gt;
+&lt;p&gt;首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。&lt;a href=&#34;https://yihui.name&#34;&gt;益辉&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用&lt;a href=&#34;https://www.rstudio.com&#34;&gt;RStudio&lt;/a&gt;新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;setwd(path) # path为新建的项目文件夹路径
 # 或者直接用rstudio打开*.Rproj文件
@@ -50,8 +50,8 @@ git init \\初始化git
 git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
 
 git add -A \\git中添加所有文件
-git commit -m &#39;init site&#39; 
-git push -u origin master
+git commit -m &#39;init site&#39; \\commit
+git push -u origin master \\push
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;绑定域名&#34;&gt;绑定域名&lt;/h2&gt;
