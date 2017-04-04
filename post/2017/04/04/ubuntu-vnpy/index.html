@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.19" />
+
+
+<title>在ubuntu上配置vnpy - 谢士晨 | Shichen Xie</title>
+<meta property="og:title" content="在ubuntu上配置vnpy - 谢士晨 | Shichen Xie">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css' rel='stylesheet' type='text/css'>
+
+
+
+<link rel="stylesheet" href="../../../../../css/fonts.css" media="all">
+<link rel="stylesheet" href="../../../../../css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="../../../../../" class="nav-logo">
+    <img src="../../../../../images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="../../../../../about/">关于</a></li>
+    
+    <li><a href="../../../../../post/">博客</a></li>
+    
+    <li><a href="../../../../../cn-vitae/">简历</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">在ubuntu上配置vnpy</h1>
+
+    
+    <span class="article-date">2017/04/04</span>
+    
+
+    <div class="article-content">
+      
+
+<p>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见<a href="https://www.zhihu.com/people/traderusingpython/answers">github主页</a>、<a href="http://www.vnpy.org">官方主页</a>、<a href="https://zhuanlan.zhihu.com/vn-py">项目知乎专栏</a>、<a href="http://www.vnpie.com/forum.php">官方社区维恩派</a>、<a href="https://www.zhihu.com/people/traderusingpython/answers">作者知乎主页</a>。</p>
+
+<p>在ubuntu上配置的主要步骤分三步，<strong>1.</strong>安装python环境anaconda2，<strong>2.</strong>安装mongodb与相关依赖python包，<strong>3.</strong>安装vnpy框架</p>
+
+<h2 id="安装anaconda">安装anaconda</h2>
+
+<p>由于速度方面的考虑，vnpy目前官方建议使用python2.*环境。先从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
+
+<pre><code class="language-bash">bash Anaconda2-4.3.1-Linux-x86_64.sh
+</code></pre>
+
+<h2 id="安装mongodb">安装mongodb</h2>
+
+<p>在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:</p>
+
+<pre><code class="language-bash">sudo apt-get install mongodb
+</code></pre>
+
+<p>然后安装pymongo包与Qt黑色主题</p>
+
+<pre><code class="language-bash">conda install pymongo qdarkstyle
+</code></pre>
+
+<p>以及编译API相关的工具</p>
+
+<pre><code class="language-bash">sudo apt-get install git build-essential libboost-all-dev python-dev cmake
+</code></pre>
+
+<h2 id="下载vnpy项目库">下载vnpy项目库</h2>
+
+<p>最后从github上下载vnpy项目库</p>
+
+<pre><code class="language-bash">git clone http://github.com/vnpy/vnpy.git
+</code></pre>
+
+<p>更详细的安装过程参考：
+<a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a></p>
+
+    </div>
+  </article>
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'shichen';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="../../../../../index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="../../../../../images/hugo-logo.png" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

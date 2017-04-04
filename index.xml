@@ -6,8 +6,56 @@
     <description>Recent content on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Mar 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Apr 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>在ubuntu上配置vnpy</title>
+      <link>/post/2017/04/04/ubuntu-vnpy/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/04/04/ubuntu-vnpy/</guid>
+      <description>
+
+&lt;p&gt;vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见&lt;a href=&#34;https://www.zhihu.com/people/traderusingpython/answers&#34;&gt;github主页&lt;/a&gt;、&lt;a href=&#34;http://www.vnpy.org&#34;&gt;官方主页&lt;/a&gt;、&lt;a href=&#34;https://zhuanlan.zhihu.com/vn-py&#34;&gt;项目知乎专栏&lt;/a&gt;、&lt;a href=&#34;http://www.vnpie.com/forum.php&#34;&gt;官方社区维恩派&lt;/a&gt;、&lt;a href=&#34;https://www.zhihu.com/people/traderusingpython/answers&#34;&gt;作者知乎主页&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;在ubuntu上配置的主要步骤分三步，&lt;strong&gt;1.&lt;/strong&gt;安装python环境anaconda2，&lt;strong&gt;2.&lt;/strong&gt;安装mongodb与相关依赖python包，&lt;strong&gt;3.&lt;/strong&gt;安装vnpy框架&lt;/p&gt;
+
+&lt;h2 id=&#34;安装anaconda&#34;&gt;安装anaconda&lt;/h2&gt;
+
+&lt;p&gt;由于速度方面的考虑，vnpy目前官方建议使用python2.*环境。先从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;bash Anaconda2-4.3.1-Linux-x86_64.sh
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;安装mongodb&#34;&gt;安装mongodb&lt;/h2&gt;
+
+&lt;p&gt;在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install mongodb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后安装pymongo包与Qt黑色主题&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;conda install pymongo qdarkstyle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以及编译API相关的工具&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install git build-essential libboost-all-dev python-dev cmake
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;下载vnpy项目库&#34;&gt;下载vnpy项目库&lt;/h2&gt;
+
+&lt;p&gt;最后从github上下载vnpy项目库&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone http://github.com/vnpy/vnpy.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;更详细的安装过程参考：
+&lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>博客搭建过程</title>
