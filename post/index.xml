@@ -23,7 +23,7 @@
 
 &lt;h2 id=&#34;安装anaconda&#34;&gt;安装anaconda&lt;/h2&gt;
 
-&lt;p&gt;由于速度方面的考虑，vnpy目前官方建议使用python2.*环境。先从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
+&lt;p&gt;出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。先从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1，官方建议下载4.0版本。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;bash Anaconda2-4.3.1-Linux-x86_64.sh
 &lt;/code&gt;&lt;/pre&gt;
@@ -45,15 +45,20 @@
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install git build-essential libboost-all-dev python-dev cmake
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;下载vnpy项目库&#34;&gt;下载vnpy项目库&lt;/h2&gt;
+&lt;h2 id=&#34;安装vnpy框架&#34;&gt;安装vnpy框架&lt;/h2&gt;
 
-&lt;p&gt;最后从github上下载vnpy项目库&lt;/p&gt;
+&lt;p&gt;最后从github上下载vnpy项目库。我先Fork了&lt;a href=&#34;https://github.com/vnpy/vnpy&#34;&gt;vnpy的GitHub项目库&lt;/a&gt;，然后clone到本地：&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone http://github.com/vnpy/vnpy.git
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone git@github.com:shichenxie/vnpy.git
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt5，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)&lt;/p&gt;
+
+&lt;p&gt;再次运行python vtMain.py，出现缺少talib包错误，&lt;a href=&#34;http://www.jianshu.com/p/555c02e30adb&#34;&gt;解决方法conda install -chttps://conda.anaconda.org/quantopian ta-lib &lt;/a&gt;&lt;/p&gt;
+
 &lt;p&gt;更详细的安装过程参考：
-&lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt;&lt;/p&gt;
+- &lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt;
+- &lt;a href=&#34;https://www.zhihu.com/question/51627423&#34;&gt;vn.py安装后无法打开，提示No module named PyQt4.QtCore&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     

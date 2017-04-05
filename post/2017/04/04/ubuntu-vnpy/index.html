@@ -77,7 +77,7 @@
 
 <h2 id="安装anaconda">安装anaconda</h2>
 
-<p>由于速度方面的考虑，vnpy目前官方建议使用python2.*环境。先从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
+<p>出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。先从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1，官方建议下载4.0版本。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
 
 <pre><code class="language-bash">bash Anaconda2-4.3.1-Linux-x86_64.sh
 </code></pre>
@@ -99,15 +99,20 @@
 <pre><code class="language-bash">sudo apt-get install git build-essential libboost-all-dev python-dev cmake
 </code></pre>
 
-<h2 id="下载vnpy项目库">下载vnpy项目库</h2>
+<h2 id="安装vnpy框架">安装vnpy框架</h2>
 
-<p>最后从github上下载vnpy项目库</p>
+<p>最后从github上下载vnpy项目库。我先Fork了<a href="https://github.com/vnpy/vnpy">vnpy的GitHub项目库</a>，然后clone到本地：</p>
 
-<pre><code class="language-bash">git clone http://github.com/vnpy/vnpy.git
+<pre><code class="language-bash">git clone git@github.com:shichenxie/vnpy.git
 </code></pre>
 
+<p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt5，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)</p>
+
+<p>再次运行python vtMain.py，出现缺少talib包错误，<a href="http://www.jianshu.com/p/555c02e30adb">解决方法conda install -chttps://conda.anaconda.org/quantopian ta-lib </a></p>
+
 <p>更详细的安装过程参考：
-<a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a></p>
+- <a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a>
+- <a href="https://www.zhihu.com/question/51627423">vn.py安装后无法打开，提示No module named PyQt4.QtCore</a></p>
 
     </div>
   </article>
