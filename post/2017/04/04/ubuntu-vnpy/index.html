@@ -73,11 +73,11 @@
 
 <p>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见<a href="http://github.com/vnpy/vnpy">github主页</a>、<a href="http://www.vnpy.org">官方主页</a>、<a href="https://zhuanlan.zhihu.com/vn-py">项目知乎专栏</a>、<a href="http://www.vnpie.com/forum.php">官方社区维恩派</a>、<a href="https://www.zhihu.com/people/traderusingpython/answers">作者知乎主页</a>。</p>
 
-<p>目前CTP只提供Windows和Linux的接口。在ubuntu上配置的主要步骤分三步，<strong>1.</strong>安装python环境anaconda2，<strong>2.</strong>安装mongodb与相关依赖python包，<strong>3.</strong>安装vnpy框架</p>
+<p>目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy<sup class="footnote-ref" id="fnref:vn-trader-Ubuntu"><a rel="footnote" href="#fn:vn-trader-Ubuntu">1</a></sup>，主要包括三步，<strong>1.</strong>安装python环境anaconda2，<strong>2.</strong>安装mongodb与相关依赖工具，<strong>3.</strong>安装vnpy框架</p>
 
 <h2 id="安装anaconda">安装anaconda</h2>
 
-<p>出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。先从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1，官方建议下载4.0版本。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
+<p>出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
 
 <pre><code class="language-bash">bash Anaconda2-4.3.1-Linux-x86_64.sh
 </code></pre>
@@ -106,13 +106,19 @@
 <pre><code class="language-bash">git clone git@github.com:shichenxie/vnpy.git
 </code></pre>
 
-<p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt5，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)</p>
+<p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行<code>python vtMain.py</code>。但是出现缺少PyQt4包的错误(<code>ImportError: No module named PyQt4.QtCore</code>)。原来新版anaconda已默认集成pyqt5<sup class="footnote-ref" id="fnref:vn-py-No-module"><a rel="footnote" href="#fn:vn-py-No-module">2</a></sup>，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(<code>conda install pyqtgraph</code>)</p>
 
-<p>再次运行python vtMain.py，出现缺少talib包错误，<a href="http://www.jianshu.com/p/555c02e30adb">解决方法conda install -chttps://conda.anaconda.org/quantopian ta-lib </a></p>
+<p>再次运行<code>python vtMain.py</code>，出现缺少talib包错误，解决方法<sup class="footnote-ref" id="fnref:ubuntu-ta-lib-ht"><a rel="footnote" href="#fn:ubuntu-ta-lib-ht">3</a></sup><code>conda install -chttps://conda.anaconda.org/quantopian ta-lib</code></p>
+<div class="footnotes">
 
-<p>更详细的安装过程参考：
-- <a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a>
-- <a href="https://www.zhihu.com/question/51627423">vn.py安装后无法打开，提示No module named PyQt4.QtCore</a></p>
+<hr />
+
+<ol>
+<li id="fn:vn-trader-Ubuntu">详细参考<a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a> <a class="footnote-return" href="#fnref:vn-trader-Ubuntu"><sup>[return]</sup></a></li>
+<li id="fn:vn-py-No-module">参考<a href="https://www.zhihu.com/question/51627423">vn.py安装后无法打开，提示No module named PyQt4.QtCore</a> <a class="footnote-return" href="#fnref:vn-py-No-module"><sup>[return]</sup></a></li>
+<li id="fn:ubuntu-ta-lib-ht">参考<a href="http://www.jianshu.com/p/555c02e30adb">ubuntu下面安装ta-lib库</a> <a class="footnote-return" href="#fnref:ubuntu-ta-lib-ht"><sup>[return]</sup></a></li>
+</ol>
+</div>
 
     </div>
   </article>

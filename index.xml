@@ -19,11 +19,11 @@
 
 &lt;p&gt;vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见&lt;a href=&#34;http://github.com/vnpy/vnpy&#34;&gt;github主页&lt;/a&gt;、&lt;a href=&#34;http://www.vnpy.org&#34;&gt;官方主页&lt;/a&gt;、&lt;a href=&#34;https://zhuanlan.zhihu.com/vn-py&#34;&gt;项目知乎专栏&lt;/a&gt;、&lt;a href=&#34;http://www.vnpie.com/forum.php&#34;&gt;官方社区维恩派&lt;/a&gt;、&lt;a href=&#34;https://www.zhihu.com/people/traderusingpython/answers&#34;&gt;作者知乎主页&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;目前CTP只提供Windows和Linux的接口。在ubuntu上配置的主要步骤分三步，&lt;strong&gt;1.&lt;/strong&gt;安装python环境anaconda2，&lt;strong&gt;2.&lt;/strong&gt;安装mongodb与相关依赖python包，&lt;strong&gt;3.&lt;/strong&gt;安装vnpy框架&lt;/p&gt;
+&lt;p&gt;目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:vn-trader-Ubuntu&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:vn-trader-Ubuntu&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，主要包括三步，&lt;strong&gt;1.&lt;/strong&gt;安装python环境anaconda2，&lt;strong&gt;2.&lt;/strong&gt;安装mongodb与相关依赖工具，&lt;strong&gt;3.&lt;/strong&gt;安装vnpy框架&lt;/p&gt;
 
 &lt;h2 id=&#34;安装anaconda&#34;&gt;安装anaconda&lt;/h2&gt;
 
-&lt;p&gt;出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。先从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1，官方建议下载4.0版本。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
+&lt;p&gt;出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;bash Anaconda2-4.3.1-Linux-x86_64.sh
 &lt;/code&gt;&lt;/pre&gt;
@@ -52,13 +52,19 @@
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone git@github.com:shichenxie/vnpy.git
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt5，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)&lt;/p&gt;
+&lt;p&gt;在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行&lt;code&gt;python vtMain.py&lt;/code&gt;。但是出现缺少PyQt4包的错误(&lt;code&gt;ImportError: No module named PyQt4.QtCore&lt;/code&gt;)。原来新版anaconda已默认集成pyqt5&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:vn-py-No-module&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:vn-py-No-module&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(&lt;code&gt;conda install pyqtgraph&lt;/code&gt;)&lt;/p&gt;
 
-&lt;p&gt;再次运行python vtMain.py，出现缺少talib包错误，&lt;a href=&#34;http://www.jianshu.com/p/555c02e30adb&#34;&gt;解决方法conda install -chttps://conda.anaconda.org/quantopian ta-lib &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;再次运行&lt;code&gt;python vtMain.py&lt;/code&gt;，出现缺少talib包错误，解决方法&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:ubuntu-ta-lib-ht&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:ubuntu-ta-lib-ht&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;code&gt;conda install -chttps://conda.anaconda.org/quantopian ta-lib&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
 
-&lt;p&gt;更详细的安装过程参考：
-- &lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt;
-- &lt;a href=&#34;https://www.zhihu.com/question/51627423&#34;&gt;vn.py安装后无法打开，提示No module named PyQt4.QtCore&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:vn-trader-Ubuntu&#34;&gt;详细参考&lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:vn-trader-Ubuntu&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:vn-py-No-module&#34;&gt;参考&lt;a href=&#34;https://www.zhihu.com/question/51627423&#34;&gt;vn.py安装后无法打开，提示No module named PyQt4.QtCore&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:vn-py-No-module&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:ubuntu-ta-lib-ht&#34;&gt;参考&lt;a href=&#34;http://www.jianshu.com/p/555c02e30adb&#34;&gt;ubuntu下面安装ta-lib库&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:ubuntu-ta-lib-ht&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 </description>
     </item>
     
