@@ -6,8 +6,25 @@
     <description>Recent content in Posts on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Apr 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Apr 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Markdown笔记</title>
+      <link>/post/2017/04/05/markdown/</link>
+      <pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/04/05/markdown/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt;: 由John Gruber开发&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.markdown.cn&#34;&gt;Markdown-中文语法说明&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pandoc.org&#34;&gt;Pandoc Markdown&lt;/a&gt;: 由John MacFarlane开发&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pages.tzengyuxio.me/pandoc/&#34;&gt;Pandoc Markdown-語法中文翻譯&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gohugo.io/overview/configuration&#34;&gt;Blackfriday Markdown&lt;/a&gt;: &lt;a href=&#34;https://github.com/russross/blackfriday&#34;&gt;blackfriday github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://rmarkdown.rstudio.com&#34;&gt;RMarkdown&lt;/a&gt;: &lt;a href=&#34;https://github.com/rstudio/rmarkdown&#34;&gt;rmarkdown github&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>在ubuntu上配置vnpy</title>
