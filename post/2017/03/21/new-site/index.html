@@ -77,16 +77,16 @@
 
 <p>首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。<a href="https://yihui.name">益辉</a>的<a href="https://github.com/rstudio/blogdown">blogdown</a>让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用<a href="https://www.rstudio.com">RStudio</a>新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码</p>
 
-<pre><code class="language-r">setwd(path) # path为新建的项目文件夹路径
-# 或者直接用rstudio打开*.Rproj文件
-
-# 安装blogdown包
+<pre><code class="language-r"># 安装blogdown包
 devtools::install_github('rstudio/blogdown') 
+
+setwd(path) # path为新建的项目文件夹路径
+# 或者直接用rstudio打开*.Rproj文件
 
 # 创建网站文件
 blogdown::new_site() 
 
-# &gt; sessionInfo()
+# &gt; sessionInfo() # R语言系统环境
 # R version 3.3.2 (2016-10-31)
 # Platform: x86_64-apple-darwin13.4.0 (64-bit)
 # Running under: macOS Sierra 10.12.3
@@ -98,14 +98,14 @@ blogdown::new_site()
 
 <p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码<sup class="footnote-ref" id="fnref:GitHub-Pages-htt"><a rel="footnote" href="#fn:GitHub-Pages-htt">2</a></sup></p>
 
-<pre><code class="language-bash">cd path \\path为public文件地址
+<pre><code class="language-bash">cd path # path为public文件地址
 
-git init \\初始化git
+git init # 初始化git
 git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
 
-git add -A \\git中添加所有文件
-git commit -m 'init site' \\commit
-git push -u origin master \\push
+git add -A # git中添加所有文件
+git commit -m 'init site' # commit
+git push -u origin master # push
 </code></pre>
 
 <h2 id="绑定域名">绑定域名</h2>
@@ -178,17 +178,6 @@ www      CNAME    username.github.io.
 
 
     
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  tex2jax: {
-    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-  }
-});
-</script>
-<script async type="text/javascript"
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
 
     
 <script>

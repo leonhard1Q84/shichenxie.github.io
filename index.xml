@@ -101,16 +101,16 @@
 
 &lt;p&gt;首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。&lt;a href=&#34;https://yihui.name&#34;&gt;益辉&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用&lt;a href=&#34;https://www.rstudio.com&#34;&gt;RStudio&lt;/a&gt;新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;setwd(path) # path为新建的项目文件夹路径
-# 或者直接用rstudio打开*.Rproj文件
-
-# 安装blogdown包
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# 安装blogdown包
 devtools::install_github(&#39;rstudio/blogdown&#39;) 
+
+setwd(path) # path为新建的项目文件夹路径
+# 或者直接用rstudio打开*.Rproj文件
 
 # 创建网站文件
 blogdown::new_site() 
 
-# &amp;gt; sessionInfo()
+# &amp;gt; sessionInfo() # R语言系统环境
 # R version 3.3.2 (2016-10-31)
 # Platform: x86_64-apple-darwin13.4.0 (64-bit)
 # Running under: macOS Sierra 10.12.3
@@ -122,14 +122,14 @@ blogdown::new_site()
 
 &lt;p&gt;然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:GitHub-Pages-htt&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:GitHub-Pages-htt&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd path \\path为public文件地址
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd path # path为public文件地址
 
-git init \\初始化git
+git init # 初始化git
 git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
 
-git add -A \\git中添加所有文件
-git commit -m &#39;init site&#39; \\commit
-git push -u origin master \\push
+git add -A # git中添加所有文件
+git commit -m &#39;init site&#39; # commit
+git push -u origin master # push
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id=&#34;绑定域名&#34;&gt;绑定域名&lt;/h2&gt;
