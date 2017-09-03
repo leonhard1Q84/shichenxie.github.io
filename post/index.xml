@@ -10,22 +10,12 @@
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>数据处理R与Python包笔记</title>
+      <title>stringr与regex函数对应关系</title>
       <link>/post/2017/07/25/datamani/</link>
       <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/07/25/datamani/</guid>
-      <description>
-
-&lt;h2 id=&#34;data-manipulation-packages&#34;&gt;data manipulation packages&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://r-datatable.com&#34;&gt;data.table&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/index.html&#34;&gt;pandas&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;functions-in-stringr-regex&#34;&gt;functions in stringr &amp;amp; regex&lt;/h2&gt;
+      <description>&lt;p&gt;stringr是&lt;a href=&#34;http://hadley.nz&#34;&gt;Hadley&lt;/a&gt;大神写的&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:r-python-data-ta&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:r-python-data-ta&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;系列数据处理包中专门处理文本数据的，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看。&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -146,6 +136,14 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:r-python-data-ta&#34;&gt;r与python中三个数据处理系列包：&lt;a href=&#34;http://r-datatable.com&#34;&gt;data.table&lt;/a&gt;、&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;、&lt;a href=&#34;http://pandas.pydata.org/index.html&#34;&gt;pandas&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:r-python-data-ta&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 </description>
     </item>
     

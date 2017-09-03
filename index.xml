@@ -10,22 +10,12 @@
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>数据处理R与Python包笔记</title>
+      <title>stringr与regex函数对应关系</title>
       <link>/post/2017/07/25/datamani/</link>
       <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/07/25/datamani/</guid>
-      <description>
-
-&lt;h2 id=&#34;data-manipulation-packages&#34;&gt;data manipulation packages&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://r-datatable.com&#34;&gt;data.table&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pandas.pydata.org/index.html&#34;&gt;pandas&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;functions-in-stringr-regex&#34;&gt;functions in stringr &amp;amp; regex&lt;/h2&gt;
+      <description>&lt;p&gt;stringr是&lt;a href=&#34;http://hadley.nz&#34;&gt;Hadley&lt;/a&gt;大神写的&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:r-python-data-ta&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:r-python-data-ta&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;系列数据处理包中专门处理文本数据的，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看。&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -146,6 +136,14 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:r-python-data-ta&#34;&gt;r与python中三个数据处理系列包：&lt;a href=&#34;http://r-datatable.com&#34;&gt;data.table&lt;/a&gt;、&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;、&lt;a href=&#34;http://pandas.pydata.org/index.html&#34;&gt;pandas&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:r-python-data-ta&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -437,19 +435,25 @@ www      CNAME    username.github.io.
 &lt;h3 id=&#34;工作&#34;&gt;工作&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;2017.05 至今 &lt;a href=&#34;http://100credit.com/&#34;&gt;百融金服&lt;/a&gt; 数据分析师&lt;/li&gt;
-&lt;li&gt;2015.10 ~ 2017.04 &lt;a href=&#34;http://www.jiuqi.com.cn&#34;&gt;久其&lt;/a&gt;&lt;a href=&#34;http://www.longcredit.com&#34;&gt;龙信&lt;/a&gt; 高级数据分析师&lt;/li&gt;
-&lt;li&gt;2015.05 ~ 2015.09 &lt;a href=&#34;http://www.broad.com&#34;&gt;远大能源&lt;/a&gt; 政策研究员&lt;/li&gt;
+&lt;li&gt;2017.05 至今 &lt;a href=&#34;http://100credit.com/&#34;&gt;百融金服&lt;/a&gt; 数据分析师 主要从事信用风险模型的开发，应用的模型主要包括评分卡与集成机器学习等&lt;/li&gt;
+&lt;li&gt;2015.10 ~ 2017.04 &lt;a href=&#34;http://www.jiuqi.com.cn&#34;&gt;久其&lt;/a&gt;&lt;a href=&#34;http://www.longcredit.com&#34;&gt;龙信&lt;/a&gt; 高级数据分析师 主要从事财政经济等相关领域的数据分析&lt;/li&gt;
+&lt;li&gt;2015.05 ~ 2015.09 &lt;a href=&#34;http://www.broad.com&#34;&gt;远大能源&lt;/a&gt; 政策研究员 主要从事节能减排相关产业政策的跟踪调研&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&#34;项目&#34;&gt;项目&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;[久其龙信] 2016.07 ~ 2017.03 某省市财政部门国库与决算数据分析.  主要完成人之一.&lt;/li&gt;
+&lt;li&gt;[久其龙信] 2016.07 ~ 2017.03 某省市财政部门国库与决算数据分析. 主要完成人之一.&lt;/li&gt;
 &lt;li&gt;[久其龙信] 2016.03 ~ 2016.06 某省宏观经济分析平台可视化方案设计. 某省经信委(2016) 主要完成人.&lt;/li&gt;
 &lt;li&gt;[久其龙信] 2015.10 ~ 2016.02 某省财政与宏观经济预测预警分析报告. 某省财政厅(2015) 主要完成人.&lt;/li&gt;
 &lt;li&gt;[硕士研究生] 2010.01 ~ 2010.04 上海2010低碳世博策略研究. 上海世博局 (2010). 第三完成人.&lt;/li&gt;
 &lt;li&gt;[硕士研究生] 2008.02 ~ 2008.12 上海市二氧化碳排放基准的初步测算. 上海市科学技术委员会 (2008). 第三完成人.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;r包&#34;&gt;R包&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2017.08 &lt;a href=&#34;http://github.com/shichenXie/scorecard&#34;&gt;scorecard&lt;/a&gt; 该包提高了评分卡模型的开发效率，其主要功能包括变量初筛、最优分箱、评分刻度与模型评估等&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&#34;计算机水平&#34;&gt;计算机水平&lt;/h2&gt;
