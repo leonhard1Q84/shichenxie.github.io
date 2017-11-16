@@ -2,12 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 谢士晨 | Shichen Xie</title>
-    <link>/post/index.xml</link>
+    <link>/post/</link>
     <description>Recent content in Posts on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 25 Jul 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>stringr与regex函数对应关系</title>
@@ -15,136 +17,8 @@
       <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/07/25/datamani/</guid>
-      <description>&lt;p&gt;stringr是&lt;a href=&#34;http://hadley.nz&#34;&gt;Hadley&lt;/a&gt;大神写的&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:r-python-data-ta&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:r-python-data-ta&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;系列数据处理包中专门处理文本数据的，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看。&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;stringr包中函数&lt;/th&gt;
-&lt;th&gt;功能说明&lt;/th&gt;
-&lt;th&gt;R Base中对应函数&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;使用正则表达式的函数&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_extract()&lt;/td&gt;
-&lt;td&gt;提取首个匹配模式的字符&lt;/td&gt;
-&lt;td&gt;regmatches()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_extract_all()&lt;/td&gt;
-&lt;td&gt;提取所有匹配模式的字符&lt;/td&gt;
-&lt;td&gt;regmatches()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_locate()&lt;/td&gt;
-&lt;td&gt;返回首个匹配模式的字符的位置&lt;/td&gt;
-&lt;td&gt;regexpr()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_locate_all()&lt;/td&gt;
-&lt;td&gt;返回所有匹配模式的字符的位置&lt;/td&gt;
-&lt;td&gt;gregexpr()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_replace()&lt;/td&gt;
-&lt;td&gt;替换首个匹配模式&lt;/td&gt;
-&lt;td&gt;sub()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_replace_all()&lt;/td&gt;
-&lt;td&gt;替换所有匹配模式&lt;/td&gt;
-&lt;td&gt;gsub()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_split()&lt;/td&gt;
-&lt;td&gt;按照模式分割字符串&lt;/td&gt;
-&lt;td&gt;strsplit()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_split_fixed()&lt;/td&gt;
-&lt;td&gt;按照模式将字符串分割成指定个数&lt;/td&gt;
-&lt;td&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_detect()&lt;/td&gt;
-&lt;td&gt;检测字符是否存在某些指定模式&lt;/td&gt;
-&lt;td&gt;grepl()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_count()&lt;/td&gt;
-&lt;td&gt;返回指定模式出现的次数&lt;/td&gt;
-&lt;td&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;其他重要函数&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_sub()&lt;/td&gt;
-&lt;td&gt;提取指定位置的字符&lt;/td&gt;
-&lt;td&gt;regmatches()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_dup()&lt;/td&gt;
-&lt;td&gt;丢弃指定位置的字符&lt;/td&gt;
-&lt;td&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_length()&lt;/td&gt;
-&lt;td&gt;返回字符的长度&lt;/td&gt;
-&lt;td&gt;nchar()&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_pad()&lt;/td&gt;
-&lt;td&gt;填补字符&lt;/td&gt;
-&lt;td&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_trim()&lt;/td&gt;
-&lt;td&gt;丢弃填充，如去掉字符前后的空格&lt;/td&gt;
-&lt;td&gt;-&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;str_c()&lt;/td&gt;
-&lt;td&gt;连接字符&lt;/td&gt;
-&lt;td&gt;paste(),paste0()&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:r-python-data-ta&#34;&gt;r与python中三个数据处理系列包：&lt;a href=&#34;http://r-datatable.com&#34;&gt;data.table&lt;/a&gt;、&lt;a href=&#34;http://tidyverse.org&#34;&gt;tidyverse&lt;/a&gt;、&lt;a href=&#34;http://pandas.pydata.org/index.html&#34;&gt;pandas&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:r-python-data-ta&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+      <description>stringr是Hadley大神写的tidyverse1系列数据处理包中专门处理文本数据的，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看。
+   stringr包中函数 功能说明 R Base中对应函数     使用正则表达式的函数     str_extract() 提取首个匹配模式的字符 regmatches()   str_extract_all() 提取所有匹配模式的字符 regmatches()   str_locate() 返回首个匹配模式的字符的位置 regexpr()   str_locate_all() 返回所有匹配模式的字符的位置 gregexpr()   str_replace() 替换首个匹配模式 sub()   str_replace_all() 替换所有匹配模式 gsub()   str_split() 按照模式分割字符串 strsplit()   str_split_fixed() 按照模式将字符串分割成指定个数 -   str_detect() 检测字符是否存在某些指定模式 grepl()   str_count() 返回指定模式出现的次数 -   其他重要函数     str_sub() 提取指定位置的字符 regmatches()   str_dup() 丢弃指定位置的字符 -   str_length() 返回字符的长度 nchar()   str_pad() 填补字符 -   str_trim() 丢弃填充，如去掉字符前后的空格 -   str_c() 连接字符 paste(),paste0()     r与python中三个数据处理系列包：data.</description>
     </item>
     
     <item>
@@ -153,17 +27,7 @@
       <pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/04/05/markdown/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://daringfireball.net/projects/markdown/&#34;&gt;Markdown&lt;/a&gt;: 由John Gruber开发&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.markdown.cn&#34;&gt;Markdown-中文语法说明&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pandoc.org&#34;&gt;Pandoc Markdown&lt;/a&gt;: 由John MacFarlane开发&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://pages.tzengyuxio.me/pandoc/&#34;&gt;Pandoc Markdown-語法中文翻譯&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://gohugo.io/overview/configuration&#34;&gt;Blackfriday Markdown&lt;/a&gt;: &lt;a href=&#34;https://github.com/russross/blackfriday&#34;&gt;blackfriday github&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://rmarkdown.rstudio.com&#34;&gt;RMarkdown&lt;/a&gt;: &lt;a href=&#34;https://github.com/rstudio/rmarkdown&#34;&gt;rmarkdown github&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference&#34;&gt;MathJax basic tutorial and quick reference&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.zybuluo.com/codeep/note/163962&#34;&gt;Cmd Markdown 公式指导手册&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
+      <description> Markdown: 由John Gruber开发 Markdown-中文语法说明 Pandoc Markdown: 由John MacFarlane开发 Pandoc Markdown-語法中文翻譯 Blackfriday Markdown: blackfriday github RMarkdown: rmarkdown github MathJax basic tutorial and quick reference Cmd Markdown 公式指导手册  </description>
     </item>
     
     <item>
@@ -172,57 +36,16 @@
       <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/04/04/ubuntu-vnpy/</guid>
-      <description>
-
-&lt;p&gt;vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见&lt;a href=&#34;http://github.com/vnpy/vnpy&#34;&gt;github主页&lt;/a&gt;、&lt;a href=&#34;http://www.vnpy.org&#34;&gt;官方主页&lt;/a&gt;、&lt;a href=&#34;https://zhuanlan.zhihu.com/vn-py&#34;&gt;项目知乎专栏&lt;/a&gt;、&lt;a href=&#34;http://www.vnpie.com/forum.php&#34;&gt;官方社区维恩派&lt;/a&gt;、&lt;a href=&#34;https://www.zhihu.com/people/traderusingpython/answers&#34;&gt;作者知乎主页&lt;/a&gt;。&lt;/p&gt;
-
-&lt;p&gt;目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:vn-trader-Ubuntu&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:vn-trader-Ubuntu&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;，主要包括三步，&lt;strong&gt;1.&lt;/strong&gt;安装python环境anaconda2，&lt;strong&gt;2.&lt;/strong&gt;安装mongodb与相关依赖工具，&lt;strong&gt;3.&lt;/strong&gt;安装vnpy框架&lt;/p&gt;
-
-&lt;h2 id=&#34;安装anaconda&#34;&gt;安装anaconda&lt;/h2&gt;
-
-&lt;p&gt;出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从&lt;a href=&#34;https://www.continuum.io/downloads&#34;&gt;continuum官方网站&lt;/a&gt;下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;bash Anaconda2-4.3.1-Linux-x86_64.sh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;安装mongodb&#34;&gt;安装mongodb&lt;/h2&gt;
-
-&lt;p&gt;在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install mongodb
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;然后安装pymongo包与Qt黑色主题&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;conda install pymongo qdarkstyle
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;以及编译API相关的工具&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo apt-get install git build-essential libboost-all-dev python-dev cmake
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;安装vnpy框架&#34;&gt;安装vnpy框架&lt;/h2&gt;
-
-&lt;p&gt;最后从github上下载vnpy项目库。我先Fork了&lt;a href=&#34;https://github.com/vnpy/vnpy&#34;&gt;vnpy的GitHub项目库&lt;/a&gt;，然后clone到本地：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git clone git@github.com:shichenxie/vnpy.git
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行&lt;code&gt;python vtMain.py&lt;/code&gt;。但是出现缺少PyQt4包的错误(&lt;code&gt;ImportError: No module named PyQt4.QtCore&lt;/code&gt;)。原来新版anaconda已默认集成pyqt5&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:vn-py-No-module&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:vn-py-No-module&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(&lt;code&gt;conda install pyqtgraph&lt;/code&gt;)&lt;/p&gt;
-
-&lt;p&gt;再次运行&lt;code&gt;python vtMain.py&lt;/code&gt;，出现缺少talib包错误，解决方法&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:ubuntu-ta-lib-ht&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:ubuntu-ta-lib-ht&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;code&gt;conda install -chttps://conda.anaconda.org/quantopian ta-lib&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:vn-trader-Ubuntu&#34;&gt;详细参考&lt;a href=&#34;https://zhuanlan.zhihu.com/p/21354681&#34;&gt;vn.trader的Ubuntu运行环境搭建教程&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:vn-trader-Ubuntu&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:vn-py-No-module&#34;&gt;参考&lt;a href=&#34;https://www.zhihu.com/question/51627423&#34;&gt;vn.py安装后无法打开，提示No module named PyQt4.QtCore&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:vn-py-No-module&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:ubuntu-ta-lib-ht&#34;&gt;参考&lt;a href=&#34;http://www.jianshu.com/p/555c02e30adb&#34;&gt;ubuntu下面安装ta-lib库&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:ubuntu-ta-lib-ht&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+      <description> vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主页。
+目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy1，主要包括三步，1.安装python环境anaconda2，2.安装mongodb与相关依赖工具，3.安装vnpy框架
+安装anaconda 出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从continuum官方网站下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:
+bash Anaconda2-4.3.1-Linux-x86_64.sh  安装mongodb 在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:
+sudo apt-get install mongodb  然后安装pymongo包与Qt黑色主题
+conda install pymongo qdarkstyle  以及编译API相关的工具
+sudo apt-get install git build-essential libboost-all-dev python-dev cmake  安装vnpy框架 最后从github上下载vnpy项目库。我先Fork了vnpy的GitHub项目库，然后clone到本地：
+git clone git@github.com:shichenxie/vnpy.git  在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt52，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)
+再次运行python vtMain.py，出现缺少talib包错误，解决方法3conda install -chttps://conda.anaconda.org/quantopian ta-lib
+ 详细参考vn.trader的Ubuntu运行环境搭建教程 [return] 参考vn.py安装后无法打开，提示No module named PyQt4.QtCore [return] 参考ubuntu下面安装ta-lib库 [return]   </description>
     </item>
     
     <item>
@@ -231,68 +54,11 @@
       <pubDate>Tue, 21 Mar 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/03/21/new-site/</guid>
-      <description>
-
-&lt;p&gt;在“我网故我在”的召唤下，我用&lt;a href=&#34;https://www.r-project.org&#34;&gt;R语言&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown包&lt;/a&gt;&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:blogdown-Creatin&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:blogdown-Creatin&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;和&lt;a href=&#34;https://pages.github.com&#34;&gt;GitHubPages&lt;/a&gt;在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。&lt;/p&gt;
-
-&lt;h2 id=&#34;编辑网站文件&#34;&gt;编辑网站文件&lt;/h2&gt;
-
-&lt;p&gt;首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。&lt;a href=&#34;https://yihui.name&#34;&gt;益辉&lt;/a&gt;的&lt;a href=&#34;https://github.com/rstudio/blogdown&#34;&gt;blogdown&lt;/a&gt;让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用&lt;a href=&#34;https://www.rstudio.com&#34;&gt;RStudio&lt;/a&gt;新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# 安装blogdown包
-devtools::install_github(&#39;rstudio/blogdown&#39;) 
-
-setwd(path) # path为新建的项目文件夹路径
-# 或者直接用rstudio打开*.Rproj文件
-
-# 创建网站文件
-blogdown::new_site() 
-
-# &amp;gt; sessionInfo() # R语言系统环境
-# R version 3.3.2 (2016-10-31)
-# Platform: x86_64-apple-darwin13.4.0 (64-bit)
-# Running under: macOS Sierra 10.12.3
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;创建github-pages仓库&#34;&gt;创建GitHub Pages仓库&lt;/h2&gt;
-
-&lt;p&gt;登录自己的github主页（&lt;code&gt;https://github.com/shichenxie&lt;/code&gt;，其中&lt;code&gt;shichenxie&lt;/code&gt;为我的github账号），新建名为&lt;code&gt;shichenxie.github.io&lt;/code&gt;的项目仓库(repository)。&lt;/p&gt;
-
-&lt;p&gt;然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:GitHub-Pages-htt&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:GitHub-Pages-htt&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd path # path为public文件地址
-
-git init # 初始化git
-git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
-
-git add -A # git中添加所有文件
-git commit -m &#39;init site&#39; # commit
-git push -u origin master # push
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;绑定域名&#34;&gt;绑定域名&lt;/h2&gt;
-
-&lt;p&gt;首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为&lt;code&gt;shichen.name&lt;/code&gt;)。上传CNAME文件到github之后，打开&lt;code&gt;shichenxie.github.io&lt;/code&gt;自动定位到&lt;code&gt;shichen.name&lt;/code&gt;，但是并不能显示网站内容，需要设置DNS解析。&lt;/p&gt;
-
-&lt;p&gt;我的网站域名是从阿里云购买的(也可从&lt;a href=&#34;https://www.godaddy.com&#34;&gt;GoDaddy&lt;/a&gt;购买)，故用阿里云的云解析DNS(也可用&lt;a href=&#34;https://www.dnspod.cn&#34;&gt;DNSPOD&lt;/a&gt;提供的DNS解析服务)，添加如下三条记录：&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:Using-a-custom-d&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:Using-a-custom-d&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;@        A        192.30.252.153
-@        A        192.30.252.154
-www      CNAME    username.github.io.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;最后在浏览器中打开&lt;a href=&#34;http://shichen.name&#34;&gt;&lt;code&gt;shichen.name&lt;/code&gt;&lt;/a&gt;，个人网站上线了。&lt;/p&gt;
-&lt;div class=&#34;footnotes&#34;&gt;
-
-&lt;hr /&gt;
-
-&lt;ol&gt;
-&lt;li id=&#34;fn:blogdown-Creatin&#34;&gt;参考&lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown: Creating Websites with R Markdown&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:blogdown-Creatin&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:GitHub-Pages-htt&#34;&gt;更详细的中文参考见&lt;a href=&#34;http://alfred-sun.github.io/blog/2014/12/05/github-pages/&#34;&gt;GitHub Pages 静态博客 - 个人建站实录&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:GitHub-Pages-htt&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li id=&#34;fn:Using-a-custom-d&#34;&gt;参考&lt;a href=&#34;https://help.github.com/articles/using-a-custom-domain-with-github-pages/&#34;&gt;Using a custom domain with GitHub Pages&lt;/a&gt;与&lt;a href=&#34;https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D&#34;&gt;域名 CNAME 解析设置方法&lt;/a&gt; &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:Using-a-custom-d&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-</description>
+      <description>在“我网故我在”的召唤下，我用R语言的blogdown包1和GitHubPages在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。
+编辑网站文件 首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。益辉的blogdown让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用RStudio新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码
+# 安装blogdown包 devtools::install_github(&#39;rstudio/blogdown&#39;) setwd(path) # path为新建的项目文件夹路径 # 或者直接用rstudio打开*.Rproj文件 # 创建网站文件 blogdown::new_site() # &amp;gt; sessionInfo() # R语言系统环境 # R version 3.3.2 (2016-10-31) # Platform: x86_64-apple-darwin13.4.0 (64-bit) # Running under: macOS Sierra 10.12.3  创建GitHub Pages仓库 登录自己的github主页（https://github.com/shichenxie，其中shichenxie为我的github账号），新建名为shichenxie.github.io的项目仓库(repository)。
+然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码2
+cd path # path为public文件地址 git init # 初始化git git remote add origin git@github.com:shichenxie/shichenxie.github.io.git git add -A # git中添加所有文件 git commit -m &#39;init site&#39; # commit git push -u origin master # push  绑定域名 首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为shichen.</description>
     </item>
     
   </channel>
