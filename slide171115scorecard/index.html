@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>使用R语言开发评分卡模型</title>
+    <meta charset="utf-8">
+    <meta name="author" content="谢士晨" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="zh-CN.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# 使用R语言开发评分卡模型
+## scorecard包简介
+### 谢士晨
+### 2017年11月
+
+---
+
+
+
+
+# 主要内容 
+
+### 1. 评分卡是什么？
+### 2. R语言环境配置
+### 3. scorecard包的使用
+
+---
+
+class: inverse, center, middle
+# 1. 评分卡是什么？
+
+---
+
+## 评分卡相关概念&lt;sup&gt;*&lt;/sup&gt;
+
+- **定义**：
+信用评分模型运用数据挖掘技术和统计分析方法，通过对消费者的人口特征、信用历史记录、行为记录、交易记录等大量数据进行系统的分析，挖掘数据中蕴含的行为模式、信用特征，捕捉历史信息和未来信用表现之间的关系，发展出预测性的模型，以一个信用评分来综合评估消费者未来的某种信用表现。
+
+--
+
+- **信用评分模型分类**：
+  - 金融机构内部数据评分
+      - 申请风险评分
+      - 行为风险评分、行为收益评分、行为流失倾向评分
+      - 申请欺诈评分、交易欺诈评分
+  - 征信局数据评分
+      - 征信局风险/破产/收益评分、市场反应评分、转账倾向评分
+
+--
+
+- **信用评分模型优点**：
+客观性、准确性、效率性
+
+--
+
+.footnote[[*] 陈建. 信用评分模型技术与应用[M]. 中国财政经济出版社, 2005.]
+
+---
+
+## 标准评分卡示例
+
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; variable &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; bin &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; points &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; basepoints &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 445 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; unemployed%,%... &amp;lt; 1 year &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &amp;lt;= ... &amp;lt; 4 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &amp;lt;= ... &amp;lt; 7 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ... &amp;gt;= 7 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; own &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; rent &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; for free &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -48 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-Inf,26) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [26,35) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [35,40) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [40, Inf) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+- 进件客户信息：
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; present.employment.since &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; housing &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; age.in.years &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &amp;lt;= ... &amp;lt; 4 years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; rent &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+- 相应信用评分：
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; present.employment.since &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; housing &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; age.in.years &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; score &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 399 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+class: inverse, center, middle
+# 2. R语言环境配置
+
+---
+
+## 软件安装与配置
+
+- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
+
+--
+
+- **自定义启动环境**&lt;sup&gt;*&lt;/sup&gt;: 
+  - R启动时在用户主目录中寻找`.Rprofile`文件，并自动执行其中的R代码。
+  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者首次打开R时通过`getwd()`获得。
+  - 在R中执行`file.edit('~/.Rprofile')`，然后将相关代码(见下页)写入并保存。
+
+--
+
+- **Rstudio配置**: (菜单`Tools -&gt; Global Options`)
+  - 取消自动加载.RData到工作环境中: `General -&gt; Restore .RData into workspace at startup`
+  - 代码文件格式保存为UTF-8: `Code -&gt; Saving -&gt; Default text encoding -&gt; UTF-8`
+  - 代码自动换行: `Code -&gt; Editing -&gt; Soft-wrap R source files`
+
+
+.footnote[[*] RobertI.Kabacoff, 卡巴科弗, 陈钢,等. R语言实战[J]. 2013. 附录B.]
+
+---
+
+```r
+# .Rprofile
+# 设置常用选项
+options(papersize="a4")
+options(editor="notepad")
+options(tab.width=2)
+options(width=130)
+options(digits=4)
+options(stringsAsFactors=FALSE)
+grDevices::windows.options(record=TRUE)
+
+# 设置R交互提示信息
+options(prompt="&gt; ")
+options(continue="+ ")
+
+# 设置包的本地库（library）路径
+.libPaths("~/Library_R") # 需在用户主目录下新建文件夹 Library_R
+
+# 设置CRAN镜像默认地址
+options(repos = c(CRAN = "http://cran.r-project.org/", 
+                  CRANextra = "https://cloud.r-project.org/"))
+
+# 启动函数
+.First &lt;- function(){ cat("\nWelcome at", base::date(), "\n") }
+
+# 会话结束函数
+.Last &lt;- function(){ cat("\nGoodbye at ", base::date(), "\n") }
+```
+
+---
+
+## R包与相关资料
+
+.pull-left[
+以`scorecard`包([Github](https://github.com/ShichenXie/scorecard))为例: 
+
+1. 安装包，从CRAN中安装`install.packages("scorecard")`
+
+1. 加载包, `library(scorecard)`
+
+1. 获取帮助: 
+  - 包的帮助 `help(package="scorecard")`
+  
+  - 函数的帮助 `help(woebin)`或者`?woebin`
+
+]
+
+--
+
+.pull-right[
+- 目前[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
+  - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
+  - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
+  - [R语言常用包介绍](https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages)
+
+- R语言相关网站: 
+  - [R官网](https://www.r-project.org)
+  - [Rstudio](https://www.rstudio.com/)
+  - [r-bloggers](http://r-bloggers.com/)
+  - [Quick-R](http://www.statmethods.net/)
+  - [统计之都COS](https://cosx.org)
+]
+
+---
+
+class: inverse, center, middle
+# 3. scorecard包的使用
+
+---
+
+## 评分卡开发流程&lt;sup&gt;*&lt;/sup&gt;
+
+1. 数据准备
+  - 特征衍生与数据整合
+  - WOE转换与单变量统计
+--
+
+1. 变量选择
+  - 变量粗筛: 信息值、缺失率、单类别比例
+  - 模型筛选: LASSO、step
+--
+
+1. 模型开发
+  - 逻辑回归模型
+--
+
+1. 模型验证
+  - 预测模型需要满足：准确性、稳健性、有意义
+--
+
+1. 评分卡刻度与实施
+
+--
+
+.footnote[[*] 马姆杜·雷法特, 王松奇, 林治乾. 信用风险评分卡研究[M]. 社会科学文献出版社, 2013.]
+
+---
+
+## 1. 数据准备-WOE转换
+
+
+```r
+library(data.table)
+library(scorecard)
+# 加载数据
+data("germancredit")
+# y变量creditability赋值为0/1
+dt &lt;- setDT(germancredit)[
+  , creditability := ifelse(creditability=="bad",1,0)]
+# 分箱
+bins &lt;- woebin(dt, y="creditability", print_step=0L)
+bins$age.in.years
+```
+
+```
+#        variable       bin count count_distr good bad badprob      woe
+# 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
+# 2: age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
+# 3: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
+# 4: age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
+# 5: age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
+#      bin_iv total_iv
+# 1: 0.057921   0.1306
+# 2: 0.001324   0.1306
+# 3: 0.048610   0.1306
+# 4: 0.009277   0.1306
+# 5: 0.013426   0.1306
+```
+
+---
+
+- 分箱i的`WOE`值`(Weight of Evidence)`定义如下：
+`$$WOE_i=\ln\left[\frac{Bad\_Distr_i}{Good\_Distr_i}\right]=\ln\left[\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right]=\ln\left[\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right]$$`
+即，`WOE`值是分箱i的坏客户分布与好客户分布的比值的对数，调整为分箱i的坏好比与总体样本的坏好比的比值的对数，衡量了分箱i对整体坏好比的影响程度。
+
+--
+
+- 信息值(Information Value)是衡量一个二元变量y和一个名义变量x之间的关联性的指标。在评分卡模型开发中，通过信息值大小判断候选自变量的预测力。信息值定义如下:
+`$$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)}$$`
+
+--
+
+.pull-left[
+
+```r
+# 信息值函数 scorecard::iv
+ivs &lt;- iv(germancredit, 
+          y="creditability")
+
+ivs[variable=="age.in.years",]
+```
+
+```
+#        variable info_value
+# 1: age.in.years     0.2597
+```
+]
+
+--
+
+.pull-right[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; IV范围 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 预测力 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 小于0.02 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 无预测力 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 0.02到0.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 弱 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 0.10到0.30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 中等 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 大于0.30 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 强 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型。
+    
+    - 连续变量首先需等距分段，`woebin`函数通过`min_perc_total`控制，默认值为0.02，即初始等距分50段。且极大/小值&lt;sup&gt;*&lt;/sup&gt;单独分段。
+    
+    - 对于类别变量，根据每个类别变量的坏客户率排序。
+    
+    - 通过上面两步连续变量与类别变量均转换为有序类别变量。
+--
+
+    - 最后，通过决策树实现有序类别变量的最优分箱，其算法过程见下一页
+    
+      - 最优分箱过程中需确保分箱区间的有序性
+    
+      - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
+    
+      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`(不包括缺失值)，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
+
+.footnote[[*] 极端值：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
+
+---
+.pull-left[
+决策树最优分箱算法过程：
+![分箱算法过程](./index_files/bin.png)
+
+]
+
+--
+
+.pull-right[
+`scorecard::woebin_plot`给出了分箱信息图：
+  - 坏客户率或者WOE值的趋势线，最多不超过一个拐点，最好是单调的
+  - 每个分箱的样本数量占比需大于5%
+
+```r
+woebin_plot(bins$age.in.years)
+```
+
+```
+## $age.in.years
+```
+
+![](index_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+---
+
+.pull-left[
+
+```r
+# 手动调整分箱
+break_adj &lt;- list(
+  age.in.years=c(26,35,40))
+
+bin_adj &lt;- woebin(
+  dt, y="creditability", 
+  breaks_list=break_adj, 
+  print_step=0L)
+
+woebin_plot(bin_adj$age.in.years)
+```
+
+```
+# $age.in.years
+```
+
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+
+
+```r
+# 调整后分箱信息
+bin_adj$age.in.years[,.(bin,woe)]
+```
+
+```
+##          bin      woe
+## 1: [-Inf,26)  0.52884
+## 2:   [26,35)  0.06047
+## 3:   [35,40) -0.56369
+## 4: [40, Inf) -0.19416
+```
+
+--
+
+.pull-right[
+
+```r
+# WOE转换
+dt_woe &lt;- woebin_ply(
+  dt, bin_adj, print_step=0L)
+
+cbind(dt[1:5,.(age.in.years)],
+      dt_woe[1:5,.(age.in.years_woe)])
+```
+
+```
+#    age.in.years age.in.years_woe
+# 1:           67          -0.1942
+# 2:           22           0.5288
+# 3:           49          -0.1942
+# 4:           45          -0.1942
+# 5:           53          -0.1942
+```
+]
+
+---
+
+### 样本切分
+
+通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
+
+```r
+dat2 &lt;- split_df(dt, y="creditability", ratio=0.6, seed=40)
+train &lt;- dat2$train; test &lt;- dat2$test
+```
+
+
+---
+
+## 2. 变量选择-变量粗筛
+
+`scorecard::var_filter`提供了变量粗筛功能，默认信息值&lt;0.02、缺失率&gt;95%、单类别比例&gt;95%的变量将删除
+
+
+```r
+dt_sel&lt;-var_filter(dt_woe,y="creditability") #粗筛后数据集
+var_sel &lt;- sub("^(.+)_woe$","\\1",names(dt_sel))
+```
+
+--
+
+
+```r
+dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
+# dt_sel2$dt # 返回粗筛后数据集 # dt_sel2$rm # 返回删除变量的原因
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; variable &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; rm_reason &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; telephone_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; number.of.people.being.liable.to.provide.maintenance.for_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; job_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; number.of.existing.credits.at.this.bank_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.residence.since_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; foreign.worker_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; identical rate &amp;gt; 0.95 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## 3. 模型开发-逻辑回归
+
+逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 `\(y=1/(1+e^{-z})\)` 将线性回归模型 `\(z=\boldsymbol{w}^T\boldsymbol{x}+b\)` 产生的预测值 `\(z\)` 转换为一个接近0或1的 `\(y\)` 值，变化后得到：
+`$$\ln\frac{y}{1-y}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$`
+其中， `\(y/(1-y)\)` 为比率(odds)，即违约概率与正常概率的比值。 `\(\ln\frac{y}{1-y}\)` 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用线性回归模型的预测结果逼近真实标签的logit。
+
+![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+
+### 逻辑回归参数求解与变量筛选
+
+
+---
+
+## 4. 模型验证评估
+
+评分卡要求备选的逻辑回归模型达到三个基本要求:
+
+- 精确性，达到可接受水平。
+
+- 稳健性，要求能够适用于更广范围的数据集。
+
+- 有意义，即业务变量及其预测值是可解释的。例如，信用卡的额度利用率越高，违约率相应也越高。
+
+
+---
+
+`scorecard::perf_eva`函数使用预测违约概率与实际违约标签，给出了模型评估的主要指标(`KS`值、`AUC`、`Gini`)与相应图表(`KS`曲线、`ROC`曲线、提升图、`PR`曲线)。
+
+
+
+
+```r
+perf_train &lt;- perf_eva(train$creditability, train_pred)
+```
+
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+```r
+perf_train$pic
+```
+
+```
+## TableGrob (1 x 2) "arrange": 2 grobs
+##   z     cells    name           grob
+## 1 1 (1-1,1-1) arrange gtable[layout]
+## 2 2 (1-1,2-2) arrange gtable[layout]
+```
+
+---
+
+.pull-left[
+**KS**
+- `KS`(柯尔莫哥洛夫-斯米尔诺夫`kolmogorov-smirnow`)图纵轴为坏客户累计百分比，横轴为总体样本累计百分比。`perf_eva`函数绘制`KS`曲线过程:
+  - 先将样本随机排列，随机种子`seed`默认为`186`
+  - 按照预测违约概率倒序排列(坏客户累计百分比曲线位于上方)
+  - 分为`groupnum`(默认`20`)等份
+  - 计算每一等份中违约与正常客户的累计百分比
+  - 绘制出两者之间差值即为`KS`曲线
+- `KS`曲线中的最大值即为`KS`值，其取值范围`0~1`。`KS`值越大模型的区分能力越好。
+- 通常申请评分卡要求`KS` `\(\ge\)` `0.3`。而且测试集与训练集的`KS`值相差小于`0.01`。
+
+]
+
+--
+
+.pull-right[
+**ROC与AUC**
+- `ROC`(受试者工作特征曲线`Receiver Operating Charactersitic`)曲线纵轴为真正例率(`True Positive Rate, TPR`)，横轴为假正例率(`False Positive Rate, FPR`)：
+  - 先将样本随机排列，随机种子`seed`默认为186
+  - 按照预测违约概率降序排列
+  - 分概率值计算好坏客户数量，然后计算`TPR=TP/(TP+FN)`与`FPR=FP/(TN+FP)`
+  - 以`TPR`为纵轴`FPR`为横轴绘制散点图即为`ROC`曲线
+- `AUC(Area Under ROC Curve)`为`ROC`曲线下面积之和，其取值范围`0~1`。`AUC`值越大模型效果越好。
+- 行为评分卡通常要求`AUC` `\(\ge\)` `0.75`，申请评分卡的`AUC`相对低一些也能够接受。
+
+]
+
+---
+
+### 模型的整体评估
+一个好的模型一般应具有以下特征：
+
+--
+
+1. 在进行数据描述时变量应该有意义。通常，某些变在特定客群的不同风险模型中重复出现。例如，信用卡行为评分卡模型中，授信使用率经常出现；申请评分卡模型中收入水平、职业和历史信贷产品拥有情况比人口统计变量重要。
+
+--
+
+1. 变量的预测力或贡献度，应该在模型的变量之间分布。
+
+--
+
+1. 模型中不应该包含太多变量。通常，包含的变量不超过9~15个(最优10~12个)。变量太多可能导致过拟合，变量太少往往不够稳健。
+
+--
+
+1. 最终模型的变量应该能够确保包含稳健一致的数据，并在后续实施阶段能够准确获取。
+
+---
+
+## 5. 评分卡刻度与实施
+
+- 评分卡的分值刻度通过将分值表示为比率对数的线性表达式:
+`$$score = A - B\cdot\ln(odds)$$`
+其中，违约与正常的比率定义为一个客户被划分为违约的估计概率与被划分为正常的估计概率之间的比率 `\(odds=p/(1-p)\)`, `A`与`B`是常数。
+
+--
+
+- 常数`A`和`B`的值可以通过两个假设代入上式计算得到：
+
+  - 基准坏好比率`(odds0)`对应的基准分值`(points0)`
+      - `\(points0=A-B\ln(odds0)\)`
+  - 坏好比率翻倍的分数`PDO(Points to Double the Odds)`
+      - `\(points0-PDO=A-B\ln(2odds0)\)`
+      
+  - 解上述两方程，可以得到： 
+      - `\(B=PDO/\ln(2)\)`
+      - `\(A=points0+B\ln(odds0)\)`
+
+---
+
+- `scorecard::scorecard`函数默认设置`points0=600, odds=1/19, pdo=50`
+
+
+```r
+# 创建评分卡刻度
+card &lt;- scorecard(bins, m2)
+
+rbindlist(card, fill = TRUE)[1:4,1:4]
+```
+
+```
+##      variable      bin     woe points
+## 1: basepoints       NA      NA    445
+## 2:    housing     rent  0.4044    -21
+## 3:    housing      own -0.1942     10
+## 4:    housing for free  0.4726    -24
+```
+
+--
+
+- `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
+
+
+```r
+# 评分转换
+train_score &lt;- scorecard_ply(train, card, print_step=0L)
+test_score &lt;- scorecard_ply(test, card, print_step=0L)
+
+train_score[1:4,]
+```
+
+```
+##    score
+## 1:   491
+## 2:   590
+## 3:   558
+## 4:   280
+```
+
+
+---
+
+### 评分稳定性指数
+
+稳定性指数`(population stability index, PSI)`是计算实际和逾期的分值分布之间差异的一个衡量指标,  `\(PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}\)` 。其计算过程见下表: 
+
+
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; bin &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; A &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; A_E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; logA_E &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PSI &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; total_PSI &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [50,250) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0250 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6931 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0087 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [250,300) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0383 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0092 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2144 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1777 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0021 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1375 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0192 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1501 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0029 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1717 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1750 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0192 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1700 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1700 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1683 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1153 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0021 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1217 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0975 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0242 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2214 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0054 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0875 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0158 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1996 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0032 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0167 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.4055 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0068 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [700,800) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0025 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2231 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+- 稳定性指数PSI与信息值的计算公式相同。信息值衡量的是两个离散变量之间的关联性，较低的取值表明两个变量的类别分布相似。信用评分卡使用稳定性指数遵循的准则如下：
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; 指数范围 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 解释 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 0~0.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 无显著变化，无须采取行动 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 0.1~0.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 发现某些变化，建议进行检查 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;gt;0.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 发现显著变化，建议重新建立评分卡 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+--
+
+- 稳定性指数可以用于以下三个目的：
+  
+  - 作为验证统计量，以确保训练数据集与测试数据集得到的评分分布之间没有显著差异。
+  - 作为监控评分卡实施以后表现的控制措施。如果稳定性指数表明发生显著变化，需要调查原因，必要时甚至需要重建评分卡。
+  - 还可以监测预测变量的评分分布是否发生变化。
+
+---
+
+`scorecard::perf_psi`函数计算两个样本的评分稳定性指数并绘制评分分布图。如果参数`score`输入多个评分或多个变量的评分，能够同时返回相应的稳定性指数。
+
+.pull-left[
+
+```r
+psi &lt;- perf_psi(
+  score = list(
+    train=train_score, 
+    test =test_score),
+  label = list(
+    train=train[,"creditability"], 
+    test =test[,"creditability"]),
+  x_limits = c(200, 750),
+  x_tick_break = 50)
+
+psi$psi
+```
+
+```
+##    variable    PSI
+## 1:    score 0.0336
+```
+]
+
+.pull-right[
+
+```r
+psi$pic
+```
+
+```
+## $score
+```
+
+![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+]
+
+---
+
+class: center, middle
+
+# 谢谢
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
