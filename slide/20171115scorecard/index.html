@@ -354,7 +354,7 @@ bins$age.in.years
 
 --
 
-- 信息值(Information Value)是衡量一个二元变量y和一个名义变量x之间的关联性的指标。在评分卡模型开发中，通过信息值大小判断候选自变量的预测力。信息值定义如下:
+- 信息值`(Information Value, IV)`是衡量一个二元变量y和一个名义变量x之间的关联性的指标。信息值定义如下:
 `$$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)}$$`
 
 --
@@ -379,6 +379,7 @@ ivs[variable=="age.in.years",]
 
 .pull-right[
 &lt;table&gt;
+&lt;caption&gt;通过信息值大小判断候选自变量的预测力&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:left;"&gt; IV范围 &lt;/th&gt;
@@ -408,7 +409,7 @@ ivs[variable=="age.in.years",]
 
 ---
 
-- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型。
+- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型(logical变量分箱时与numeric类似)。
     
     - 连续变量首先需等距分段，`woebin`函数通过`min_perc_total`控制，默认值为0.02，即初始等距分50段。且极大/小值&lt;sup&gt;*&lt;/sup&gt;单独分段。
     
@@ -423,7 +424,7 @@ ivs[variable=="age.in.years",]
     
       - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
     
-      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`(不包括缺失值)，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
+      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
 
 .footnote[[*] 极端值：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -437,8 +438,8 @@ ivs[variable=="age.in.years",]
 --
 
 .pull-right[
-`scorecard::woebin_plot`给出了分箱信息图：
-  - 坏客户率或者WOE值的趋势线，最多不超过一个拐点，最好是单调的
+`scorecard::woebin_plot`绘制分箱信息图。合理的分箱应有以下特征：
+  - 坏客户率或者WOE值趋势线，最多不超过一个拐点，最好是单调的
   - 每个分箱的样本数量占比需大于5%
 
 ```r
@@ -449,8 +450,9 @@ woebin_plot(bins$age.in.years)
 ## $age.in.years
 ```
 
-![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/woebin_plot1-1.png)&lt;!-- --&gt;
 ]
+
 
 ---
 
@@ -473,7 +475,7 @@ woebin_plot(bin_adj$age.in.years)
 # $age.in.years
 ```
 
-![](index_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/woebin_plot2-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -584,16 +586,68 @@ dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
 
 ## 3. 模型开发-逻辑回归
 
-逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 `\(y=1/(1+e^{-z})\)` 将线性回归模型 `\(z=\boldsymbol{w}^T\boldsymbol{x}+b\)` 产生的预测值 `\(z\)` 转换为一个接近0或1的 `\(y\)` 值，变化后得到：
-`$$\ln\frac{y}{1-y}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$`
-其中， `\(y/(1-y)\)` 为比率(odds)，即违约概率与正常概率的比值。 `\(\ln\frac{y}{1-y}\)` 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用线性回归模型的预测结果逼近真实标签的logit。
+逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 `\(y=1/(1+e^{-z})\)` 将线性回归模型 `\(z=\boldsymbol{w}^T\boldsymbol{x}+b\)` 产生的预测值转换为一个接近0或1的拟合值 `\(\hat{y}\)` ：
+.pull-left[
+`$$\begin{eqnarray} 
+\hat{y}&amp;=&amp;\frac{1}{1+e^{-z}} \\&amp;=&amp;\frac{1}{1+e^{-(\boldsymbol{w}^T\boldsymbol{x}+b)}}
+\end{eqnarray}$$`
+]
+.pull-right[
+![](index_files/figure-html/sig-1.png)&lt;!-- --&gt;
+]
 
-![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+--
+
+上式的 `\(\hat{y}\)` 可视为事件发生的概率 `\(p(y=1|\boldsymbol{x})\)` ，变换后得到：
+`$$\ln\frac{p}{1-p}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$`
+其中， `\(p/(1-p)\)` 为比率(odds)，即违约概率与正常概率的比值。 `\(\ln{p/(1-p)}\)` 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用比率的自然对数作为因变量的线性回归模型。
 
 ---
 
-### 逻辑回归参数求解与变量筛选
+### 逻辑回归代价函数(cost function)
 
+单个样本的损失函数(loss function):
+`$$\ell(\hat{y},y)=-(y\ln{\hat{y}} + (1-y)\ln{(1-\hat{y})})$$`
+其中, `\(\hat{y}\)`为拟合值, `\(y\)` 为实际标签
+
+对于整个训练集的代价函数(cost function):
+`$$\begin{eqnarray}
+J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
+\\&amp;=&amp;-\frac{1}{m}\sum_i{[y^{(i)}\ln{\hat{y}^{(i)}}+(1-y^{(i)})\ln{(1-\hat{y}^{(i)})}]}
+\end{eqnarray}$$`
+使用梯度下降(gradient descent), 找到合适的参数 `\((\boldsymbol{w}, b)\)` , 使得 `\(J(\boldsymbol{w},b)\)` 尽可能小:
+.pull-left[
+![](index_files/figure-html/gradient_descent-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+`$$\begin{eqnarray}
+&amp;&amp;\min{J(\boldsymbol{w},b)}: \\
+&amp;&amp;repeat\{ \\
+&amp;&amp; \boldsymbol{w} := \boldsymbol{w} - \alpha\frac{dJ}{dw} \\
+&amp;&amp;\} \end{eqnarray}$$`
+]
+
+---
+
+### 正则化(regulation)
+
+在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
+`$$\min{J(\boldsymbol{w},b)}+\lambda(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$`
+其中，正则化参数 `\(\lambda&gt;0\)` ; `\(||\boldsymbol{w}||_1\)` 与 `\(||\boldsymbol{w}||_2^2\)` 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 `\(w\)` 会有更少的非零分量。使用lasso筛选变量的案例如下：
+
+```r
+library(h2o)
+localH2O &lt;- h2o.init()
+dth2o &lt;- as.h2o(dt_woe)
+# h2o.glm lasso 
+fit &lt;- h2o.glm(y="creditability", training_frame=dth2o, 
+family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
+# summary(fit)
+
+# variable importance
+varimp &lt;- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
+var_sel2 &lt;- c(varimp$names, "creditability")
+```
 
 ---
 
@@ -619,7 +673,7 @@ dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
 perf_train &lt;- perf_eva(train$creditability, train_pred)
 ```
 
-![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 
 ```r
 perf_train$pic
@@ -941,8 +995,70 @@ psi$pic
 ## $score
 ```
 
-![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 ]
+
+---
+
+## 评分卡建模案例
+
+```r
+library(data.table)
+library(scorecard)
+# load germancredit data
+data("germancredit")
+
+# rename creditability as y
+dt &lt;- setDT(germancredit)[, `:=`(
+  y = ifelse(creditability == "bad", 1, 0),
+  creditability = NULL)]
+
+# filter variable via missing rate, iv, identical value rate
+dt_s &lt;- var_filter(dt, "y")
+
+# breaking dt into train and test ------
+dt_list &lt;- split_df(dt_s, y="y", ratio = 0.6, seed = 21)
+train &lt;- dt_list$train; test &lt;- dt_list$test;
+
+# woe binning ------
+bins &lt;- woebin(train, "y", print_step = 5) # woebin_plot(bins)
+
+# converting train and test into woe values
+train_woe &lt;- woebin_ply(train, bins, print_step = 5)
+test_woe &lt;- woebin_ply(test, bins, print_step = 5)
+```
+
+---
+
+```r
+# glm ------
+m1 &lt;- glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
+
+# Select a formula-based model by AIC
+m_step &lt;- step(m1, direction="both", trace = FALSE)
+m2 &lt;- eval(m_step$call) # summary(m2)
+
+# performance ------
+# predicted proability
+train_pred &lt;- predict(m2, type='response', train_woe)
+test_pred &lt;- predict(m2, type='response', test_woe)
+
+# ks &amp; roc plot
+perf_eva(train$y, train_pred, title = "train")
+perf_eva(test$y, test_pred, title = "test")
+
+# score
+card &lt;- scorecard(bins, m2)
+# credit score, only_total_score = TRUE
+train_score &lt;- scorecard_ply(train, card, print_step = 0)
+test_score &lt;- scorecard_ply(test, card, print_step = 0)
+
+# psi
+perf_psi(
+  score = list(train = train_score, test = test_score),
+  label = list(train = train[,"y"], test = test[, "y"]),
+  x_limits = c(250, 700), x_tick_break = 50 )
+```
 
 ---
 

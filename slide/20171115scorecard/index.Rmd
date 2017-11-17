@@ -284,7 +284,7 @@ class: inverse, center, middle
 
 ## 1. 数据准备-WOE转换
 
-```{r comment='#', message=FALSE, warning=FALSE}
+```{r woebin, comment='#', message=FALSE, warning=FALSE}
 library(data.table)
 library(scorecard)
 # 加载数据
@@ -305,13 +305,13 @@ $$WOE_i=\ln\left[\frac{Bad\_Distr_i}{Good\_Distr_i}\right]=\ln\left[\frac{Bad_i/
 
 --
 
-- 信息值(Information Value)是衡量一个二元变量y和一个名义变量x之间的关联性的指标。在评分卡模型开发中，通过信息值大小判断候选自变量的预测力。信息值定义如下:
+- 信息值`(Information Value, IV)`是衡量一个二元变量y和一个名义变量x之间的关联性的指标。信息值定义如下:
 $$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)}$$
 
 --
 
 .pull-left[
-```{r comment='#', message=FALSE, warning=FALSE}
+```{r iv1, comment='#', message=FALSE, warning=FALSE}
 # 信息值函数 scorecard::iv
 ivs <- iv(germancredit, 
           y="creditability")
@@ -323,17 +323,16 @@ ivs[variable=="age.in.years",]
 --
 
 .pull-right[
-```{r results = "asis", echo=FALSE, message=FALSE}
+```{r iv2, results = "asis", echo=FALSE, message=FALSE}
 iv_df <- data.frame(IV范围=c("小于0.02","0.02到0.10","0.10到0.30","大于0.30"), 预测力=c("无预测力","弱","中等","强"))
 
-knitr::kable(iv_df, format = "html")
-
+knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选自变量的预测力")
 ```
 ]
 
 ---
 
-- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型。
+- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型(logical变量分箱时与numeric类似)。
     
     - 连续变量首先需等距分段，`woebin`函数通过`min_perc_total`控制，默认值为0.02，即初始等距分50段。且极大/小值<sup>*</sup>单独分段。
     
@@ -348,7 +347,7 @@ knitr::kable(iv_df, format = "html")
     
       - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
     
-      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`(不包括缺失值)，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
+      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
 
 .footnote[[*] 极端值：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -362,18 +361,19 @@ knitr::kable(iv_df, format = "html")
 --
 
 .pull-right[
-`scorecard::woebin_plot`给出了分箱信息图：
-  - 坏客户率或者WOE值的趋势线，最多不超过一个拐点，最好是单调的
+`scorecard::woebin_plot`绘制分箱信息图。合理的分箱应有以下特征：
+  - 坏客户率或者WOE值趋势线，最多不超过一个拐点，最好是单调的
   - 每个分箱的样本数量占比需大于5%
-```{r}
+```{r woebin_plot1}
 woebin_plot(bins$age.in.years)
 ```
 ]
 
+
 ---
 
 .pull-left[
-```{r comment='#', message=FALSE, warning=FALSE}
+```{r woebin_plot2, comment='#', message=FALSE, warning=FALSE}
 # 手动调整分箱
 break_adj <- list(
   age.in.years=c(26,35,40))
@@ -443,21 +443,79 @@ knitr::kable(dt_sel2$rm, format = "html")
 
 ## 3. 模型开发-逻辑回归
 
-逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 $y=1/(1+e^{-z})$ 将线性回归模型 $z=\boldsymbol{w}^T\boldsymbol{x}+b$ 产生的预测值 $z$ 转换为一个接近0或1的 $y$ 值，变化后得到：
-$$\ln\frac{y}{1-y}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$
-其中， $y/(1-y)$ 为比率(odds)，即违约概率与正常概率的比值。 $\ln\frac{y}{1-y}$ 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用线性回归模型的预测结果逼近真实标签的logit。
-
-```{r echo=FALSE, fig.width=5, fig.height=3}
+逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 $y=1/(1+e^{-z})$ 将线性回归模型 $z=\boldsymbol{w}^T\boldsymbol{x}+b$ 产生的预测值转换为一个接近0或1的拟合值 $\hat{y}$ ：
+.pull-left[
+$$\begin{eqnarray} 
+\hat{y}&=&\frac{1}{1+e^{-z}} \\&=&\frac{1}{1+e^{-(\boldsymbol{w}^T\boldsymbol{x}+b)}}
+\end{eqnarray}$$
+]
+.pull-right[
+```{r sig, echo=FALSE, fig.width=4, fig.height=2}
 library(ggplot2) # sigmoid function
 ggplot(data.frame(x = c(-10, 10)), aes(x)) +
   stat_function(fun = function(x) 1/(1+exp(-x))) + 
-  labs(title="sigmoid function")
+  labs(title="sigmoid function",x=NULL,y=NULL)
 ```
+]
+
+--
+
+上式的 $\hat{y}$ 可视为事件发生的概率 $p(y=1|\boldsymbol{x})$ ，变换后得到：
+$$\ln\frac{p}{1-p}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$
+其中， $p/(1-p)$ 为比率(odds)，即违约概率与正常概率的比值。 $\ln{p/(1-p)}$ 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用比率的自然对数作为因变量的线性回归模型。
 
 ---
 
-### 逻辑回归参数求解与变量筛选
+### 逻辑回归代价函数(cost function)
 
+单个样本的损失函数(loss function):
+$$\ell(\hat{y},y)=-(y\ln{\hat{y}} + (1-y)\ln{(1-\hat{y})})$$
+其中, $\hat{y}$为拟合值, $y$ 为实际标签
+
+对于整个训练集的代价函数(cost function):
+$$\begin{eqnarray}
+J(\boldsymbol{w},b)&=&\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
+\\&=&-\frac{1}{m}\sum_i{[y^{(i)}\ln{\hat{y}^{(i)}}+(1-y^{(i)})\ln{(1-\hat{y}^{(i)})}]}
+\end{eqnarray}$$
+使用梯度下降(gradient descent), 找到合适的参数 $(\boldsymbol{w}, b)$ , 使得 $J(\boldsymbol{w},b)$ 尽可能小:
+.pull-left[
+```{r gradient_descent, echo=FALSE, fig.height=2, fig.width=3}
+library(ggplot2)
+
+ggplot(data.frame(x = c(0, 10)), aes(x)) +
+  stat_function(fun = function(x) (x-5)^2+1) + 
+  labs(x=NULL,y=NULL)
+```
+]
+.pull-right[
+$$\begin{eqnarray}
+&&\min{J(\boldsymbol{w},b)}: \\
+&&repeat\{ \\
+&& \boldsymbol{w} := \boldsymbol{w} - \alpha\frac{dJ}{dw} \\
+&&\} \end{eqnarray}$$
+]
+
+---
+
+### 正则化(regulation)
+
+在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
+$$\min{J(\boldsymbol{w},b)}+\lambda(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$
+其中，正则化参数 $\lambda>0$ ; $||\boldsymbol{w}||_1$ 与 $||\boldsymbol{w}||_2^2$ 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 $w$ 会有更少的非零分量。使用lasso筛选变量的案例如下：
+
+```r
+library(h2o)
+localH2O <- h2o.init()
+dth2o <- as.h2o(dt_woe)
+# h2o.glm lasso 
+fit <- h2o.glm(y="creditability", training_frame=dth2o, 
+family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
+# summary(fit)
+
+# variable importance
+varimp <- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) & coefficients > 0 & sign == "POS"]
+var_sel2 <- c(varimp$names, "creditability")
+```
 
 ---
 
@@ -476,7 +534,7 @@ ggplot(data.frame(x = c(-10, 10)), aes(x)) +
 
 `scorecard::perf_eva`函数使用预测违约概率与实际违约标签，给出了模型评估的主要指标(`KS`值、`AUC`、`Gini`)与相应图表(`KS`曲线、`ROC`曲线、提升图、`PR`曲线)。
 
-```{r echo=FALSE}
+```{r perf_eva, echo=FALSE}
 train_woe <- woebin_ply(train[,var_sel,with=F], bin_adj, print_step=0L)
 test_woe <- woebin_ply(test[,var_sel,with=F], bin_adj, print_step=0L)
 
@@ -573,7 +631,7 @@ $$score = A - B\cdot\ln(odds)$$
 
 - `scorecard::scorecard`函数默认设置`points0=600, odds=1/19, pdo=50`
 
-```{r warning=FALSE, message=FALSE}
+```{r card, warning=FALSE, message=FALSE}
 # 创建评分卡刻度
 card <- scorecard(bins, m2)
 
@@ -584,7 +642,7 @@ rbindlist(card, fill = TRUE)[1:4,1:4]
 
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 
-```{r warning=FALSE, message=FALSE}
+```{r score, warning=FALSE, message=FALSE}
 # 评分转换
 train_score <- scorecard_ply(train, card, print_step=0L)
 test_score <- scorecard_ply(test, card, print_step=0L)
@@ -599,7 +657,7 @@ train_score[1:4,]
 
 稳定性指数`(population stability index, PSI)`是计算实际和逾期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
 
-```{r include=FALSE}
+```{r psi, include=FALSE}
 psi <- perf_psi(
   score = list(train = train_score, test = test_score),
   label = list(train = train[,"creditability"], test = test[, "creditability"]),
@@ -613,7 +671,7 @@ psi_cal <- psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/su
 ```
 
 
-```{r results = "asis", echo=FALSE, message=FALSE}
+```{r psi2, results = "asis", echo=FALSE, message=FALSE}
 knitr::kable(psi_cal, format = "html")
 
 ```
@@ -622,7 +680,7 @@ knitr::kable(psi_cal, format = "html")
 
 - 稳定性指数PSI与信息值的计算公式相同。信息值衡量的是两个离散变量之间的关联性，较低的取值表明两个变量的类别分布相似。信用评分卡使用稳定性指数遵循的准则如下：
 
-```{r results = "asis", echo=FALSE, message=FALSE}
+```{r psi_rule, results = "asis", echo=FALSE, message=FALSE}
 psi_rule <- data.frame(
   指数范围=c("0~0.1", "0.1~0.25", ">0.25"),
   解释=c("无显著变化，无须采取行动", "发现某些变化，建议进行检查", "发现显著变化，建议重新建立评分卡")
@@ -666,6 +724,68 @@ psi$pic
 
 ```
 ]
+
+---
+
+## 评分卡建模案例
+
+```r
+library(data.table)
+library(scorecard)
+# load germancredit data
+data("germancredit")
+
+# rename creditability as y
+dt <- setDT(germancredit)[, `:=`(
+  y = ifelse(creditability == "bad", 1, 0),
+  creditability = NULL)]
+
+# filter variable via missing rate, iv, identical value rate
+dt_s <- var_filter(dt, "y")
+
+# breaking dt into train and test ------
+dt_list <- split_df(dt_s, y="y", ratio = 0.6, seed = 21)
+train <- dt_list$train; test <- dt_list$test;
+
+# woe binning ------
+bins <- woebin(train, "y", print_step = 5) # woebin_plot(bins)
+
+# converting train and test into woe values
+train_woe <- woebin_ply(train, bins, print_step = 5)
+test_woe <- woebin_ply(test, bins, print_step = 5)
+```
+
+---
+
+```r
+# glm ------
+m1 <- glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
+
+# Select a formula-based model by AIC
+m_step <- step(m1, direction="both", trace = FALSE)
+m2 <- eval(m_step$call) # summary(m2)
+
+# performance ------
+# predicted proability
+train_pred <- predict(m2, type='response', train_woe)
+test_pred <- predict(m2, type='response', test_woe)
+
+# ks & roc plot
+perf_eva(train$y, train_pred, title = "train")
+perf_eva(test$y, test_pred, title = "test")
+
+# score
+card <- scorecard(bins, m2)
+# credit score, only_total_score = TRUE
+train_score <- scorecard_ply(train, card, print_step = 0)
+test_score <- scorecard_ply(test, card, print_step = 0)
+
+# psi
+perf_psi(
+  score = list(train = train_score, test = test_score),
+  label = list(train = train[,"y"], test = test[, "y"]),
+  x_limits = c(250, 700), x_tick_break = 50 )
+```
 
 ---
 
