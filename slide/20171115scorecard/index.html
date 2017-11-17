@@ -138,7 +138,9 @@ class: inverse, center, middle
 
 ---
 
-- 进件客户信息：
+## 标准评分卡示例（续）
+
+- 如果某进件客户信息如下：
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -157,9 +159,7 @@ class: inverse, center, middle
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
-- 相应信用评分：
+- 则相应信用评分为：
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -195,7 +195,7 @@ class: inverse, center, middle
 
 - **自定义启动环境**&lt;sup&gt;*&lt;/sup&gt;: 
   - R启动时在用户主目录中寻找`.Rprofile`文件，并自动执行其中的R代码。
-  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者首次打开R时通过`getwd()`获得。
+  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者刚打开R时通过`getwd()`获得。
   - 在R中执行`file.edit('~/.Rprofile')`，然后将相关代码(见下页)写入并保存。
 
 --
@@ -244,17 +244,23 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
 ## R包与相关资料
 
 .pull-left[
-以`scorecard`包([Github](https://github.com/ShichenXie/scorecard))为例: 
+以`scorecard`包([Github](https://github.com/ShichenXie/scorecard), [Slide](http://shichen.name/slide/20171115scorecard/))为例: 
 
-1. 安装包，从CRAN中安装`install.packages("scorecard")`
+- 安装包，
 
-1. 加载包, `library(scorecard)`
+```r
+# install from CRAN
+install.packages("scorecard") 
+# install from github
+devtools::install_github(
+  "shichenxie/scorecard") 
+```
 
-1. 获取帮助: 
+- 加载包, `library(scorecard)`
+
+- 获取帮助: 
   - 包的帮助 `help(package="scorecard")`
-  
   - 函数的帮助 `help(woebin)`或者`?woebin`
-
 ]
 
 --
@@ -264,13 +270,14 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
   - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
   - [R语言常用包介绍](https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages)
-
+  
 - R语言相关网站: 
   - [R官网](https://www.r-project.org)
   - [Rstudio](https://www.rstudio.com/)
   - [r-bloggers](http://r-bloggers.com/)
   - [Quick-R](http://www.statmethods.net/)
   - [统计之都COS](https://cosx.org)
+  - 大神: 谢益辉([HP](http://yihui.name), [GH](https://github.com/yihui)), Hadley([HP](http://hadley.nz), [GH](http://github.com/hadley/)), Matt([GH](https://github.com/mattdowle))
 ]
 
 ---
@@ -442,7 +449,7 @@ woebin_plot(bins$age.in.years)
 ## $age.in.years
 ```
 
-![](index_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -466,7 +473,7 @@ woebin_plot(bin_adj$age.in.years)
 # $age.in.years
 ```
 
-![](index_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -581,7 +588,7 @@ dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
 `$$\ln\frac{y}{1-y}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$`
 其中， `\(y/(1-y)\)` 为比率(odds)，即违约概率与正常概率的比值。 `\(\ln\frac{y}{1-y}\)` 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用线性回归模型的预测结果逼近真实标签的logit。
 
-![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -612,7 +619,7 @@ dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
 perf_train &lt;- perf_eva(train$creditability, train_pred)
 ```
 
-![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
 
 ```r
 perf_train$pic
@@ -934,7 +941,7 @@ psi$pic
 ## $score
 ```
 
-![](index_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+![](index_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 ]
 
 ---

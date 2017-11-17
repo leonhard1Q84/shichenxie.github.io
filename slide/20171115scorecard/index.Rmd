@@ -62,7 +62,7 @@ class: inverse, center, middle
 
 ## 标准评分卡示例
 
-```{r include=FALSE}
+```{r scorecard_example1, include=FALSE}
 y <- "creditability"
 x <- c("age.in.years", "housing", "present.employment.since")
 breaks_list <- list(
@@ -121,32 +121,30 @@ x <- sort(x)
   #   x_limits=c(350, 850), x_tick_break=50, seed=seed)
 ```
 
-```{r results = "asis", echo=FALSE, message=FALSE}
+```{r scorecard_example1_1, results = "asis", echo=FALSE, message=FALSE}
 
 card <- rbindlist(sc,fill = TRUE)[,.(variable,bin,points=as.integer(points))]
 
 # print(xtable::xtable(card), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(card, format = "html")
-
 ```
 
 ---
 
-- 进件客户信息：
+## 标准评分卡示例（续）
+
+- 如果某进件客户信息如下：
 
 ```{r results = "asis", echo=FALSE}
-# print(xtable::xtable(dt[8,c(3:1)]), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(dt[8,c(3:1)], format = "html")
-
 ```
 
---
-
-- 相应信用评分：
+- 则相应信用评分为：
 
 ```{r results = "asis", echo=FALSE}
-# print(xtable::xtable(setnames(train_score[8,], sub("_points$","",names(train_score)))[,lapply(.SD,as.integer)]), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
-knitr::kable(setnames(train_score[8,], sub("_points$","",names(train_score)))[,lapply(.SD,as.integer)], format = "html")
+knitr::kable(
+  setnames(train_score[8,],sub("_points$","",names(train_score)))[,lapply(.SD,as.integer)], 
+  format = "html")
 ```
 
 ---
@@ -164,7 +162,7 @@ class: inverse, center, middle
 
 - **自定义启动环境**<sup>*</sup>: 
   - R启动时在用户主目录中寻找`.Rprofile`文件，并自动执行其中的R代码。
-  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者首次打开R时通过`getwd()`获得。
+  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者刚打开R时通过`getwd()`获得。
   - 在R中执行`file.edit('~/.Rprofile')`，然后将相关代码(见下页)写入并保存。
 
 --
@@ -213,17 +211,23 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
 ## R包与相关资料
 
 .pull-left[
-以`scorecard`包([Github](https://github.com/ShichenXie/scorecard))为例: 
+以`scorecard`包([Github](https://github.com/ShichenXie/scorecard), [Slide](http://shichen.name/slide/20171115scorecard/))为例: 
 
-1. 安装包，从CRAN中安装`install.packages("scorecard")`
+- 安装包，
 
-1. 加载包, `library(scorecard)`
+```r
+# install from CRAN
+install.packages("scorecard") 
+# install from github
+devtools::install_github(
+  "shichenxie/scorecard") 
+```
 
-1. 获取帮助: 
+- 加载包, `library(scorecard)`
+
+- 获取帮助: 
   - 包的帮助 `help(package="scorecard")`
-  
   - 函数的帮助 `help(woebin)`或者`?woebin`
-
 ]
 
 --
@@ -233,13 +237,14 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
   - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
   - [R语言常用包介绍](https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages)
-
+  
 - R语言相关网站: 
   - [R官网](https://www.r-project.org)
   - [Rstudio](https://www.rstudio.com/)
   - [r-bloggers](http://r-bloggers.com/)
   - [Quick-R](http://www.statmethods.net/)
   - [统计之都COS](https://cosx.org)
+  - 大神: 谢益辉([HP](http://yihui.name), [GH](https://github.com/yihui)), Hadley([HP](http://hadley.nz), [GH](http://github.com/hadley/)), Matt([GH](https://github.com/mattdowle))
 ]
 
 ---
@@ -321,7 +326,6 @@ ivs[variable=="age.in.years",]
 ```{r results = "asis", echo=FALSE, message=FALSE}
 iv_df <- data.frame(IV范围=c("小于0.02","0.02到0.10","0.10到0.30","大于0.30"), 预测力=c("无预测力","弱","中等","强"))
 
-# print(xtable::xtable(iv_df), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(iv_df, format = "html")
 
 ```
@@ -432,7 +436,6 @@ dt_sel2<-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
 
 ```{r results = "asis", echo=FALSE, message=FALSE}
 # 删除变量的原因
-# print(xtable::xtable(dt_sel2$rm), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(dt_sel2$rm, format = "html")
 ```
 
@@ -611,7 +614,6 @@ psi_cal <- psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/su
 
 
 ```{r results = "asis", echo=FALSE, message=FALSE}
-# print(xtable::xtable(psi_cal), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(psi_cal, format = "html")
 
 ```
@@ -626,7 +628,6 @@ psi_rule <- data.frame(
   解释=c("无显著变化，无须采取行动", "发现某些变化，建议进行检查", "发现显著变化，建议重新建立评分卡")
 )
 
-# print(xtable::xtable(psi_rule), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(psi_rule, format = "html")
 ```
 
