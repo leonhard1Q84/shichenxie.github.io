@@ -551,7 +551,7 @@ train_pred <- predict(m2, type='response', train_woe)
 test_pred <- predict(m2, type='response', test_woe)
 ```
 
-```{r}
+```{r perf_pic}
 perf_train <- perf_eva(train$creditability, train_pred)
 perf_train$pic
 ```
@@ -673,7 +673,6 @@ psi_cal <- psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/su
 
 ```{r psi2, results = "asis", echo=FALSE, message=FALSE}
 knitr::kable(psi_cal, format = "html")
-
 ```
 
 ---
@@ -719,9 +718,8 @@ psi$psi
 ]
 
 .pull-right[
-```{r}
+```{r psi_pic}
 psi$pic
-
 ```
 ]
 
