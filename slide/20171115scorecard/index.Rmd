@@ -15,10 +15,6 @@ output:
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-library(data.table)
-library(scorecard)
-
-data("germancredit")
 ```
 
 # 主要内容 
@@ -63,6 +59,10 @@ class: inverse, center, middle
 ## 标准评分卡示例
 
 ```{r scorecard_example1, include=FALSE}
+library(data.table)
+library(scorecard)
+data("germancredit")
+
 y <- "creditability"
 x <- c("age.in.years", "housing", "present.employment.since")
 breaks_list <- list(
@@ -669,7 +669,7 @@ train_score[1:3,]
 
 ### 评分稳定性指数
 
-稳定性指数`(population stability index, PSI)`是计算实际和逾期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
+稳定性指数`(population stability index, PSI)`是计算实际和预期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
 
 ```{r psi, include=FALSE}
 psi <- perf_psi(
