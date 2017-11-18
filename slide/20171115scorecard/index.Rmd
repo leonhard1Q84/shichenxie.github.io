@@ -236,8 +236,7 @@ devtools::install_github(
 - 目前[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
   - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
-  - [R语言常用包介绍](https://support.rstudio.com/hc/en-us/articles/201057987-Quick-list-of-useful-R-packages)
-  
+
 - R语言相关网站: 
   - [R官网](https://www.r-project.org)
   - [Rstudio](https://www.rstudio.com/)
@@ -379,7 +378,7 @@ knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选
 `scorecard::woebin_plot`绘制分箱信息图。合理的分箱应有以下特征：
   - 坏客户率或者WOE值趋势线，最多不超过一个拐点，最好是单调的
   - 每个分箱的样本数量占比需大于5%
-```{r woebin_plot1}
+```{r woebin_plot1, fig.width=6,fig.height=3.6}
 woebin_plot(bins$age.in.years)
 ```
 ]
@@ -485,7 +484,7 @@ J(\boldsymbol{w},b)&=&\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 \end{eqnarray}$$
 使用梯度下降(gradient descent), 找到合适的参数 $(\boldsymbol{w}, b)$ , 使得 $J(\boldsymbol{w},b)$ 尽可能小:
 .pull-left[
-```{r gradient_descent, echo=FALSE, fig.height=2, fig.width=4}
+```{r gradient_descent, echo=FALSE, fig.width=4, fig.height=2}
 library(ggplot2)
 
 ggplot(data.frame(x = c(0, 10)), aes(x)) +
