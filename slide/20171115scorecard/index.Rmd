@@ -558,7 +558,7 @@ summary(m2)$coefficients
 ```{r perf_eva, echo=FALSE}
 ```
 
-```{r perf_pic, fig.width=9, fig.height=6}
+```{r perf_pic, fig.width=9, fig.height=4.5}
 # predicted proability
 train_pred <- predict(m2, type='response', train_woe)
 test_pred <- predict(m2, type='response', test_woe)
