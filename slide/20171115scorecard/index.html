@@ -315,19 +315,42 @@ class: inverse, center, middle
 
 ---
 
-## 1. 数据准备-WOE转换
+## 1. 数据准备-样本切分
 
+通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
 
 ```r
 library(data.table)
 library(scorecard)
 # 加载数据
 data("germancredit")
+
 # y变量creditability赋值为0/1
 dt &lt;- setDT(germancredit)[
   , creditability := ifelse(creditability=="bad",1,0)]
+
+# 数据集切分为训练集与测试集
+dt_list &lt;- split_df(dt, y="creditability", ratio=0.6, seed=21)
+train &lt;- dt_list$train; test &lt;- dt_list$test
+```
+
+---
+
+### WOE转换
+
+
+```r
 # 分箱
 bins &lt;- woebin(dt, y="creditability", print_step=0L)
+
+class(bins)
+```
+
+```
+# [1] "list"
+```
+
+```r
 bins$age.in.years
 ```
 
@@ -348,8 +371,8 @@ bins$age.in.years
 
 ---
 
-- 分箱i的`WOE`值`(Weight of Evidence)`定义如下：
-`$$WOE_i=\ln\left[\frac{Bad\_Distr_i}{Good\_Distr_i}\right]=\ln\left[\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right]=\ln\left[\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right]$$`
+- 分箱i的`WOE`值`(Weight of Evidence)`定义如下:   
+`$$WOE_i=\ln\left[\frac{Bad\_Distr_i}{Good\_Distr_i}\right]=\ln\left[\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right]=\ln\left[\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right]$$`  
 即，`WOE`值是分箱i的坏客户分布与好客户分布的比值的对数，调整为分箱i的坏好比与总体样本的坏好比的比值的对数，衡量了分箱i对整体坏好比的影响程度。
 
 --
@@ -463,12 +486,12 @@ woebin_plot(bins$age.in.years)
 break_adj &lt;- list(
   age.in.years=c(26,35,40))
 
-bin_adj &lt;- woebin(
+bins_adj &lt;- woebin(
   dt, y="creditability", 
   breaks_list=break_adj, 
   print_step=0L)
 
-woebin_plot(bin_adj$age.in.years)
+woebin_plot(bins_adj$age.in.years)
 ```
 
 ```
@@ -481,7 +504,7 @@ woebin_plot(bin_adj$age.in.years)
 
 ```r
 # 调整后分箱信息
-bin_adj$age.in.years[,.(bin,woe)]
+bins_adj$age.in.years[,.(bin,woe)]
 ```
 
 ```
@@ -498,34 +521,24 @@ bin_adj$age.in.years[,.(bin,woe)]
 
 ```r
 # WOE转换
-dt_woe &lt;- woebin_ply(
-  dt, bin_adj, print_step=0L)
+train_woe &lt;- woebin_ply(
+  train, bins_adj, print_step=0L)
+test_woe &lt;- woebin_ply(
+  test, bins_adj, print_step=0L)
 
-cbind(dt[1:5,.(age.in.years)],
-      dt_woe[1:5,.(age.in.years_woe)])
+cbind(train[1:5,.(age.in.years)],
+      train_woe[1:5,.(age.in.years_woe)])
 ```
 
 ```
 #    age.in.years age.in.years_woe
-# 1:           67          -0.1942
-# 2:           22           0.5288
-# 3:           49          -0.1942
-# 4:           45          -0.1942
-# 5:           53          -0.1942
+# 1:           34          0.06047
+# 2:           28          0.06047
+# 3:           31          0.06047
+# 4:           46         -0.19416
+# 5:           28          0.06047
 ```
 ]
-
----
-
-### 样本切分
-
-通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
-
-```r
-dat2 &lt;- split_df(dt, y="creditability", ratio=0.6, seed=40)
-train &lt;- dat2$train; test &lt;- dat2$test
-```
-
 
 ---
 
@@ -535,15 +548,15 @@ train &lt;- dat2$train; test &lt;- dat2$test
 
 
 ```r
-dt_sel&lt;-var_filter(dt_woe,y="creditability") #粗筛后数据集
-var_sel &lt;- sub("^(.+)_woe$","\\1",names(dt_sel))
+dt_sel&lt;-var_filter(train_woe,y="creditability") #粗筛后数据集
+var_sel &lt;- names(dt_sel)
 ```
 
 --
 
 
 ```r
-dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
+dt_sel2&lt;-var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
 # dt_sel2$dt # 返回粗筛后数据集 # dt_sel2$rm # 返回删除变量的原因
 ```
 
@@ -568,11 +581,11 @@ dt_sel2&lt;-var_filter(dt_woe,y="creditability",return_rm_reason=TRUE)
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; number.of.existing.credits.at.this.bank_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; present.residence.since_woe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; present.residence.since_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; installment.rate.in.percentage.of.disposable.income_woe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -638,7 +651,7 @@ J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 ```r
 library(h2o)
 localH2O &lt;- h2o.init()
-dth2o &lt;- as.h2o(dt_woe)
+dth2o &lt;- as.h2o(train_woe)
 # h2o.glm lasso 
 fit &lt;- h2o.glm(y="creditability", training_frame=dth2o, 
 family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
@@ -646,7 +659,52 @@ family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
 
 # variable importance
 varimp &lt;- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
-var_sel2 &lt;- c(varimp$names, "creditability")
+var_sel3 &lt;- c(varimp$names, "creditability")
+```
+
+---
+
+### 基于AIC筛选变量step
+
+
+```r
+# glm ------
+m1 &lt;- glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
+# summary(m1)
+
+# Select a formula-based model by AIC
+m_step &lt;- step(m1, direction="both", trace = FALSE)
+m2 &lt;- eval(m_step$call)
+summary(m2)$coefficients
+```
+
+```
+##                                         Estimate Std. Error z value
+## (Intercept)                              -0.7858     0.1037  -7.579
+## other.installment.plans_woe               0.7092     0.4054   1.750
+## age.in.years_woe                          0.7615     0.3214   2.369
+## property_woe                              0.7536     0.3273   2.303
+## personal.status.and.sex_woe               1.1862     0.5174   2.293
+## present.employment.since_woe              0.5980     0.3593   1.664
+## savings.account.and.bonds_woe             0.6963     0.2406   2.894
+## credit.amount_woe                         0.7010     0.2430   2.885
+## purpose_woe                               1.0387     0.2727   3.809
+## credit.history_woe                        0.4320     0.1977   2.185
+## duration.in.month_woe                     0.5926     0.2061   2.875
+## status.of.existing.checking.account_woe   0.5716     0.1303   4.386
+##                                          Pr(&gt;|z|)
+## (Intercept)                             3.476e-14
+## other.installment.plans_woe             8.019e-02
+## age.in.years_woe                        1.783e-02
+## property_woe                            2.129e-02
+## personal.status.and.sex_woe             2.187e-02
+## present.employment.since_woe            9.603e-02
+## savings.account.and.bonds_woe           3.804e-03
+## credit.amount_woe                       3.910e-03
+## purpose_woe                             1.394e-04
+## credit.history_woe                      2.890e-02
+## duration.in.month_woe                   4.043e-03
+## status.of.existing.checking.account_woe 1.157e-05
 ```
 
 ---
@@ -670,10 +728,21 @@ var_sel2 &lt;- c(varimp$names, "creditability")
 
 
 ```r
-perf_train &lt;- perf_eva(train$creditability, train_pred)
+# predicted proability
+train_pred &lt;- predict(m2, type='response', train_woe)
+test_pred &lt;- predict(m2, type='response', test_woe)
+
+# performance 
+perf_train &lt;- perf_eva(train$creditability, train_pred, title="train")
 ```
 
 ![](index_files/figure-html/perf_pic-1.png)&lt;!-- --&gt;
+
+```r
+perf_test &lt;- perf_eva(test$creditability, test_pred, title="test")
+```
+
+![](index_files/figure-html/perf_pic-2.png)&lt;!-- --&gt;
 
 ```r
 perf_train$pic
@@ -741,7 +810,7 @@ perf_train$pic
 ## 5. 评分卡刻度与实施
 
 - 评分卡的分值刻度通过将分值表示为比率对数的线性表达式:
-`$$score = A - B\cdot\ln(odds)$$`
+`$$score = A - B\ln(odds)$$`
 其中，违约与正常的比率定义为一个客户被划分为违约的估计概率与被划分为正常的估计概率之间的比率 `\(odds=p/(1-p)\)`, `A`与`B`是常数。
 
 --
@@ -764,17 +833,16 @@ perf_train$pic
 
 ```r
 # 创建评分卡刻度
-card &lt;- scorecard(bins, m2)
+card &lt;- scorecard(bins_adj, m2)
 
-rbindlist(card, fill = TRUE)[1:4,1:4]
+rbindlist(card, fill = TRUE)[1:3,1:4]
 ```
 
 ```
-##      variable      bin     woe points
-## 1: basepoints       NA      NA    445
-## 2:    housing     rent  0.4044    -21
-## 3:    housing      own -0.1942     10
-## 4:    housing for free  0.4726    -24
+##                   variable    bin    woe points
+## 1:              basepoints     NA     NA    441
+## 2: other.installment.plans   bank 0.4836    -25
+## 3: other.installment.plans stores 0.4595    -24
 ```
 
 --
@@ -787,15 +855,14 @@ rbindlist(card, fill = TRUE)[1:4,1:4]
 train_score &lt;- scorecard_ply(train, card, print_step=0L)
 test_score &lt;- scorecard_ply(test, card, print_step=0L)
 
-train_score[1:4,]
+train_score[1:3,]
 ```
 
 ```
 ##    score
-## 1:   491
-## 2:   590
-## 3:   558
-## 4:   280
+## 1:   397
+## 2:   412
+## 3:   416
 ```
 
 
@@ -822,103 +889,94 @@ train_score[1:4,]
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [50,250) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0250 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [100,250) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.6931 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0087 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0690 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [250,300) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0383 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0092 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2144 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0233 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0350 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0117 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.4055 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0047 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0600 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1777 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0021 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0683 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0042 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0592 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1183 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1375 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0192 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1501 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0029 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1633 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1650 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0017 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0102 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1717 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1750 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0033 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0192 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1825 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0158 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0908 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0014 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1700 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1700 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1950 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0741 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1683 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0183 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1153 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0021 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1733 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0133 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1217 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0975 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0242 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2214 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0054 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0850 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0250 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2578 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0064 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0875 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0158 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1996 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0032 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0625 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0042 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0645 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0333 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0500 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0167 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4055 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0068 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [700,800) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0025 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2231 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0217 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0067 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3677 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0025 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -981,7 +1039,7 @@ psi$psi
 
 ```
 ##    variable    PSI
-## 1:    score 0.0336
+## 1:    score 0.0178
 ```
 ]
 
@@ -999,8 +1057,7 @@ psi$pic
 ]
 
 ---
-
-## 评分卡建模案例
+**评分卡建模案例**
 
 ```r
 library(data.table)
@@ -1017,15 +1074,18 @@ dt &lt;- setDT(germancredit)[, `:=`(
 dt_s &lt;- var_filter(dt, "y")
 
 # breaking dt into train and test ------
-dt_list &lt;- split_df(dt_s, y="y", ratio = 0.6, seed = 21)
+dt_list &lt;- split_df(dt_s, y="y", ratio = 0.6, seed = 30)
 train &lt;- dt_list$train; test &lt;- dt_list$test;
 
 # woe binning ------
 bins &lt;- woebin(train, "y", print_step = 5) # woebin_plot(bins)
+# binning adjustment
+breaks_adj &lt;- list(age.in.years=c(26, 35, 40))
+bins_adj &lt;- woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
 
 # converting train and test into woe values
-train_woe &lt;- woebin_ply(train, bins, print_step = 5)
-test_woe &lt;- woebin_ply(test, bins, print_step = 5)
+train_woe &lt;- woebin_ply(train, bins_adj, print_step = 5)
+test_woe &lt;- woebin_ply(test, bins_adj, print_step = 5)
 ```
 
 ---
@@ -1048,7 +1108,7 @@ perf_eva(train$y, train_pred, title = "train")
 perf_eva(test$y, test_pred, title = "test")
 
 # score
-card &lt;- scorecard(bins, m2)
+card &lt;- scorecard(bins_adj, m2)
 # credit score, only_total_score = TRUE
 train_score &lt;- scorecard_ply(train, card, print_step = 0)
 test_score &lt;- scorecard_ply(test, card, print_step = 0)
