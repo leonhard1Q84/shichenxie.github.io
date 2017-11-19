@@ -340,7 +340,7 @@ train &lt;- dt_list$train; test &lt;- dt_list$test
 
 ```r
 # 分箱
-bins &lt;- woebin(dt, y="creditability", print_step=0L)
+bins &lt;- woebin(dt, y="creditability", print_step=0)
 
 class(bins)
 ```
@@ -488,7 +488,7 @@ break_adj &lt;- list(
 bins_adj &lt;- woebin(
   dt, y="creditability", 
   breaks_list=break_adj, 
-  print_step=0L)
+  print_step=0)
 
 woebin_plot(bins_adj$age.in.years)
 ```
@@ -521,9 +521,9 @@ bins_adj$age.in.years[,.(bin,woe)]
 ```r
 # WOE转换
 train_woe &lt;- woebin_ply(
-  train, bins_adj, print_step=0L)
+  train, bins_adj, print_step=0)
 test_woe &lt;- woebin_ply(
-  test, bins_adj, print_step=0L)
+  test, bins_adj, print_step=0)
 
 cbind(train[1:5,.(age.in.years)],
       train_woe[1:5,.(age.in.years_woe)])
@@ -810,7 +810,7 @@ perf_train$pic
 
 - 评分卡的分值刻度通过将分值表示为比率对数的线性表达式:
 `$$score = A - B\ln(odds)$$`
-其中，违约与正常的比率定义为一个客户被划分为违约的估计概率与被划分为正常的估计概率之间的比率 `\(odds=p/(1-p)\)`, `A`与`B`是常数。
+其中， `A`与`B`是常数, 坏好比率 `\(odds=p/(1-p)\)` 为一个客户违约的估计概率与正常的估计概率的比率, `\(\ln(odds)\)` 为逻辑回归的因变量，即 `\(\ln(odds)=\boldsymbol{w}^T\boldsymbol{x}+b\)`
 
 --
 
@@ -826,44 +826,38 @@ perf_train$pic
       - `\(A=points0+B\ln(odds0)\)`
 
 ---
-
-- `scorecard::scorecard`函数默认设置`points0=600, odds=1/19, pdo=50`
-
-
-```r
-# 创建评分卡刻度
-card &lt;- scorecard(bins_adj, m2)
-
-rbindlist(card, fill = TRUE)[1:3,1:4]
-```
-
-```
-##                   variable    bin    woe points
-## 1:              basepoints     NA     NA    441
-## 2: other.installment.plans   bank 0.4836    -25
-## 3: other.installment.plans stores 0.4595    -24
-```
-
+- 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
+`$$\begin{eqnarray}
+score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
+&amp;=&amp; (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_nx_n
+\end{eqnarray}$$`
+其中， `\(x_1\cdots x_n\)` 为最终进入模型的自变量且已经转换为WOE值,  `\(w_i\)` 为逻辑回归的变量系数,  `\(b\)` 为逻辑回归的截距, `\(A, B\)` 为上页求得的刻度因子。 `\(Bw_ix_i\)` 为变量 `\(x_i\)` 对应的评分， `\((A-Bb)\)` 为基础分(也可将基础分值平均分配给各个变量)。
 --
 
-- `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
-
+- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
 
 ```r
-# 评分转换
-train_score &lt;- scorecard_ply(train, card, print_step=0L)
-test_score &lt;- scorecard_ply(test, card, print_step=0L)
+card &lt;- scorecard(bins_adj, m2) # 创建评分卡刻度
+rbindlist(card, fill=TRUE)[1:2,1:4] 
+```
 
-train_score[1:3,]
+```
+##                   variable  bin    woe points
+## 1:              basepoints   NA     NA    441
+## 2: other.installment.plans bank 0.4836    -25
+```
+- `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
+
+```r
+train_score &lt;- scorecard_ply(train, card, print_step=0) # 评分转换
+train_score[1:2,]
 ```
 
 ```
 ##    score
 ## 1:   397
 ## 2:   412
-## 3:   416
 ```
-
 
 ---
 
