@@ -641,23 +641,39 @@ $$score = A - B\ln(odds)$$
       - $A=points0+B\ln(odds0)$
 
 ---
+
+### 评分卡刻度
+
 - 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
 $$\begin{eqnarray}
 score &=& A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 &=& (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_nx_n
 \end{eqnarray}$$
 其中， $x_1\cdots x_n$ 为最终进入模型的自变量且已经转换为WOE值,  $w_i$ 为逻辑回归的变量系数,  $b$ 为逻辑回归的截距, $A, B$ 为上页求得的刻度因子。 $Bw_ix_i$ 为变量 $x_i$ 对应的评分， $(A-Bb)$ 为基础分(也可将基础分值平均分配给各个变量)。
+
 --
 
 - `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
 ```{r card, warning=FALSE, message=FALSE}
-card <- scorecard(bins_adj, m2) # 创建评分卡刻度
-rbindlist(card, fill=TRUE)[1:2,1:4] 
+# 创建评分卡刻度
+card <- scorecard(bins_adj, m2) 
+data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
 ```
+
+---
+
+### 评分卡刻度(续)
+
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 ```{r score, warning=FALSE, message=FALSE}
-train_score <- scorecard_ply(train, card, print_step=0) # 评分转换
-train_score[1:2,]
+# 评分转换只有总分
+train_score <- scorecard_ply(train, card, print_step=0) 
+test_score <- scorecard_ply(test, card, print_step=0) 
+str(train_score)
+
+# 评分转换包括变量分值
+train_score2 <- scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
+str(train_score2)
 ```
 
 ---
@@ -670,7 +686,7 @@ train_score[1:2,]
 psi <- perf_psi(
   score = list(train = train_score, test = test_score),
   label = list(train = train[,"creditability"], test = test[, "creditability"]),
-  x_limits = c(200, 750),
+  x_limits = c(250, 750),
   x_tick_break = 50,
   return_distr_dat = TRUE)
 

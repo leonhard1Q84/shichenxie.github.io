@@ -354,18 +354,18 @@ bins$age.in.years
 ```
 
 ```
-#        variable       bin count count_distr good bad badprob      woe
-# 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
-# 2: age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
-# 3: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
-# 4: age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
-# 5: age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
-#      bin_iv total_iv
-# 1: 0.057921   0.1306
-# 2: 0.001324   0.1306
-# 3: 0.048610   0.1306
-# 4: 0.009277   0.1306
-# 5: 0.013426   0.1306
+#       variable       bin count count_distr good bad badprob      woe
+# 1 age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
+# 2 age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
+# 3 age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
+# 4 age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
+# 5 age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
+#     bin_iv total_iv
+# 1 0.057921   0.1306
+# 2 0.001324   0.1306
+# 3 0.048610   0.1306
+# 4 0.009277   0.1306
+# 5 0.013426   0.1306
 ```
 
 ---
@@ -826,37 +826,74 @@ perf_train$pic
       - `\(A=points0+B\ln(odds0)\)`
 
 ---
+
+### 评分卡刻度
+
 - 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
 `$$\begin{eqnarray}
 score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 &amp;=&amp; (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_nx_n
 \end{eqnarray}$$`
 其中， `\(x_1\cdots x_n\)` 为最终进入模型的自变量且已经转换为WOE值,  `\(w_i\)` 为逻辑回归的变量系数,  `\(b\)` 为逻辑回归的截距, `\(A, B\)` 为上页求得的刻度因子。 `\(Bw_ix_i\)` 为变量 `\(x_i\)` 对应的评分， `\((A-Bb)\)` 为基础分(也可将基础分值平均分配给各个变量)。
+
 --
 
 - `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
 
 ```r
-card &lt;- scorecard(bins_adj, m2) # 创建评分卡刻度
-rbindlist(card, fill=TRUE)[1:2,1:4] 
+# 创建评分卡刻度
+card &lt;- scorecard(bins_adj, m2) 
+data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
 ```
 
 ```
-##                   variable  bin    woe points
-## 1:              basepoints   NA     NA    441
-## 2: other.installment.plans bank 0.4836    -25
+##                   variable    bin     woe points
+## 1:              basepoints     NA      NA    441
+## 2: other.installment.plans   bank  0.4836    -25
+## 3: other.installment.plans stores  0.4595    -24
+## 4: other.installment.plans   none -0.1212      6
 ```
+
+---
+
+### 评分卡刻度(续)
+
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 
 ```r
-train_score &lt;- scorecard_ply(train, card, print_step=0) # 评分转换
-train_score[1:2,]
+# 评分转换只有总分
+train_score &lt;- scorecard_ply(train, card, print_step=0) 
+test_score &lt;- scorecard_ply(test, card, print_step=0) 
+str(train_score)
 ```
 
 ```
-##    score
-## 1:   397
-## 2:   412
+## Classes 'data.table' and 'data.frame':	600 obs. of  1 variable:
+##  $ score: num  397 412 416 626 386 360 370 697 395 418 ...
+##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
+```
+
+```r
+# 评分转换包括变量分值
+train_score2 &lt;- scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
+str(train_score2)
+```
+
+```
+## Classes 'data.table' and 'data.frame':	600 obs. of  12 variables:
+##  $ other.installment.plans_points            : num  6 6 -25 6 -25 -25 6 6 -25 6 ...
+##  $ age.in.years_points                       : num  -3 -3 -3 11 -3 -29 -3 -3 -3 -29 ...
+##  $ property_points                           : num  25 25 -2 25 -2 -2 -2 25 25 -2 ...
+##  $ personal.status.and.sex_points            : num  -23 14 -23 14 -23 -23 14 14 12 -23 ...
+##  $ present.employment.since_points           : num  -19 17 10 -1 -1 -1 -19 -1 -1 -19 ...
+##  $ savings.account.and.bonds_points          : num  -14 -14 -7 38 -7 -14 -14 38 -14 -14 ...
+##  $ credit.amount_points                      : num  18 -20 18 -6 18 18 18 18 -6 18 ...
+##  $ purpose_points                            : num  -21 -21 -21 31 -21 60 -21 31 -21 -21 ...
+##  $ credit.history_points                     : num  -3 -3 -3 23 -3 -35 -3 23 -3 -3 ...
+##  $ duration.in.month_points                  : num  15 -5 56 -5 -5 -5 -22 56 15 15 ...
+##  $ status.of.existing.checking.account_points: num  -25 -25 -25 49 17 -25 -25 49 -25 49 ...
+##  $ score                                     : num  397 412 416 626 386 360 370 697 395 418 ...
+##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
 ---
@@ -882,22 +919,13 @@ train_score[1:2,]
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [100,250) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0125 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0008 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0690 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [250,300) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0233 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [100,300) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0350 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.4055 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0047 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0125 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.3054 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0038 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
@@ -906,7 +934,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; -0.0042 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -0.0592 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
@@ -915,7 +943,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; -0.0017 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -0.0102 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
@@ -924,7 +952,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; -0.0158 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -0.0908 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0014 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
@@ -933,7 +961,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; -0.0150 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -0.0741 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
@@ -942,7 +970,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; 0.0133 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0800 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
@@ -951,7 +979,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; 0.0250 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.2578 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0064 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
@@ -960,7 +988,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; 0.0042 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0645 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
@@ -969,7 +997,7 @@ train_score[1:2,]
    &lt;td style="text-align:right;"&gt; 0.0067 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.3677 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0025 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0169 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
