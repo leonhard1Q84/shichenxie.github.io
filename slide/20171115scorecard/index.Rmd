@@ -735,7 +735,7 @@ psi <- perf_psi(
   label = list(
     train=train[,"creditability"], 
     test =test[,"creditability"]),
-  x_limits = c(200, 750),
+  x_limits = c(250, 750),
   x_tick_break = 50)
 
 psi$psi
