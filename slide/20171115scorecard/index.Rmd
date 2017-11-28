@@ -505,8 +505,8 @@ $$\begin{eqnarray}
 ### 正则化(regulation)
 
 在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
-$$\min{J(\boldsymbol{w},b)}+\lambda(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$
-其中，正则化参数 $\lambda>0$ ; $||\boldsymbol{w}||_1$ 与 $||\boldsymbol{w}||_2^2$ 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 $w$ 会有更少的非零分量。使用lasso筛选变量的案例如下：
+$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{2m}(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$
+其中，正则化参数 $\lambda>0$ ; $||\boldsymbol{w}||_1=\sum_j{|w_j|}$ 与 $||\boldsymbol{w}||_2^2=\sum_j{w_j^2}=\boldsymbol{w}^T\boldsymbol{w}$ 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 $\boldsymbol{w}$ 会有更少的非零分量。使用lasso筛选变量的案例如下：
 
 ```r
 library(h2o)
@@ -514,8 +514,7 @@ localH2O <- h2o.init()
 dth2o <- as.h2o(train_woe)
 # h2o.glm lasso 
 fit <- h2o.glm(y="creditability", training_frame=dth2o, 
-family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
-# summary(fit)
+family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
 varimp <- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) & coefficients > 0 & sign == "POS"]
@@ -647,9 +646,9 @@ $$score = A - B\ln(odds)$$
 - 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
 $$\begin{eqnarray}
 score &=& A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
-&=& (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_nx_n
+&=& (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_mx_m
 \end{eqnarray}$$
-其中， $x_1\cdots x_n$ 为最终进入模型的自变量且已经转换为WOE值,  $w_i$ 为逻辑回归的变量系数,  $b$ 为逻辑回归的截距, $A, B$ 为上页求得的刻度因子。 $Bw_ix_i$ 为变量 $x_i$ 对应的评分， $(A-Bb)$ 为基础分(也可将基础分值平均分配给各个变量)。
+其中， $x_1\cdots x_m$ 为最终进入模型的自变量且已经转换为WOE值,  $w_i$ 为逻辑回归的变量系数,  $b$ 为逻辑回归的截距, $A, B$ 为上页求得的刻度因子。 $Bw_ix_i$ 为变量 $x_i$ 对应的评分， $(A-Bb)$ 为基础分(也可将基础分值平均分配给各个变量)。
 
 --
 
@@ -685,7 +684,7 @@ str(train_score2)
 ```{r psi, include=FALSE}
 psi <- perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train[,"creditability"], test = test[, "creditability"]),
+  label = list(train = train$creditability, test = test$creditability),
   x_limits = c(250, 750),
   x_tick_break = 50,
   return_distr_dat = TRUE)
@@ -733,8 +732,8 @@ psi <- perf_psi(
     train=train_score, 
     test =test_score),
   label = list(
-    train=train[,"creditability"], 
-    test =test[,"creditability"]),
+    train=train$creditability, 
+    test =test$creditability),
   x_limits = c(250, 750),
   x_tick_break = 50)
 
@@ -808,7 +807,7 @@ test_score <- scorecard_ply(test, card, print_step = 0)
 # psi
 perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train[,"y"], test = test[, "y"]),
+  label = list(train = train$y, test = test$y),
   x_limits = c(250, 700), x_tick_break = 50 )
 ```
 

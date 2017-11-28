@@ -354,18 +354,18 @@ bins$age.in.years
 ```
 
 ```
-#       variable       bin count count_distr good bad badprob      woe
-# 1 age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
-# 2 age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
-# 3 age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
-# 4 age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
-# 5 age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
-#     bin_iv total_iv
-# 1 0.057921   0.1306
-# 2 0.001324   0.1306
-# 3 0.048610   0.1306
-# 4 0.009277   0.1306
-# 5 0.013426   0.1306
+#        variable       bin count count_distr good bad badprob      woe
+# 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
+# 2: age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
+# 3: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
+# 4: age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
+# 5: age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
+#      bin_iv total_iv
+# 1: 0.057921   0.1306
+# 2: 0.001324   0.1306
+# 3: 0.048610   0.1306
+# 4: 0.009277   0.1306
+# 5: 0.013426   0.1306
 ```
 
 ---
@@ -644,8 +644,8 @@ J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 ### 正则化(regulation)
 
 在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
-`$$\min{J(\boldsymbol{w},b)}+\lambda(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$`
-其中，正则化参数 `\(\lambda&gt;0\)` ; `\(||\boldsymbol{w}||_1\)` 与 `\(||\boldsymbol{w}||_2^2\)` 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 `\(w\)` 会有更少的非零分量。使用lasso筛选变量的案例如下：
+`$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{2m}(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$`
+其中，正则化参数 `\(\lambda&gt;0\)` ; `\(||\boldsymbol{w}||_1=\sum_j{|w_j|}\)` 与 `\(||\boldsymbol{w}||_2^2=\sum_j{w_j^2}=\boldsymbol{w}^T\boldsymbol{w}\)` 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 `\(\boldsymbol{w}\)` 会有更少的非零分量。使用lasso筛选变量的案例如下：
 
 ```r
 library(h2o)
@@ -653,8 +653,7 @@ localH2O &lt;- h2o.init()
 dth2o &lt;- as.h2o(train_woe)
 # h2o.glm lasso 
 fit &lt;- h2o.glm(y="creditability", training_frame=dth2o, 
-family="binomial", nfolds=0, alpha=1, lambda_search=TRUE)
-# summary(fit)
+family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
 varimp &lt;- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
@@ -832,9 +831,9 @@ perf_train$pic
 - 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
 `$$\begin{eqnarray}
 score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
-&amp;=&amp; (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_nx_n
+&amp;=&amp; (A-Bb) - Bw_1x_1 - Bw_2x_2 \cdots - Bw_mx_m
 \end{eqnarray}$$`
-其中， `\(x_1\cdots x_n\)` 为最终进入模型的自变量且已经转换为WOE值,  `\(w_i\)` 为逻辑回归的变量系数,  `\(b\)` 为逻辑回归的截距, `\(A, B\)` 为上页求得的刻度因子。 `\(Bw_ix_i\)` 为变量 `\(x_i\)` 对应的评分， `\((A-Bb)\)` 为基础分(也可将基础分值平均分配给各个变量)。
+其中， `\(x_1\cdots x_m\)` 为最终进入模型的自变量且已经转换为WOE值,  `\(w_i\)` 为逻辑回归的变量系数,  `\(b\)` 为逻辑回归的截距, `\(A, B\)` 为上页求得的刻度因子。 `\(Bw_ix_i\)` 为变量 `\(x_i\)` 对应的评分， `\((A-Bb)\)` 为基础分(也可将基础分值平均分配给各个变量)。
 
 --
 
@@ -1050,8 +1049,8 @@ psi &lt;- perf_psi(
     train=train_score, 
     test =test_score),
   label = list(
-    train=train[,"creditability"], 
-    test =test[,"creditability"]),
+    train=train$creditability, 
+    test =test$creditability),
   x_limits = c(250, 750),
   x_tick_break = 50)
 
@@ -1137,7 +1136,7 @@ test_score &lt;- scorecard_ply(test, card, print_step = 0)
 # psi
 perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train[,"y"], test = test[, "y"]),
+  label = list(train = train$y, test = test$y),
   x_limits = c(250, 700), x_tick_break = 50 )
 ```
 
