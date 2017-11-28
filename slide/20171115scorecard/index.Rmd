@@ -63,59 +63,59 @@ library(data.table)
 library(scorecard)
 data("germancredit")
 
-y <- "creditability"
-x <- c("age.in.years", "housing", "present.employment.since")
-breaks_list <- list(
+y = "creditability"
+x = c("age.in.years", "housing", "present.employment.since")
+breaks_list = list(
   # credit.history = c("no credits taken/ all credits paid back duly%,%all credits at this bank paid back duly", "existing credits paid back duly till now%,%delay in paying off in the past", "critical account/ other credits existing (not at this bank)"), 
   age.in.years = c(26, 35, 40),
   present.employment.since = c("unemployed%,%... < 1 year", "1 <= ... < 4 years", "4 <= ... < 7 years", "... >= 7 years"), 
   housing = NULL
 )
 
-dt <- setDT(germancredit)[,`:=`(
+dt = setDT(germancredit)[,`:=`(
   creditability = ifelse(creditability=="bad",1,0), 
   housing = as.character(housing)
 )][,c(x,y),with=F]
 
 
 # for (i in seq(0,100,by=10)) {
-seed <- 40
+seed = 40
 set.seed(seed)
-x <- sort(x)
+x = sort(x)
 
 # glm 
-  train <- split_df(dt, y, ratio=0.6, seed=seed)$train
-  test <- split_df(dt, y, ratio=0.6, seed=seed)$test
+  train = split_df(dt, y, ratio=0.6, seed=seed)$train
+  test = split_df(dt, y, ratio=0.6, seed=seed)$test
   
-  bins_train <- woebin(train, y, breaks_list=breaks_list, print_step=0)
-  # bins_test <- woebin(test, y, breaks_list=breaks_list, print_step=0)
+  bins_train = woebin(train, y, breaks_list=breaks_list, print_step=0)
+  # bins_test = woebin(test, y, breaks_list=breaks_list, print_step=0)
   
-  train_woe <- woebin_ply(train, bins_train, print_step=0)
-  test_woe <- woebin_ply(test, bins_train, print_step=0)
+  train_woe = woebin_ply(train, bins_train, print_step=0)
+  test_woe = woebin_ply(test, bins_train, print_step=0)
   
   # glm 
-  fmla <- as.formula(paste0(y, " ~ ."))
-  m <- glm(fmla, family = "binomial", data=train_woe)
+  fmla = as.formula(paste0(y, " ~ ."))
+  m = glm(fmla, family = "binomial", data=train_woe)
   
   # perf
-  train_pred <- predict(m, type='response', train_woe)
-  test_pred <- predict(m, type='response', test_woe)
+  train_pred = predict(m, type='response', train_woe)
+  test_pred = predict(m, type='response', test_woe)
   
-  # train_perf <-
+  # train_perf =
   #   perf_eva(train_woe$creditability, train_pred, title="train")
-  # test_perf <-
+  # test_perf =
   #   perf_eva(test_woe$creditability, test_pred, title="test")
   # cat(seed, "train:", train_perf$KS, "test:", test_perf$KS, "diff", test_perf$KS-train_perf$KS,"\n")
 # }
   
   # creating score card ---
-  sc <- scorecard(bins_train, m, points0=600, odds0=1/19, pdo=50)
+  sc = scorecard(bins_train, m, points0=600, odds0=1/19, pdo=50)
   
   # # scoring 
-  train_score <- scorecard_ply(train, sc, only_total_score=F)
-  # test_score <- scorecard_ply(test, sc, only_total_score=T)
+  train_score = scorecard_ply(train, sc, only_total_score=F)
+  # test_score = scorecard_ply(test, sc, only_total_score=T)
   # 
-  # p_psi <- perf_psi(
+  # p_psi = perf_psi(
   #   score = list(train=train_score, test=test_score),
   #   label = list(train=train[,y,with=F], test=test[,y,with=F]),
   #   x_limits=c(350, 850), x_tick_break=50, seed=seed)
@@ -123,7 +123,7 @@ x <- sort(x)
 
 ```{r scorecard_example1_1, results = "asis", echo=FALSE, message=FALSE}
 
-card <- rbindlist(sc,fill = TRUE)[,.(variable,bin,points=as.integer(points))]
+card = rbindlist(sc,fill = TRUE)[,.(variable,bin,points=as.integer(points))]
 
 # print(xtable::xtable(card), include.rownames = FALSE, type = "html", html.table.attributes = "border=0")
 knitr::kable(card, format = "html")
@@ -200,10 +200,10 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
                   CRANextra = "https://cloud.r-project.org/"))
 
 # 启动函数
-.First <- function(){ cat("\nWelcome at", base::date(), "\n") }
+.First = function(){ cat("\nWelcome at", base::date(), "\n") }
 
 # 会话结束函数
-.Last <- function(){ cat("\nGoodbye at ", base::date(), "\n") }
+.Last = function(){ cat("\nGoodbye at ", base::date(), "\n") }
 ```
 
 ---
@@ -291,12 +291,12 @@ library(scorecard)
 data("germancredit")
 
 # y变量creditability赋值为0/1
-dt <- setDT(germancredit)[
+dt = setDT(germancredit)[
   , creditability := ifelse(creditability=="bad",1,0)]
 
 # 数据集切分为训练集与测试集
-dt_list <- split_df(dt, y="creditability", ratio=0.6, seed=21)
-train <- dt_list$train; test <- dt_list$test
+dt_list = split_df(dt, y="creditability", ratio=0.6, seed=21)
+train = dt_list$train; test = dt_list$test
 ```
 
 ---
@@ -305,7 +305,7 @@ train <- dt_list$train; test <- dt_list$test
 
 ```{r woebin, comment='#', message=FALSE, warning=FALSE}
 # 分箱
-bins <- woebin(dt, y="creditability", print_step=0)
+bins = woebin(dt, y="creditability", print_step=0)
 
 class(bins)
 bins$age.in.years
@@ -327,7 +327,7 @@ $$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{
 .pull-left[
 ```{r iv1, comment='#', message=FALSE, warning=FALSE}
 # 信息值函数 scorecard::iv
-ivs <- iv(germancredit, 
+ivs = iv(germancredit, 
           y="creditability")
 
 ivs[variable=="age.in.years",]
@@ -338,7 +338,7 @@ ivs[variable=="age.in.years",]
 
 .pull-right[
 ```{r iv2, results = "asis", echo=FALSE, message=FALSE}
-iv_df <- data.frame(IV范围=c("小于0.02","0.02到0.10","0.10到0.30","大于0.30"), 预测力=c("无预测力","弱","中等","强"))
+iv_df = data.frame(IV范围=c("小于0.02","0.02到0.10","0.10到0.30","大于0.30"), 预测力=c("无预测力","弱","中等","强"))
 
 knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选自变量的预测力")
 ```
@@ -389,10 +389,10 @@ woebin_plot(bins$age.in.years)
 .pull-left[
 ```{r woebin_plot2, comment='#', message=FALSE, warning=FALSE}
 # 手动调整分箱
-break_adj <- list(
+break_adj = list(
   age.in.years=c(26,35,40))
 
-bins_adj <- woebin(
+bins_adj = woebin(
   dt, y="creditability", 
   breaks_list=break_adj, 
   print_step=0)
@@ -411,9 +411,9 @@ bins_adj$age.in.years[,.(bin,woe)]
 .pull-right[
 ```{r comment='#', message=FALSE, warning=FALSE}
 # WOE转换
-train_woe <- woebin_ply(
+train_woe = woebin_ply(
   train, bins_adj, print_step=0)
-test_woe <- woebin_ply(
+test_woe = woebin_ply(
   test, bins_adj, print_step=0)
 
 cbind(train[1:5,.(age.in.years)],
@@ -428,14 +428,14 @@ cbind(train[1:5,.(age.in.years)],
 `scorecard::var_filter`提供了变量粗筛功能，默认信息值<0.02、缺失率>95%、单类别比例>95%的变量将删除
 
 ```{r comment='#', message=FALSE, warning=FALSE}
-dt_sel<-var_filter(train_woe,y="creditability") #粗筛后数据集
-var_sel <- names(dt_sel)
+dt_sel=var_filter(train_woe,y="creditability") #粗筛后数据集
+var_sel = names(dt_sel)
 ```
 
 --
 
 ```{r comment='#', message=FALSE, warning=FALSE}
-dt_sel2<-var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
+dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
 # dt_sel2$dt # 返回粗筛后数据集 # dt_sel2$rm # 返回删除变量的原因
 ```
 
@@ -510,15 +510,15 @@ $$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{2m}(\alpha||\boldsymbol{w}||_1+(1-\al
 
 ```r
 library(h2o)
-localH2O <- h2o.init()
-dth2o <- as.h2o(train_woe)
+localH2O = h2o.init()
+dth2o = as.h2o(train_woe)
 # h2o.glm lasso 
-fit <- h2o.glm(y="creditability", training_frame=dth2o, 
+fit = h2o.glm(y="creditability", training_frame=dth2o, 
 family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
-varimp <- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) & coefficients > 0 & sign == "POS"]
-var_sel3 <- c(varimp$names, "creditability")
+varimp = data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) & coefficients > 0 & sign == "POS"]
+var_sel3 = c(varimp$names, "creditability")
 ```
 
 ---
@@ -527,12 +527,12 @@ var_sel3 <- c(varimp$names, "creditability")
 
 ```{r}
 # glm ------
-m1 <- glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
+m1 = glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
 # summary(m1)
 
 # Select a formula-based model by AIC
-m_step <- step(m1, direction="both", trace = FALSE)
-m2 <- eval(m_step$call)
+m_step = step(m1, direction="both", trace = FALSE)
+m2 = eval(m_step$call)
 summary(m2)$coefficients
 ```
 
@@ -558,12 +558,12 @@ summary(m2)$coefficients
 
 ```{r perf_pic, fig.width=9, fig.height=4.5}
 # predicted proability
-train_pred <- predict(m2, type='response', train_woe)
-test_pred <- predict(m2, type='response', test_woe)
+train_pred = predict(m2, type='response', train_woe)
+test_pred = predict(m2, type='response', test_woe)
 
 # performance 
-perf_train <- perf_eva(train$creditability, train_pred, title="train")
-perf_test <- perf_eva(test$creditability, test_pred, title="test")
+perf_train = perf_eva(train$creditability, train_pred, title="train")
+perf_test = perf_eva(test$creditability, test_pred, title="test")
 
 perf_train$pic
 ```
@@ -655,7 +655,7 @@ score &=& A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 - `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
 ```{r card, warning=FALSE, message=FALSE}
 # 创建评分卡刻度
-card <- scorecard(bins_adj, m2) 
+card = scorecard(bins_adj, m2) 
 data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
 ```
 
@@ -666,12 +666,12 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 ```{r score, warning=FALSE, message=FALSE}
 # 评分转换只有总分
-train_score <- scorecard_ply(train, card, print_step=0) 
-test_score <- scorecard_ply(test, card, print_step=0) 
+train_score = scorecard_ply(train, card, print_step=0) 
+test_score = scorecard_ply(test, card, print_step=0) 
 str(train_score)
 
 # 评分转换包括变量分值
-train_score2 <- scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
+train_score2 = scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
 str(train_score2)
 ```
 
@@ -682,14 +682,14 @@ str(train_score2)
 稳定性指数`(population stability index, PSI)`是计算实际和预期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
 
 ```{r psi, include=FALSE}
-psi <- perf_psi(
+psi = perf_psi(
   score = list(train = train_score, test = test_score),
   label = list(train = train$creditability, test = test$creditability),
   x_limits = c(250, 750),
   x_tick_break = 50,
   return_distr_dat = TRUE)
 
-psi_cal <- psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/sum(count_test))][,`:=`(
+psi_cal = psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/sum(count_test))][,`:=`(
   A_E=A-E, logA_E=log(A/E)
 )][,`:=`(PSI = A_E*logA_E, total_PSI = sum(A_E*logA_E))]
 ```
@@ -704,7 +704,7 @@ knitr::kable(psi_cal, format = "html")
 - 稳定性指数PSI与信息值的计算公式相同。信息值衡量的是两个离散变量之间的关联性，较低的取值表明两个变量的类别分布相似。信用评分卡使用稳定性指数遵循的准则如下：
 
 ```{r psi_rule, results = "asis", echo=FALSE, message=FALSE}
-psi_rule <- data.frame(
+psi_rule = data.frame(
   指数范围=c("0~0.1", "0.1~0.25", ">0.25"),
   解释=c("无显著变化，无须采取行动", "发现某些变化，建议进行检查", "发现显著变化，建议重新建立评分卡")
 )
@@ -727,7 +727,7 @@ knitr::kable(psi_rule, format = "html")
 
 .pull-left[
 ```{r}
-psi <- perf_psi(
+psi = perf_psi(
   score = list(
     train=train_score, 
     test =test_score),
@@ -757,52 +757,52 @@ library(scorecard)
 data("germancredit")
 
 # rename creditability as y
-dt <- setDT(germancredit)[, `:=`(
+dt = setDT(germancredit)[, `:=`(
   y = ifelse(creditability == "bad", 1, 0),
   creditability = NULL)]
 
 # filter variable via missing rate, iv, identical value rate
-dt_s <- var_filter(dt, "y")
+dt_s = var_filter(dt, "y")
 
 # breaking dt into train and test ------
-dt_list <- split_df(dt_s, y="y", ratio = 0.6, seed = 30)
-train <- dt_list$train; test <- dt_list$test;
+dt_list = split_df(dt_s, y="y", ratio = 0.6, seed = 30)
+train = dt_list$train; test = dt_list$test;
 
 # woe binning ------
-bins <- woebin(train, "y", print_step = 5) # woebin_plot(bins)
+bins = woebin(train, "y", print_step = 5) # woebin_plot(bins)
 # binning adjustment
-breaks_adj <- list(age.in.years=c(26, 35, 40))
-bins_adj <- woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
+breaks_adj = list(age.in.years=c(26, 35, 40))
+bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
 
 # converting train and test into woe values
-train_woe <- woebin_ply(train, bins_adj, print_step = 5)
-test_woe <- woebin_ply(test, bins_adj, print_step = 5)
+train_woe = woebin_ply(train, bins_adj, print_step = 5)
+test_woe = woebin_ply(test, bins_adj, print_step = 5)
 ```
 
 ---
 
 ```r
 # glm ------
-m1 <- glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
+m1 = glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
 
 # Select a formula-based model by AIC
-m_step <- step(m1, direction="both", trace = FALSE)
-m2 <- eval(m_step$call) # summary(m2)
+m_step = step(m1, direction="both", trace = FALSE)
+m2 = eval(m_step$call) # summary(m2)
 
 # performance ------
 # predicted proability
-train_pred <- predict(m2, type='response', train_woe)
-test_pred <- predict(m2, type='response', test_woe)
+train_pred = predict(m2, type='response', train_woe)
+test_pred = predict(m2, type='response', test_woe)
 
 # ks & roc plot
 perf_eva(train$y, train_pred, title = "train")
 perf_eva(test$y, test_pred, title = "test")
 
 # score
-card <- scorecard(bins_adj, m2)
+card = scorecard(bins_adj, m2)
 # credit score, only_total_score = TRUE
-train_score <- scorecard_ply(train, card, print_step = 0)
-test_score <- scorecard_ply(test, card, print_step = 0)
+train_score = scorecard_ply(train, card, print_step = 0)
+test_score = scorecard_ply(test, card, print_step = 0)
 
 # psi
 perf_psi(

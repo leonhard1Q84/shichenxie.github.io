@@ -233,10 +233,10 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
                   CRANextra = "https://cloud.r-project.org/"))
 
 # 启动函数
-.First &lt;- function(){ cat("\nWelcome at", base::date(), "\n") }
+.First = function(){ cat("\nWelcome at", base::date(), "\n") }
 
 # 会话结束函数
-.Last &lt;- function(){ cat("\nGoodbye at ", base::date(), "\n") }
+.Last = function(){ cat("\nGoodbye at ", base::date(), "\n") }
 ```
 
 ---
@@ -325,12 +325,12 @@ library(scorecard)
 data("germancredit")
 
 # y变量creditability赋值为0/1
-dt &lt;- setDT(germancredit)[
+dt = setDT(germancredit)[
   , creditability := ifelse(creditability=="bad",1,0)]
 
 # 数据集切分为训练集与测试集
-dt_list &lt;- split_df(dt, y="creditability", ratio=0.6, seed=21)
-train &lt;- dt_list$train; test &lt;- dt_list$test
+dt_list = split_df(dt, y="creditability", ratio=0.6, seed=21)
+train = dt_list$train; test = dt_list$test
 ```
 
 ---
@@ -340,7 +340,7 @@ train &lt;- dt_list$train; test &lt;- dt_list$test
 
 ```r
 # 分箱
-bins &lt;- woebin(dt, y="creditability", print_step=0)
+bins = woebin(dt, y="creditability", print_step=0)
 
 class(bins)
 ```
@@ -385,7 +385,7 @@ bins$age.in.years
 
 ```r
 # 信息值函数 scorecard::iv
-ivs &lt;- iv(germancredit, 
+ivs = iv(germancredit, 
           y="creditability")
 
 ivs[variable=="age.in.years",]
@@ -482,10 +482,10 @@ woebin_plot(bins$age.in.years)
 
 ```r
 # 手动调整分箱
-break_adj &lt;- list(
+break_adj = list(
   age.in.years=c(26,35,40))
 
-bins_adj &lt;- woebin(
+bins_adj = woebin(
   dt, y="creditability", 
   breaks_list=break_adj, 
   print_step=0)
@@ -520,9 +520,9 @@ bins_adj$age.in.years[,.(bin,woe)]
 
 ```r
 # WOE转换
-train_woe &lt;- woebin_ply(
+train_woe = woebin_ply(
   train, bins_adj, print_step=0)
-test_woe &lt;- woebin_ply(
+test_woe = woebin_ply(
   test, bins_adj, print_step=0)
 
 cbind(train[1:5,.(age.in.years)],
@@ -547,15 +547,15 @@ cbind(train[1:5,.(age.in.years)],
 
 
 ```r
-dt_sel&lt;-var_filter(train_woe,y="creditability") #粗筛后数据集
-var_sel &lt;- names(dt_sel)
+dt_sel=var_filter(train_woe,y="creditability") #粗筛后数据集
+var_sel = names(dt_sel)
 ```
 
 --
 
 
 ```r
-dt_sel2&lt;-var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
+dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
 # dt_sel2$dt # 返回粗筛后数据集 # dt_sel2$rm # 返回删除变量的原因
 ```
 
@@ -649,15 +649,15 @@ J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 
 ```r
 library(h2o)
-localH2O &lt;- h2o.init()
-dth2o &lt;- as.h2o(train_woe)
+localH2O = h2o.init()
+dth2o = as.h2o(train_woe)
 # h2o.glm lasso 
-fit &lt;- h2o.glm(y="creditability", training_frame=dth2o, 
+fit = h2o.glm(y="creditability", training_frame=dth2o, 
 family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
-varimp &lt;- data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
-var_sel3 &lt;- c(varimp$names, "creditability")
+varimp = data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
+var_sel3 = c(varimp$names, "creditability")
 ```
 
 ---
@@ -667,12 +667,12 @@ var_sel3 &lt;- c(varimp$names, "creditability")
 
 ```r
 # glm ------
-m1 &lt;- glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
+m1 = glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
 # summary(m1)
 
 # Select a formula-based model by AIC
-m_step &lt;- step(m1, direction="both", trace = FALSE)
-m2 &lt;- eval(m_step$call)
+m_step = step(m1, direction="both", trace = FALSE)
+m2 = eval(m_step$call)
 summary(m2)$coefficients
 ```
 
@@ -727,17 +727,17 @@ summary(m2)$coefficients
 
 ```r
 # predicted proability
-train_pred &lt;- predict(m2, type='response', train_woe)
-test_pred &lt;- predict(m2, type='response', test_woe)
+train_pred = predict(m2, type='response', train_woe)
+test_pred = predict(m2, type='response', test_woe)
 
 # performance 
-perf_train &lt;- perf_eva(train$creditability, train_pred, title="train")
+perf_train = perf_eva(train$creditability, train_pred, title="train")
 ```
 
 ![](index_files/figure-html/perf_pic-1.png)&lt;!-- --&gt;
 
 ```r
-perf_test &lt;- perf_eva(test$creditability, test_pred, title="test")
+perf_test = perf_eva(test$creditability, test_pred, title="test")
 ```
 
 ![](index_files/figure-html/perf_pic-2.png)&lt;!-- --&gt;
@@ -841,7 +841,7 @@ score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 
 ```r
 # 创建评分卡刻度
-card &lt;- scorecard(bins_adj, m2) 
+card = scorecard(bins_adj, m2) 
 data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
 ```
 
@@ -861,8 +861,8 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 
 ```r
 # 评分转换只有总分
-train_score &lt;- scorecard_ply(train, card, print_step=0) 
-test_score &lt;- scorecard_ply(test, card, print_step=0) 
+train_score = scorecard_ply(train, card, print_step=0) 
+test_score = scorecard_ply(test, card, print_step=0) 
 str(train_score)
 ```
 
@@ -874,7 +874,7 @@ str(train_score)
 
 ```r
 # 评分转换包括变量分值
-train_score2 &lt;- scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
+train_score2 = scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
 str(train_score2)
 ```
 
@@ -1044,7 +1044,7 @@ str(train_score2)
 .pull-left[
 
 ```r
-psi &lt;- perf_psi(
+psi = perf_psi(
   score = list(
     train=train_score, 
     test =test_score),
@@ -1086,52 +1086,52 @@ library(scorecard)
 data("germancredit")
 
 # rename creditability as y
-dt &lt;- setDT(germancredit)[, `:=`(
+dt = setDT(germancredit)[, `:=`(
   y = ifelse(creditability == "bad", 1, 0),
   creditability = NULL)]
 
 # filter variable via missing rate, iv, identical value rate
-dt_s &lt;- var_filter(dt, "y")
+dt_s = var_filter(dt, "y")
 
 # breaking dt into train and test ------
-dt_list &lt;- split_df(dt_s, y="y", ratio = 0.6, seed = 30)
-train &lt;- dt_list$train; test &lt;- dt_list$test;
+dt_list = split_df(dt_s, y="y", ratio = 0.6, seed = 30)
+train = dt_list$train; test = dt_list$test;
 
 # woe binning ------
-bins &lt;- woebin(train, "y", print_step = 5) # woebin_plot(bins)
+bins = woebin(train, "y", print_step = 5) # woebin_plot(bins)
 # binning adjustment
-breaks_adj &lt;- list(age.in.years=c(26, 35, 40))
-bins_adj &lt;- woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
+breaks_adj = list(age.in.years=c(26, 35, 40))
+bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
 
 # converting train and test into woe values
-train_woe &lt;- woebin_ply(train, bins_adj, print_step = 5)
-test_woe &lt;- woebin_ply(test, bins_adj, print_step = 5)
+train_woe = woebin_ply(train, bins_adj, print_step = 5)
+test_woe = woebin_ply(test, bins_adj, print_step = 5)
 ```
 
 ---
 
 ```r
 # glm ------
-m1 &lt;- glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
+m1 = glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
 
 # Select a formula-based model by AIC
-m_step &lt;- step(m1, direction="both", trace = FALSE)
-m2 &lt;- eval(m_step$call) # summary(m2)
+m_step = step(m1, direction="both", trace = FALSE)
+m2 = eval(m_step$call) # summary(m2)
 
 # performance ------
 # predicted proability
-train_pred &lt;- predict(m2, type='response', train_woe)
-test_pred &lt;- predict(m2, type='response', test_woe)
+train_pred = predict(m2, type='response', train_woe)
+test_pred = predict(m2, type='response', test_woe)
 
 # ks &amp; roc plot
 perf_eva(train$y, train_pred, title = "train")
 perf_eva(test$y, test_pred, title = "test")
 
 # score
-card &lt;- scorecard(bins_adj, m2)
+card = scorecard(bins_adj, m2)
 # credit score, only_total_score = TRUE
-train_score &lt;- scorecard_ply(train, card, print_step = 0)
-test_score &lt;- scorecard_ply(test, card, print_step = 0)
+train_score = scorecard_ply(train, card, print_step = 0)
+test_score = scorecard_ply(test, card, print_step = 0)
 
 # psi
 perf_psi(
