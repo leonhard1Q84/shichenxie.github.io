@@ -22,12 +22,12 @@
     </item>
     
     <item>
-      <title>Markdown笔记</title>
+      <title>Markdown相关资料</title>
       <link>/post/2017/04/05/markdown/</link>
       <pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/2017/04/05/markdown/</guid>
-      <description> Markdown: 由John Gruber开发 Markdown-中文语法说明 Pandoc Markdown: 由John MacFarlane开发 Pandoc Markdown-語法中文翻譯 Blackfriday Markdown: blackfriday github RMarkdown: rmarkdown github MathJax basic tutorial and quick reference Cmd Markdown 公式指导手册  </description>
+      <description> John Gruber&amp;rsquo;s Markdown syntax (中文翻译) John MacFarlane&amp;rsquo;s Pandoc Markdown (中文翻译) Blackfriday Markdown (github) RMarkdown (github) MathJax (中文版)  </description>
     </item>
     
     <item>
