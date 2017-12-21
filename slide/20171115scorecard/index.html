@@ -354,18 +354,18 @@ bins$age.in.years
 ```
 
 ```
-#        variable       bin count count_distr good bad badprob      woe
-# 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.52884
-# 2: age.in.years   [26,35)   358       0.358  246 112  0.3128  0.06047
-# 3: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.87249
-# 4: age.in.years   [37,62)   335       0.335  246  89  0.2657 -0.16940
-# 5: age.in.years [62, Inf)    38       0.038   31   7  0.1842 -0.64078
+#        variable       bin count count_distr good bad badprob     woe
+# 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.5288
+# 2: age.in.years   [26,28)   101       0.101   74  27  0.2673 -0.1609
+# 3: age.in.years   [28,35)   257       0.257  172  85  0.3307  0.1425
+# 4: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.8725
+# 5: age.in.years [37, Inf)   373       0.373  277  96  0.2574 -0.2124
 #      bin_iv total_iv
-# 1: 0.057921   0.1306
-# 2: 0.001324   0.1306
-# 3: 0.048610   0.1306
-# 4: 0.009277   0.1306
-# 5: 0.013426   0.1306
+# 1: 0.057921   0.1305
+# 2: 0.002529   0.1305
+# 3: 0.005359   0.1305
+# 4: 0.048610   0.1305
+# 5: 0.016080   0.1305
 ```
 
 ---
@@ -448,7 +448,7 @@ ivs[variable=="age.in.years",]
     
       - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
 
-.footnote[[*] 极端值：均值上下1.5倍四分位距以外的值，其中四分位距指上下四分位数之差。]
+.footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
 ---
 .pull-left[
@@ -580,10 +580,6 @@ dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; number.of.existing.credits.at.this.bank_woe &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; present.residence.since_woe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
@@ -682,31 +678,31 @@ summary(m2)$coefficients
 
 ```
 ##                                         Estimate Std. Error z value
-## (Intercept)                              -0.7922     0.1035  -7.654
-## other.installment.plans_woe               0.7347     0.4052   1.813
-## age.in.years_woe                          0.7781     0.3224   2.414
-## property_woe                              0.7742     0.3268   2.369
-## personal.status.and.sex_woe               1.1626     0.5173   2.247
-## present.employment.since_woe              0.5765     0.3593   1.605
-## savings.account.and.bonds_woe             0.7033     0.2409   2.919
-## credit.amount_woe                         0.7123     0.2496   2.853
-## purpose_woe                               1.0612     0.2721   3.901
-## credit.history_woe                        0.4204     0.1964   2.141
-## duration.in.month_woe                     0.5772     0.2111   2.734
-## status.of.existing.checking.account_woe   0.5731     0.1304   4.395
+## (Intercept)                              -0.7864     0.1037  -7.583
+## other.installment.plans_woe               0.7215     0.4052   1.780
+## age.in.years_woe                          0.7678     0.3215   2.388
+## property_woe                              0.7591     0.3271   2.321
+## personal.status.and.sex_woe               1.1820     0.5175   2.284
+## present.employment.since_woe              0.5908     0.3594   1.644
+## savings.account.and.bonds_woe             0.6874     0.2403   2.860
+## credit.amount_woe                         0.7072     0.2428   2.913
+## purpose_woe                               1.0299     0.2725   3.780
+## credit.history_woe                        0.4267     0.1974   2.162
+## duration.in.month_woe                     0.5871     0.2064   2.845
+## status.of.existing.checking.account_woe   0.5805     0.1306   4.444
 ##                                          Pr(&gt;|z|)
-## (Intercept)                             1.948e-14
-## other.installment.plans_woe             6.978e-02
-## age.in.years_woe                        1.578e-02
-## property_woe                            1.784e-02
-## personal.status.and.sex_woe             2.461e-02
-## present.employment.since_woe            1.086e-01
-## savings.account.and.bonds_woe           3.509e-03
-## credit.amount_woe                       4.326e-03
-## purpose_woe                             9.599e-05
-## credit.history_woe                      3.228e-02
-## duration.in.month_woe                   6.253e-03
-## status.of.existing.checking.account_woe 1.107e-05
+## (Intercept)                             3.365e-14
+## other.installment.plans_woe             7.501e-02
+## age.in.years_woe                        1.694e-02
+## property_woe                            2.031e-02
+## personal.status.and.sex_woe             2.236e-02
+## present.employment.since_woe            1.003e-01
+## savings.account.and.bonds_woe           4.235e-03
+## credit.amount_woe                       3.582e-03
+## purpose_woe                             1.570e-04
+## credit.history_woe                      3.063e-02
+## duration.in.month_woe                   4.444e-03
+## status.of.existing.checking.account_woe 8.836e-06
 ```
 
 ---
@@ -852,7 +848,7 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 ```
 ##                   variable    bin     woe points
 ## 1:              basepoints     NA      NA    441
-## 2: other.installment.plans   bank  0.4836    -26
+## 2: other.installment.plans   bank  0.4836    -25
 ## 3: other.installment.plans stores  0.4595    -24
 ## 4: other.installment.plans   none -0.1212      6
 ```
@@ -872,7 +868,7 @@ str(train_score)
 
 ```
 ## Classes 'data.table' and 'data.frame':	600 obs. of  1 variable:
-##  $ score: num  399 414 415 627 386 362 369 697 394 418 ...
+##  $ score: num  398 412 415 625 386 360 371 696 395 420 ...
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -884,18 +880,18 @@ str(train_score2)
 
 ```
 ## Classes 'data.table' and 'data.frame':	600 obs. of  12 variables:
-##  $ other.installment.plans_points            : num  6 6 -26 6 -26 -26 6 6 -26 6 ...
-##  $ age.in.years_points                       : num  -3 -3 -3 11 -3 -30 -3 -3 -3 -30 ...
-##  $ property_points                           : num  26 26 -2 26 -2 -2 -2 26 26 -2 ...
-##  $ personal.status.and.sex_points            : num  -22 14 -22 14 -22 -22 14 14 12 -22 ...
-##  $ present.employment.since_points           : num  -18 16 10 -1 -1 -1 -18 -1 -1 -18 ...
-##  $ savings.account.and.bonds_points          : num  -14 -14 -7 39 -7 -14 -14 39 -14 -14 ...
-##  $ credit.amount_points                      : num  18 -18 18 -6 18 18 18 18 -6 18 ...
-##  $ purpose_points                            : num  -21 -21 -21 31 -21 62 -21 31 -21 -21 ...
-##  $ credit.history_points                     : num  -3 -3 -3 22 -3 -34 -3 22 -3 -3 ...
-##  $ duration.in.month_points                  : num  14 -5 55 -5 -5 -5 -24 55 14 14 ...
-##  $ status.of.existing.checking.account_points: num  -25 -25 -25 49 17 -25 -25 49 -25 49 ...
-##  $ score                                     : num  399 414 415 627 386 362 369 697 394 418 ...
+##  $ other.installment.plans_points            : num  6 6 -25 6 -25 -25 6 6 -25 6 ...
+##  $ age.in.years_points                       : num  -3 -3 -3 11 -3 -29 -3 -3 -3 -29 ...
+##  $ property_points                           : num  25 25 -2 25 -2 -2 -2 25 25 -2 ...
+##  $ personal.status.and.sex_points            : num  -23 14 -23 14 -23 -23 14 14 12 -23 ...
+##  $ present.employment.since_points           : num  -18 17 10 -1 -1 -1 -18 -1 -1 -18 ...
+##  $ savings.account.and.bonds_points          : num  -13 -13 -7 38 -7 -13 -13 38 -13 -13 ...
+##  $ credit.amount_points                      : num  18 -20 18 -6 18 18 18 18 -6 18 ...
+##  $ purpose_points                            : num  -21 -21 -21 30 -21 60 -21 30 -21 -21 ...
+##  $ credit.history_points                     : num  -3 -3 -3 23 -3 -35 -3 23 -3 -3 ...
+##  $ duration.in.month_points                  : num  15 -5 56 -5 -5 -5 -22 56 15 15 ...
+##  $ status.of.existing.checking.account_points: num  -26 -26 -26 49 17 -26 -26 49 -26 49 ...
+##  $ score                                     : num  398 412 415 625 386 360 371 696 395 420 ...
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -923,84 +919,84 @@ str(train_score2)
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [150,300) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0383 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0400 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0017 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0426 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0142 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.3542 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0050 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0700 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0750 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0050 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0690 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0025 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0351 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1567 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1625 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0058 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0366 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1650 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0017 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0101 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1733 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1925 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0192 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.1049 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1633 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0167 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0972 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0016 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1933 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1975 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0042 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0213 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1950 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0741 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1750 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1750 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1733 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1625 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0108 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0645 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1033 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0775 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0258 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2877 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0074 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0850 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0233 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2426 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0057 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0683 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0625 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0058 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0892 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0005 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0092 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1369 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0013 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0217 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0175 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0042 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2136 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0009 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0007 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1063,7 +1059,7 @@ psi$psi
 
 ```
 ##    variable    PSI
-## 1:    score 0.0116
+## 1:    score 0.0161
 ```
 ]
 
