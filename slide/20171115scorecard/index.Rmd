@@ -505,7 +505,7 @@ $$\begin{eqnarray}
 ### 正则化(regulation)
 
 在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
-$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{2m}(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$
+$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{m}(\alpha||\boldsymbol{w}||_1+\frac{1}{2}(1-\alpha)||\boldsymbol{w}||_2^2)$$
 其中，正则化参数 $\lambda>0$ ; $||\boldsymbol{w}||_1=\sum_j{|w_j|}$ 与 $||\boldsymbol{w}||_2^2=\sum_j{w_j^2}=\boldsymbol{w}^T\boldsymbol{w}$ 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 $\boldsymbol{w}$ 会有更少的非零分量。使用lasso筛选变量的案例如下：
 
 ```r

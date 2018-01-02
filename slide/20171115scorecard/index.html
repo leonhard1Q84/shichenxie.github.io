@@ -76,7 +76,7 @@ class: inverse, center, middle
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; basepoints &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 445 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 449 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
@@ -175,7 +175,7 @@ class: inverse, center, middle
    &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 399 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 403 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -644,7 +644,7 @@ J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 ### 正则化(regulation)
 
 在使得代价函数最小时，尤其当样本特征很多时，容易陷入过拟合问题。为了改善过拟合，通常在代价函数中引入正则化项：
-`$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{2m}(\alpha||\boldsymbol{w}||_1+(1-\alpha)||\boldsymbol{w}||_2^2)$$`
+`$$\min{J(\boldsymbol{w},b)}+\frac{\lambda}{m}(\alpha||\boldsymbol{w}||_1+\frac{1}{2}(1-\alpha)||\boldsymbol{w}||_2^2)$$`
 其中，正则化参数 `\(\lambda&gt;0\)` ; `\(||\boldsymbol{w}||_1=\sum_j{|w_j|}\)` 与 `\(||\boldsymbol{w}||_2^2=\sum_j{w_j^2}=\boldsymbol{w}^T\boldsymbol{w}\)` 分别为L1与L2范数正则化，也分别称为LASSO(Least Absolute Shrinkage and Selection Operator)与"岭回归"(ridge regression)。L1与L2范数正则化都有助于降低过拟合风险，但前者更易于获得稀疏解，即求得的 `\(\boldsymbol{w}\)` 会有更少的非零分量。使用lasso筛选变量的案例如下：
 
 ```r
@@ -847,7 +847,7 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 
 ```
 ##                   variable    bin     woe points
-## 1:              basepoints     NA      NA    441
+## 1:              basepoints     NA      NA    444
 ## 2: other.installment.plans   bank  0.4836    -25
 ## 3: other.installment.plans stores  0.4595    -24
 ## 4: other.installment.plans   none -0.1212      6
@@ -868,7 +868,7 @@ str(train_score)
 
 ```
 ## Classes 'data.table' and 'data.frame':	600 obs. of  1 variable:
-##  $ score: num  398 412 415 625 386 360 371 696 395 420 ...
+##  $ score: num  401 415 418 628 389 363 374 699 398 423 ...
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -891,7 +891,7 @@ str(train_score2)
 ##  $ credit.history_points                     : num  -3 -3 -3 23 -3 -35 -3 23 -3 -3 ...
 ##  $ duration.in.month_points                  : num  15 -5 56 -5 -5 -5 -22 56 15 15 ...
 ##  $ status.of.existing.checking.account_points: num  -26 -26 -26 49 17 -26 -26 49 -26 49 ...
-##  $ score                                     : num  398 412 415 625 386 360 371 696 395 420 ...
+##  $ score                                     : num  401 415 418 628 389 363 374 699 398 423 ...
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -920,83 +920,83 @@ str(train_score2)
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [150,300) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0333 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0142 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.3542 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0050 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0425 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0092 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2429 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0700 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0725 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0025 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0351 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0750 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1600 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.1650 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0017 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0101 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0050 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0308 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1633 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1800 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0167 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0972 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0016 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1683 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0042 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0245 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1950 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2100 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0150 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0741 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0011 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1900 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2075 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0175 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0881 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0015 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1733 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1625 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0108 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0645 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0007 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1717 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0008 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0048 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1083 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0850 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0233 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2426 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0057 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0775 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0408 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4232 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0173 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0717 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0625 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0092 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1369 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0013 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0683 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0042 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0592 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0233 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0150 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0033 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2007 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0007 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0161 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0083 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4418 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0037 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0262 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1059,7 +1059,7 @@ psi$psi
 
 ```
 ##    variable    PSI
-## 1:    score 0.0161
+## 1:    score 0.0262
 ```
 ]
 
