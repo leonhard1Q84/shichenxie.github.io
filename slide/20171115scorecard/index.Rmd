@@ -156,7 +156,7 @@ class: inverse, center, middle
 
 ## 软件安装与配置
 
-- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
+- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像,国内速度更快](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
 
 --
 
@@ -173,7 +173,7 @@ class: inverse, center, middle
   - 代码自动换行: `Code -> Editing -> Soft-wrap R source files`
 
 
-.footnote[[*] RobertI.Kabacoff, 卡巴科弗, 陈钢,等. R语言实战[J]. 2013. 附录B.]
+.footnote[[*] RobertI.Kabacoff, 卡巴科弗, 陈钢,等. R语言实战. 2013. 附录B.]
 
 ---
 
@@ -187,13 +187,13 @@ options(width=130)
 options(digits=4)
 options(stringsAsFactors=FALSE)
 grDevices::windows.options(record=TRUE)
-
 # 设置R交互提示信息
 options(prompt="> ")
 options(continue="+ ")
 
 # 设置包的本地库（library）路径
 .libPaths("~/Library_R") # 需在用户主目录下新建文件夹 Library_R
+# 设置之后重启R，.libPaths()返回新建的本地库路径
 
 # 设置CRAN镜像默认地址
 options(repos = c(CRAN = "http://cran.r-project.org/", 
@@ -233,7 +233,7 @@ devtools::install_github(
 --
 
 .pull-right[
-- 目前[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
+- 目前(2017.11)[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
   - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
 
@@ -260,7 +260,7 @@ class: inverse, center, middle
   - WOE转换与单变量统计
 --
 
-1. 变量选择
+1. 变量筛选
   - 变量粗筛: 信息值、缺失率、单类别比例
   - 模型筛选: LASSO、step
 --
@@ -361,7 +361,7 @@ knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选
     
       - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
     
-      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
+      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与6，即信息增益率小于10%或者非缺失值分箱数大于6后停止进一步分箱。
 
 .footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -377,7 +377,7 @@ knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选
 .pull-right[
 `scorecard::woebin_plot`绘制分箱信息图。合理的分箱应有以下特征：
   - 坏客户率或者WOE值趋势线，最多不超过一个拐点，最好是单调的
-  - 每个分箱的样本数量占比需大于5%
+  - 每个分箱的样本数量占比最好大于5%
 ```{r woebin_plot1, fig.width=6,fig.height=3.6}
 woebin_plot(bins$age.in.years)
 ```
@@ -425,7 +425,7 @@ cbind(train[1:5,.(age.in.years)],
 
 ## 2. 变量选择-变量粗筛
 
-`scorecard::var_filter`提供了变量粗筛功能，默认信息值<0.02、缺失率>95%、单类别比例>95%的变量将删除
+`scorecard::var_filter`提供了变量粗筛功能，默认删除信息值<0.02、缺失率>95%、单类别比例>95%的变量
 
 ```{r comment='#', message=FALSE, warning=FALSE}
 dt_sel=var_filter(train_woe,y="creditability") #粗筛后数据集
@@ -612,7 +612,7 @@ perf_train$pic
 
 --
 
-1. 模型中不应该包含太多变量。通常，包含的变量不超过9~15个(最优10~12个)。变量太多可能导致过拟合，变量太少往往不够稳健。
+1. 模型中不应该包含太多变量。通常，包含的变量不超过9~20个(最优10~12个)。变量太多可能导致过拟合，变量太少往往区分度不够。
 
 --
 
@@ -666,8 +666,8 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 ```{r score, warning=FALSE, message=FALSE}
 # 评分转换只有总分
-train_score = scorecard_ply(train, card, print_step=0) 
-test_score = scorecard_ply(test, card, print_step=0) 
+train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0) 
+test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0) 
 str(train_score)
 
 # 评分转换包括变量分值
@@ -761,7 +761,7 @@ dt = setDT(germancredit)[, `:=`(
   y = ifelse(creditability == "bad", 1, 0),
   creditability = NULL)]
 
-# filter variable via missing rate, iv, identical value rate
+# filter variable via iv, missing rate, identical value rate
 dt_s = var_filter(dt, "y")
 
 # breaking dt into train and test ------
@@ -769,14 +769,14 @@ dt_list = split_df(dt_s, y="y", ratio = 0.6, seed = 30)
 train = dt_list$train; test = dt_list$test;
 
 # woe binning ------
-bins = woebin(train, "y", print_step = 5) # woebin_plot(bins)
+bins = woebin(train, "y", print_step=0) # woebin_plot(bins)
 # binning adjustment
 breaks_adj = list(age.in.years=c(26, 35, 40))
-bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
+bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step=0)
 
 # converting train and test into woe values
-train_woe = woebin_ply(train, bins_adj, print_step = 5)
-test_woe = woebin_ply(test, bins_adj, print_step = 5)
+train_woe = woebin_ply(train, bins_adj, print_step=0)
+test_woe = woebin_ply(test, bins_adj, print_step=0)
 ```
 
 ---
@@ -801,8 +801,8 @@ perf_eva(test$y, test_pred, title = "test")
 # score
 card = scorecard(bins_adj, m2)
 # credit score, only_total_score = TRUE
-train_score = scorecard_ply(train, card, print_step = 0)
-test_score = scorecard_ply(test, card, print_step = 0)
+train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0)
+test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0)
 
 # psi
 perf_psi(

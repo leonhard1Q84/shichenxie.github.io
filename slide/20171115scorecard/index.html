@@ -4,7 +4,7 @@
     <title>使用R语言开发评分卡模型</title>
     <meta charset="utf-8">
     <meta name="author" content="谢士晨" />
-    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="zh-CN.css" type="text/css" />
   </head>
   <body>
@@ -79,41 +79,6 @@ class: inverse, center, middle
    &lt;td style="text-align:right;"&gt; 449 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; unemployed%,%... &amp;lt; 1 year &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -23 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 1 &amp;lt;= ... &amp;lt; 4 years &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 4 &amp;lt;= ... &amp;lt; 7 years &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; ... &amp;gt;= 7 years &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; own &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; rent &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; for free &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -48 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [-Inf,26) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
@@ -132,6 +97,41 @@ class: inverse, center, middle
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [40, Inf) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; own &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; rent &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; for free &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -48 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; unemployed%,%... &amp;lt; 1 year &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &amp;lt;= ... &amp;lt; 4 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &amp;lt;= ... &amp;lt; 7 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ... &amp;gt;= 7 years &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -164,17 +164,17 @@ class: inverse, center, middle
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; present.employment.since &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; housing &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; age.in.years &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; housing &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; present.employment.since &lt;/th&gt;
    &lt;th style="text-align:right;"&gt; score &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 403 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -189,7 +189,7 @@ class: inverse, center, middle
 
 ## 软件安装与配置
 
-- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
+- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像,国内速度更快](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
 
 --
 
@@ -206,7 +206,7 @@ class: inverse, center, middle
   - 代码自动换行: `Code -&gt; Editing -&gt; Soft-wrap R source files`
 
 
-.footnote[[*] RobertI.Kabacoff, 卡巴科弗, 陈钢,等. R语言实战[J]. 2013. 附录B.]
+.footnote[[*] RobertI.Kabacoff, 卡巴科弗, 陈钢,等. R语言实战. 2013. 附录B.]
 
 ---
 
@@ -220,13 +220,13 @@ options(width=130)
 options(digits=4)
 options(stringsAsFactors=FALSE)
 grDevices::windows.options(record=TRUE)
-
 # 设置R交互提示信息
 options(prompt="&gt; ")
 options(continue="+ ")
 
 # 设置包的本地库（library）路径
 .libPaths("~/Library_R") # 需在用户主目录下新建文件夹 Library_R
+# 设置之后重启R，.libPaths()返回新建的本地库路径
 
 # 设置CRAN镜像默认地址
 options(repos = c(CRAN = "http://cran.r-project.org/", 
@@ -266,7 +266,7 @@ devtools::install_github(
 --
 
 .pull-right[
-- 目前[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
+- 目前(2017.11)[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
   - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
 
@@ -293,7 +293,7 @@ class: inverse, center, middle
   - WOE转换与单变量统计
 --
 
-1. 变量选择
+1. 变量筛选
   - 变量粗筛: 信息值、缺失率、单类别比例
   - 模型筛选: LASSO、step
 --
@@ -446,7 +446,7 @@ ivs[variable=="age.in.years",]
     
       - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
     
-      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与5，即信息增益率小于10%或者非缺失值分箱数大于5后停止进一步分箱。
+      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与6，即信息增益率小于10%或者非缺失值分箱数大于6后停止进一步分箱。
 
 .footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -462,7 +462,7 @@ ivs[variable=="age.in.years",]
 .pull-right[
 `scorecard::woebin_plot`绘制分箱信息图。合理的分箱应有以下特征：
   - 坏客户率或者WOE值趋势线，最多不超过一个拐点，最好是单调的
-  - 每个分箱的样本数量占比需大于5%
+  - 每个分箱的样本数量占比最好大于5%
 
 ```r
 woebin_plot(bins$age.in.years)
@@ -543,7 +543,7 @@ cbind(train[1:5,.(age.in.years)],
 
 ## 2. 变量选择-变量粗筛
 
-`scorecard::var_filter`提供了变量粗筛功能，默认信息值&lt;0.02、缺失率&gt;95%、单类别比例&gt;95%的变量将删除
+`scorecard::var_filter`提供了变量粗筛功能，默认删除信息值&lt;0.02、缺失率&gt;95%、单类别比例&gt;95%的变量
 
 
 ```r
@@ -568,15 +568,7 @@ dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; telephone_woe &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; number.of.people.being.liable.to.provide.maintenance.for_woe &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; job_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; installment.rate.in.percentage.of.disposable.income_woe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -584,7 +576,15 @@ dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; installment.rate.in.percentage.of.disposable.income_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; job_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; number.of.people.being.liable.to.provide.maintenance.for_woe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; telephone_woe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; iv &amp;lt; 0.02 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -679,30 +679,30 @@ summary(m2)$coefficients
 ```
 ##                                         Estimate Std. Error z value
 ## (Intercept)                              -0.7864     0.1037  -7.583
-## other.installment.plans_woe               0.7215     0.4052   1.780
-## age.in.years_woe                          0.7678     0.3215   2.388
-## property_woe                              0.7591     0.3271   2.321
-## personal.status.and.sex_woe               1.1820     0.5175   2.284
-## present.employment.since_woe              0.5908     0.3594   1.644
-## savings.account.and.bonds_woe             0.6874     0.2403   2.860
-## credit.amount_woe                         0.7072     0.2428   2.913
-## purpose_woe                               1.0299     0.2725   3.780
-## credit.history_woe                        0.4267     0.1974   2.162
-## duration.in.month_woe                     0.5871     0.2064   2.845
 ## status.of.existing.checking.account_woe   0.5805     0.1306   4.444
+## duration.in.month_woe                     0.5871     0.2064   2.845
+## credit.history_woe                        0.4267     0.1974   2.162
+## purpose_woe                               1.0299     0.2725   3.780
+## credit.amount_woe                         0.7072     0.2428   2.913
+## savings.account.and.bonds_woe             0.6874     0.2403   2.860
+## present.employment.since_woe              0.5908     0.3594   1.644
+## personal.status.and.sex_woe               1.1820     0.5175   2.284
+## property_woe                              0.7591     0.3271   2.321
+## age.in.years_woe                          0.7678     0.3215   2.388
+## other.installment.plans_woe               0.7215     0.4052   1.780
 ##                                          Pr(&gt;|z|)
 ## (Intercept)                             3.365e-14
-## other.installment.plans_woe             7.501e-02
-## age.in.years_woe                        1.694e-02
-## property_woe                            2.031e-02
-## personal.status.and.sex_woe             2.236e-02
-## present.employment.since_woe            1.003e-01
-## savings.account.and.bonds_woe           4.235e-03
-## credit.amount_woe                       3.582e-03
-## purpose_woe                             1.570e-04
-## credit.history_woe                      3.063e-02
-## duration.in.month_woe                   4.444e-03
 ## status.of.existing.checking.account_woe 8.836e-06
+## duration.in.month_woe                   4.444e-03
+## credit.history_woe                      3.063e-02
+## purpose_woe                             1.570e-04
+## credit.amount_woe                       3.582e-03
+## savings.account.and.bonds_woe           4.235e-03
+## present.employment.since_woe            1.003e-01
+## personal.status.and.sex_woe             2.236e-02
+## property_woe                            2.031e-02
+## age.in.years_woe                        1.694e-02
+## other.installment.plans_woe             7.501e-02
 ```
 
 ---
@@ -797,7 +797,7 @@ perf_train$pic
 
 --
 
-1. 模型中不应该包含太多变量。通常，包含的变量不超过9~15个(最优10~12个)。变量太多可能导致过拟合，变量太少往往不够稳健。
+1. 模型中不应该包含太多变量。通常，包含的变量不超过9~20个(最优10~12个)。变量太多可能导致过拟合，变量太少往往区分度不够。
 
 --
 
@@ -846,11 +846,16 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 ```
 
 ```
-##                   variable    bin     woe points
-## 1:              basepoints     NA      NA    444
-## 2: other.installment.plans   bank  0.4836    -25
-## 3: other.installment.plans stores  0.4595    -24
-## 4: other.installment.plans   none -0.1212      6
+##                               variable
+## 1:                          basepoints
+## 2: status.of.existing.checking.account
+## 3: status.of.existing.checking.account
+## 4: status.of.existing.checking.account
+##                                                       bin     woe points
+## 1:                                                     NA      NA    444
+## 2:                         ... &lt; 0 DM%,%0 &lt;= ... &lt; 200 DM  0.6142    -26
+## 3: ... &gt;= 200 DM / salary assignments for at least 1 year -0.4055     17
+## 4:                                    no checking account -1.1763     49
 ```
 
 ---
@@ -861,8 +866,8 @@ data.table::rbindlist(card, fill=TRUE)[1:4,1:4]
 
 ```r
 # 评分转换只有总分
-train_score = scorecard_ply(train, card, print_step=0) 
-test_score = scorecard_ply(test, card, print_step=0) 
+train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0) 
+test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0) 
 str(train_score)
 ```
 
@@ -880,17 +885,17 @@ str(train_score2)
 
 ```
 ## Classes 'data.table' and 'data.frame':	600 obs. of  12 variables:
-##  $ other.installment.plans_points            : num  6 6 -25 6 -25 -25 6 6 -25 6 ...
-##  $ age.in.years_points                       : num  -3 -3 -3 11 -3 -29 -3 -3 -3 -29 ...
-##  $ property_points                           : num  25 25 -2 25 -2 -2 -2 25 25 -2 ...
-##  $ personal.status.and.sex_points            : num  -23 14 -23 14 -23 -23 14 14 12 -23 ...
-##  $ present.employment.since_points           : num  -18 17 10 -1 -1 -1 -18 -1 -1 -18 ...
-##  $ savings.account.and.bonds_points          : num  -13 -13 -7 38 -7 -13 -13 38 -13 -13 ...
-##  $ credit.amount_points                      : num  18 -20 18 -6 18 18 18 18 -6 18 ...
-##  $ purpose_points                            : num  -21 -21 -21 30 -21 60 -21 30 -21 -21 ...
-##  $ credit.history_points                     : num  -3 -3 -3 23 -3 -35 -3 23 -3 -3 ...
-##  $ duration.in.month_points                  : num  15 -5 56 -5 -5 -5 -22 56 15 15 ...
 ##  $ status.of.existing.checking.account_points: num  -26 -26 -26 49 17 -26 -26 49 -26 49 ...
+##  $ duration.in.month_points                  : num  15 -5 56 -5 -5 -5 -22 56 15 15 ...
+##  $ credit.history_points                     : num  -3 -3 -3 23 -3 -35 -3 23 -3 -3 ...
+##  $ purpose_points                            : num  -21 -21 -21 30 -21 60 -21 30 -21 -21 ...
+##  $ credit.amount_points                      : num  18 -20 18 -6 18 18 18 18 -6 18 ...
+##  $ savings.account.and.bonds_points          : num  -13 -13 -7 38 -7 -13 -13 38 -13 -13 ...
+##  $ present.employment.since_points           : num  -18 17 10 -1 -1 -1 -18 -1 -1 -18 ...
+##  $ personal.status.and.sex_points            : num  -23 14 -23 14 -23 -23 14 14 12 -23 ...
+##  $ property_points                           : num  25 25 -2 25 -2 -2 -2 25 25 -2 ...
+##  $ age.in.years_points                       : num  -3 -3 -3 11 -3 -29 -3 -3 -3 -29 ...
+##  $ other.installment.plans_points            : num  6 6 -25 6 -25 -25 6 6 -25 6 ...
 ##  $ score                                     : num  401 415 418 628 389 363 374 699 398 423 ...
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
@@ -1090,7 +1095,7 @@ dt = setDT(germancredit)[, `:=`(
   y = ifelse(creditability == "bad", 1, 0),
   creditability = NULL)]
 
-# filter variable via missing rate, iv, identical value rate
+# filter variable via iv, missing rate, identical value rate
 dt_s = var_filter(dt, "y")
 
 # breaking dt into train and test ------
@@ -1098,14 +1103,14 @@ dt_list = split_df(dt_s, y="y", ratio = 0.6, seed = 30)
 train = dt_list$train; test = dt_list$test;
 
 # woe binning ------
-bins = woebin(train, "y", print_step = 5) # woebin_plot(bins)
+bins = woebin(train, "y", print_step=0) # woebin_plot(bins)
 # binning adjustment
 breaks_adj = list(age.in.years=c(26, 35, 40))
-bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step = 5)
+bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step=0)
 
 # converting train and test into woe values
-train_woe = woebin_ply(train, bins_adj, print_step = 5)
-test_woe = woebin_ply(test, bins_adj, print_step = 5)
+train_woe = woebin_ply(train, bins_adj, print_step=0)
+test_woe = woebin_ply(test, bins_adj, print_step=0)
 ```
 
 ---
@@ -1130,8 +1135,8 @@ perf_eva(test$y, test_pred, title = "test")
 # score
 card = scorecard(bins_adj, m2)
 # credit score, only_total_score = TRUE
-train_score = scorecard_ply(train, card, print_step = 0)
-test_score = scorecard_ply(test, card, print_step = 0)
+train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0)
+test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0)
 
 # psi
 perf_psi(
@@ -1152,8 +1157,15 @@ class: center, middle
 "highlightLines": true,
 "countIncrementalSlides": false
 });
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
-(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
