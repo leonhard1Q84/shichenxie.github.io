@@ -837,25 +837,21 @@ score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 
 --
 
-- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
+- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds0=1/19, pdo=50`
 
 ```r
 # 创建评分卡刻度
 card = scorecard(bins_adj, m2) 
-data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
+data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4] 
 ```
 
 ```
-##                               variable
-## 1:                          basepoints
-## 2: status.of.existing.checking.account
-## 3: status.of.existing.checking.account
-## 4: status.of.existing.checking.account
-##                                                       bin     woe points
-## 1:                                                     NA      NA    444
-## 2:                         ... &lt; 0 DM%,%0 &lt;= ... &lt; 200 DM  0.6142    -26
-## 3: ... &gt;= 200 DM / salary assignments for at least 1 year -0.4055     17
-## 4:                                    no checking account -1.1763     49
+##        variable       bin      woe points
+## 1:   basepoints        NA       NA    444
+## 2: age.in.years [-Inf,26)  0.52884    -29
+## 3: age.in.years   [26,35)  0.06047     -3
+## 4: age.in.years   [35,40) -0.56369     31
+## 5: age.in.years [40, Inf) -0.19416     11
 ```
 
 ---

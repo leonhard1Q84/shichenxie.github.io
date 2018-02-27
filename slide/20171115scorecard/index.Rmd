@@ -652,11 +652,11 @@ score &=& A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 
 --
 
-- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds=1/19, pdo=50`
+- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds0=1/19, pdo=50`
 ```{r card, warning=FALSE, message=FALSE}
 # 创建评分卡刻度
 card = scorecard(bins_adj, m2) 
-data.table::rbindlist(card, fill=TRUE)[1:4,1:4] 
+data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4] 
 ```
 
 ---
