@@ -620,13 +620,13 @@ dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
 
 单个样本的损失函数(loss function):
 `$$\ell(\hat{y},y)=-(y\ln{\hat{y}} + (1-y)\ln{(1-\hat{y})})$$`
-其中, `\(\hat{y}\)`为拟合值, `\(y\)` 为实际标签
-
 对于整个训练集的代价函数(cost function):
 `$$\begin{eqnarray}
 J(\boldsymbol{w},b)&amp;=&amp;\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 \\&amp;=&amp;-\frac{1}{m}\sum_i{[y^{(i)}\ln{\hat{y}^{(i)}}+(1-y^{(i)})\ln{(1-\hat{y}^{(i)})}]}
 \end{eqnarray}$$`
+其中, `\(\hat{y}\)` 为拟合值, `\(y\)`为实际标签, `\(m\)`为样本数量
+
 使用梯度下降(gradient descent), 找到合适的参数 `\((\boldsymbol{w}, b)\)` , 使得 `\(J(\boldsymbol{w},b)\)` 尽可能小:
 .pull-left[
 ![](index_files/figure-html/gradient_descent-1.png)&lt;!-- --&gt;

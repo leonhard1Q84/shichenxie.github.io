@@ -475,13 +475,13 @@ $$\ln\frac{p}{1-p}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$
 
 单个样本的损失函数(loss function):
 $$\ell(\hat{y},y)=-(y\ln{\hat{y}} + (1-y)\ln{(1-\hat{y})})$$
-其中, $\hat{y}$为拟合值, $y$ 为实际标签
-
 对于整个训练集的代价函数(cost function):
 $$\begin{eqnarray}
 J(\boldsymbol{w},b)&=&\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
 \\&=&-\frac{1}{m}\sum_i{[y^{(i)}\ln{\hat{y}^{(i)}}+(1-y^{(i)})\ln{(1-\hat{y}^{(i)})}]}
 \end{eqnarray}$$
+其中, $\hat{y}$ 为拟合值, $y$ 为实际标签, $m$ 为样本数量
+
 使用梯度下降(gradient descent), 找到合适的参数 $(\boldsymbol{w}, b)$ , 使得 $J(\boldsymbol{w},b)$ 尽可能小:
 .pull-left[
 ```{r gradient_descent, echo=FALSE, fig.width=4, fig.height=2}
@@ -489,7 +489,12 @@ library(ggplot2)
 
 ggplot(data.frame(x = c(0, 10)), aes(x)) +
   stat_function(fun = function(x) (x-5)^2+1) + 
-  labs(x=NULL,y=NULL)
+  labs(x="w",y="J") + 
+  theme(axis.ticks.y=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.text.x=element_blank())
+
 ```
 ]
 .pull-right[
