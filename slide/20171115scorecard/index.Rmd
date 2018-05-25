@@ -1,5 +1,5 @@
 ---
-title: "使用R语言开发评分卡模型"
+title: "信用评分卡模型开发与应用"
 subtitle: "scorecard包简介"
 author: "谢士晨"
 date: "2017年11月"
@@ -19,31 +19,32 @@ options(htmltools.dir.version = FALSE)
 
 # 主要内容 
 
-### 1. 评分卡是什么？
-### 2. R语言环境配置
-### 3. scorecard包的使用
+### 一. 评分卡是什么？
+### 二. R语言环境配置
+### 三. 评分卡模型开发
 
 ---
 
 class: inverse, center, middle
-# 1. 评分卡是什么？
+# 一. 评分卡是什么？
 
 ---
 
-## 评分卡相关概念<sup>*</sup>
+## 信用评分模型相关概念<sup>*</sup>
 
 - **定义**：
-信用评分模型运用数据挖掘技术和统计分析方法，通过对消费者的人口特征、信用历史记录、行为记录、交易记录等大量数据进行系统的分析，挖掘数据中蕴含的行为模式、信用特征，捕捉历史信息和未来信用表现之间的关系，发展出预测性的模型，以一个信用评分来综合评估消费者未来的某种信用表现。
+个人信用评分是对个人信用信息的一种量化描述。
+具体而言，信用评分模型运用数据挖掘技术和统计分析方法，通过对消费者的身份特征、信用历史、行为记录、交易记录等大量数据进行系统的分析，挖掘数据中蕴含的行为模式与信用特征，捕捉历史信息和未来信用表现之间的关系，发展出预测性的模型，以一个信用评分来综合评估消费者未来的某种信用表现。
 
 --
 
-- **信用评分模型分类**：
-  - 金融机构内部数据评分
-      - 申请风险评分
-      - 行为风险评分、行为收益评分、行为流失倾向评分
-      - 申请欺诈评分、交易欺诈评分
-  - 征信局数据评分
-      - 征信局风险/破产/收益评分、市场反应评分、转账倾向评分
+- **信用评分模型分类**:
+    - 按照客户的生命周期可分为: 
+    (1)申请评分(Application score)、(2)行为评分(Behavioural score)、(3)催收评分(Collections score)
+    - 按照模型的数据来源可分为: 
+    (1)征信局评分、(2)行业共享评分、(3)定制评分
+    - 按照模型的预测目标可分为: 
+    (1)风险评分、(2)收益评分、(3)流失倾向评分、(4)转账倾向评分、(5)循环信贷倾向评分、(6)欺诈评分
 
 --
 
@@ -55,70 +56,42 @@ class: inverse, center, middle
 .footnote[[*] 陈建. 信用评分模型技术与应用[M]. 中国财政经济出版社, 2005.]
 
 ---
+## 信贷业务流程
+
+![信贷业务流程](./index_files/信贷业务流程.svg)
+
+---
 
 ## 标准评分卡示例
 
 ```{r scorecard_example1, include=FALSE}
 library(data.table)
 library(scorecard)
+
 data("germancredit")
 
-y = "creditability"
-x = c("age.in.years", "housing", "present.employment.since")
-breaks_list = list(
-  # credit.history = c("no credits taken/ all credits paid back duly%,%all credits at this bank paid back duly", "existing credits paid back duly till now%,%delay in paying off in the past", "critical account/ other credits existing (not at this bank)"), 
-  age.in.years = c(26, 35, 40),
-  present.employment.since = c("unemployed%,%... < 1 year", "1 <= ... < 4 years", "4 <= ... < 7 years", "... >= 7 years"), 
-  housing = NULL
-)
+# breaks_list = list(
+#   age.in.years = c(26, 35, 40),
+#   present.employment.since = c("unemployed%,%... < 1 year", "1 <= ... < 4 years", "4 <= ... < 7 years", "... >= 7 years"), 
+#   housing = NULL
+# )
+y="creditability"
+x=c("age.in.years", "housing", "present.employment.since")
 
-dt = setDT(germancredit)[,`:=`(
-  creditability = ifelse(creditability=="bad",1,0), 
-  housing = as.character(housing)
-)][,c(x,y),with=F]
-
-
-# for (i in seq(0,100,by=10)) {
-seed = 40
-set.seed(seed)
-x = sort(x)
-
+# binning 
+bins = woebin(germancredit, y, x, breaks_list=NULL, method='chimerge')
+dt_woe = woebin_ply(germancredit, bins)
+  
 # glm 
-  train = split_df(dt, y, ratio=0.6, seed=seed)$train
-  test = split_df(dt, y, ratio=0.6, seed=seed)$test
+fmla = paste0(y, " ~ ", paste0(paste0(x, "_woe"), collapse = " + "))
+m = glm(as.formula(fmla), family = "binomial", data=dt_woe)
   
-  bins_train = woebin(train, y, breaks_list=breaks_list, print_step=0)
-  # bins_test = woebin(test, y, breaks_list=breaks_list, print_step=0)
-  
-  train_woe = woebin_ply(train, bins_train, print_step=0)
-  test_woe = woebin_ply(test, bins_train, print_step=0)
-  
-  # glm 
-  fmla = as.formula(paste0(y, " ~ ."))
-  m = glm(fmla, family = "binomial", data=train_woe)
-  
-  # perf
-  train_pred = predict(m, type='response', train_woe)
-  test_pred = predict(m, type='response', test_woe)
-  
-  # train_perf =
-  #   perf_eva(train_woe$creditability, train_pred, title="train")
-  # test_perf =
-  #   perf_eva(test_woe$creditability, test_pred, title="test")
-  # cat(seed, "train:", train_perf$KS, "test:", test_perf$KS, "diff", test_perf$KS-train_perf$KS,"\n")
-# }
-  
-  # creating score card ---
-  sc = scorecard(bins_train, m, points0=600, odds0=1/19, pdo=50)
-  
-  # # scoring 
-  train_score = scorecard_ply(train, sc, only_total_score=F)
-  # test_score = scorecard_ply(test, sc, only_total_score=T)
-  # 
-  # p_psi = perf_psi(
-  #   score = list(train=train_score, test=test_score),
-  #   label = list(train=train[,y,with=F], test=test[,y,with=F]),
-  #   x_limits=c(350, 850), x_tick_break=50, seed=seed)
+# perf
+pred = predict(m, type='response', dt_woe)
+
+# scoring 
+sc = scorecard(bins, m)
+dt_score = scorecard_ply(germancredit, sc, only_total_score=F, print_step = 0)
 ```
 
 ```{r scorecard_example1_1, results = "asis", echo=FALSE, message=FALSE}
@@ -136,27 +109,27 @@ knitr::kable(card, format = "html")
 - 如果某进件客户信息如下：
 
 ```{r results = "asis", echo=FALSE}
-knitr::kable(dt[8,c(3:1)], format = "html")
+knitr::kable(setDT(germancredit)[8,sort(x),with=F], format = "html")
 ```
 
 - 则相应信用评分为：
 
 ```{r results = "asis", echo=FALSE}
 knitr::kable(
-  setnames(train_score[8,],sub("_points$","",names(train_score)))[,lapply(.SD,as.integer)], 
+  setnames(dt_score[8,],sub("_points$","",names(dt_score)))[,lapply(.SD,as.integer)], 
   format = "html")
 ```
 
 ---
 
 class: inverse, center, middle
-# 2. R语言环境配置
+# 二. R语言环境配置
 
 ---
 
 ## 软件安装与配置
 
-- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像,国内速度更快](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
+- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像(速度更快)](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
 
 --
 
@@ -196,7 +169,7 @@ options(continue="+ ")
 # 设置之后重启R，.libPaths()返回新建的本地库路径
 
 # 设置CRAN镜像默认地址
-options(repos = c(CRAN = "http://cran.r-project.org/", 
+options(repos = c(CRAN = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/",
                   CRANextra = "https://cloud.r-project.org/"))
 
 # 启动函数
@@ -211,7 +184,7 @@ options(repos = c(CRAN = "http://cran.r-project.org/",
 ## R包与相关资料
 
 .pull-left[
-以`scorecard`包([Github](https://github.com/ShichenXie/scorecard), [Slide](http://shichen.name/slide/20171115scorecard/))为例: 
+以`scorecard`包([Github](https://github.com/ShichenXie/scorecard), [Slides](http://shichen.name/slide/20171115scorecard/))为例: 
 
 - 安装包，
 
@@ -238,75 +211,106 @@ devtools::install_github(
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
 
 - R语言相关网站: 
-  - [R官网](https://www.r-project.org)
-  - [Rstudio](https://www.rstudio.com/)
-  - [r-bloggers](http://r-bloggers.com/)
-  - [Quick-R](http://www.statmethods.net/)
-  - [统计之都COS](https://cosx.org)
-  - 大神: 谢益辉([HP](http://yihui.name), [GH](https://github.com/yihui)), Hadley([HP](http://hadley.nz), [GH](http://github.com/hadley/)), Matt([GH](https://github.com/mattdowle))
+  - 官网: [R官网](https://www.r-project.org), [Rstudio](https://www.rstudio.com/)
+  - 论坛博客: [统计之都COS](https://cosx.org), [r-bloggers](http://r-bloggers.com/), [Quick-R](http://www.statmethods.net/)
+  - 各路大神: 谢益辉([HP](http://yihui.name), [GH](https://github.com/yihui)), Hadley([HP](http://hadley.nz), [GH](http://github.com/hadley/)), Matt([GH](https://github.com/mattdowle))
 ]
 
 ---
 
 class: inverse, center, middle
-# 3. scorecard包的使用
+# 三. 评分卡模型开发
 
 ---
 
 ## 评分卡开发流程<sup>*</sup>
 
 1. 数据准备
-  - 特征衍生与数据整合
-  - WOE转换与单变量统计
+  1. 数据清洗整合
+  1. 标签定义与特征衍生
 --
 
-1. 变量筛选
-  - 变量粗筛: 信息值、缺失率、单类别比例
-  - 模型筛选: LASSO、step
+1. 模型训练
+  1. 模型外变量选择(信息值、缺失率、单类别比例)
+  1. 建模样本切分
+  1. 分箱WOE转换
+  1. 逻辑回归与模型内变量选择(LASSO、step)
+  1. 拒绝推断（可选）
 --
 
-1. 模型开发
-  - 逻辑回归模型
+1. 模型评估
+  1. 模型验证评估(准确性、稳健性、有意义)
+  1. 信用风险策略
 --
 
-1. 模型验证
-  - 预测模型需要满足：准确性、稳健性、有意义
---
-
-1. 评分卡刻度与实施
-
+1. 评分刻度与实施
+  1. 评分刻度转换
+  1. 模型监控
+  
 --
 
 .footnote[[*] 马姆杜·雷法特, 王松奇, 林治乾. 信用风险评分卡研究[M]. 社会科学文献出版社, 2013.]
 
 ---
 
-## 1. 数据准备-样本切分
+class: inverse, center, middle
+# 三-2. 模型训练
 
-通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
-```{r}
-library(data.table)
+---
+
+## 2.1 变量选择主要方法
+
+- 不使用预测模型
+  - 有监督
+      - 信息值、卡方统计量、基尼系数
+  - 无监督
+      - 相关性、聚类分析、主成分分析
+    
+- 使用预测模型
+  - 有监督
+      - 逐步回归（forward, backward, stepwise）
+      - 正则化（AIC, BIC, lasso, ridge）
+      - 集成模型（RF, xgboost）
+      - 交叉验证
+
+---
+
+## 2.1 模型外变量选择
+
+`scorecard::var_filter`函数提供了变量粗筛功能，默认删除信息值<0.02、缺失率>95%、单类别比例>95%的变量
+
+```{r comment='#', message=FALSE, warning=FALSE}
 library(scorecard)
-# 加载数据
 data("germancredit")
 
-# y变量creditability赋值为0/1
-dt = setDT(germancredit)[
-  , creditability := ifelse(creditability=="bad",1,0)]
-
-# 数据集切分为训练集与测试集
-dt_list = split_df(dt, y="creditability", ratio=0.6, seed=21)
-train = dt_list$train; test = dt_list$test
+dt_sel=var_filter(germancredit, y="creditability") 
+str(dt_sel)
 ```
 
 ---
 
-### WOE转换
+## 2.2 建模样本切分
+
+通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
+```{r}
+# 数据集切分为训练集与测试集
+dt_list = split_df(dt_sel, y="creditability", 
+  ratio=0.7, seed=21)
+
+train = dt_list$train
+test = dt_list$test
+
+lapply(dt_list, dim)
+```
+
+---
+
+## 2.3 分箱WOE转换
+
+证据权重(Weight of Evidence, WOE)转换可以将logistic回归模型转变为标准评分卡格式。该转换过程能够简化模型的应用且增加业务解释性，同时能将特征与标签之间的非线性关系转化为线性的。`scorecard::woebin`函数提供了tree与chimerge两种分箱方法。
 
 ```{r woebin, comment='#', message=FALSE, warning=FALSE}
-# 分箱
-bins = woebin(dt, y="creditability", print_step=0)
-
+bins = woebin(dt_sel, y="creditability", method="tree")
 class(bins)
 bins$age.in.years
 ```
@@ -314,8 +318,8 @@ bins$age.in.years
 ---
 
 - 分箱i的`WOE`值`(Weight of Evidence)`定义如下:   
-$$WOE_i=\ln\left[\frac{Bad\_Distr_i}{Good\_Distr_i}\right]=\ln\left[\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right]=\ln\left[\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right]$$  
-即，`WOE`值是分箱i的坏客户分布与好客户分布的比值的对数，调整为分箱i的坏好比与总体样本的坏好比的比值的对数，衡量了分箱i对整体坏好比的影响程度。
+$$WOE_i=\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)=\ln\left(\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right)=\ln\left(\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right)$$  
+即，`WOE`值是分箱i的坏客户分布与好客户分布的比值的对数，调整为分箱i的坏好比与总体样本的坏好比的比值的对数。其衡量了分箱i对整体坏好比的影响程度。
 
 --
 
@@ -340,32 +344,33 @@ ivs[variable=="age.in.years",]
 ```{r iv2, results = "asis", echo=FALSE, message=FALSE}
 iv_df = data.frame(IV范围=c("小于0.02","0.02到0.10","0.10到0.30","大于0.30"), 预测力=c("无预测力","弱","中等","强"))
 
-knitr::kable(iv_df, format = "html",caption = "通过信息值大小判断候选自变量的预测力")
+knitr::kable(iv_df, format = "html",caption = "信息值与预测力关系")
 ```
 ]
 
 ---
 
-- `scorecard::woebin`分箱函数：模型候选变量包括连续变量、类别变量、有序类别变量三类，分别对应R语言中的numeric、character、factor数据类型(logical变量分箱时与numeric类似)。
+
+- `scorecard::woebin`函数tree方法分箱的原理类似决策树过程。
+不同的变量类型的分箱过程稍有差异。常见的变量类型包括数值型、类别型、有序类别型三类，分别对应R中的numeric、character、factor。
     
-    - 连续变量首先需等距分段，`woebin`函数通过`min_perc_total`控制，默认值为0.02，即初始等距分50段。且极大/小值<sup>*</sup>单独分段。
+    - 数值型变量首先需等距细分段，通过`min_perc_fine_bin`参数控制，默认值为0.02，即初始等距分为50段。且极值<sup>*</sup>单独分段。
     
     - 对于类别变量，根据每个类别变量的坏客户率排序。
     
     - 通过上面两步连续变量与类别变量均转换为有序类别变量。
+
+    - 最后，采用贪心算法逐步搜索使得信息值最大且新增分箱中样本占比(`min_perc_coarse_bin`)不小于5%的分箱点。
+    - 分箱过程的停止条件是信息增益率(`stop_limit`)小于0.1与最大分箱数(`max_bin_num`)大于8。
+
 --
 
-    - 最后，通过决策树实现有序类别变量的最优分箱，其算法过程见下一页
-    
-      - 最优分箱过程中需确保分箱区间的有序性
-    
-      - 每一个最优分箱节点使得分箱之后的信息值在所有候选分箱节点中最大
-    
-      - 分箱停止条件是信息增益率`stop_limit`与最大分箱数 `max_bin_num`，默认值分别为0.1与6，即信息增益率小于10%或者非缺失值分箱数大于6后停止进一步分箱。
+- `scorecard::woebin`函数chimerge方法分箱的原理参见[chimerge算法](http://blog.csdn.net/qunxingvip/article/details/50449376)或原论文[ChiMerge:Discretization of numeric attributs](http://www.aaai.org/Papers/AAAI/1992/AAAI92-019.pdf)
 
 .footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
 ---
+
 .pull-left[
 决策树最优分箱算法过程：
 ![分箱算法过程](./index_files/bin.png)
@@ -383,7 +388,6 @@ woebin_plot(bins$age.in.years)
 ```
 ]
 
-
 ---
 
 .pull-left[
@@ -393,7 +397,7 @@ break_adj = list(
   age.in.years=c(26,35,40))
 
 bins_adj = woebin(
-  dt, y="creditability", 
+  dt_sel, y="creditability", 
   breaks_list=break_adj, 
   print_step=0)
 
@@ -401,9 +405,12 @@ woebin_plot(bins_adj$age.in.years)
 ```
 ]
 
-```{r}
-# 调整后分箱信息
-bins_adj$age.in.years[,.(bin,woe)]
+--
+
+```r
+# 交互式调整分箱
+breaks_adj = woebin_adj(
+  dt_sel, "creditability", bins) 
 ```
 
 --
@@ -412,41 +419,23 @@ bins_adj$age.in.years[,.(bin,woe)]
 ```{r comment='#', message=FALSE, warning=FALSE}
 # WOE转换
 train_woe = woebin_ply(
-  train, bins_adj, print_step=0)
+  train, bins_adj)
 test_woe = woebin_ply(
-  test, bins_adj, print_step=0)
+  test, bins_adj)
 
-cbind(train[1:5,.(age.in.years)],
-      train_woe[1:5,.(age.in.years_woe)])
 ```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+cbind(train[1:8,.(age.in.years)],
+      train_woe[1:8,.(age.in.years_woe)])
+```
+
 ]
 
----
-
-## 2. 变量选择-变量粗筛
-
-`scorecard::var_filter`提供了变量粗筛功能，默认删除信息值<0.02、缺失率>95%、单类别比例>95%的变量
-
-```{r comment='#', message=FALSE, warning=FALSE}
-dt_sel=var_filter(train_woe,y="creditability") #粗筛后数据集
-var_sel = names(dt_sel)
-```
-
---
-
-```{r comment='#', message=FALSE, warning=FALSE}
-dt_sel2=var_filter(train_woe,y="creditability",return_rm_reason=TRUE)
-# dt_sel2$dt # 返回粗筛后数据集 # dt_sel2$rm # 返回删除变量的原因
-```
-
-```{r results = "asis", echo=FALSE, message=FALSE}
-# 删除变量的原因
-knitr::kable(dt_sel2$rm, format = "html")
-```
 
 ---
 
-## 3. 模型开发-逻辑回归
+## 2.4 逻辑回归
 
 逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 $y=1/(1+e^{-z})$ 将线性回归模型 $z=\boldsymbol{w}^T\boldsymbol{x}+b$ 产生的预测值转换为一个接近0或1的拟合值 $\hat{y}$ ：
 .pull-left[
@@ -532,18 +521,39 @@ var_sel3 = c(varimp$names, "creditability")
 
 ```{r}
 # glm ------
-m1 = glm( creditability ~ ., family = "binomial", data = train_woe[,var_sel,with=FALSE])
+m1 = glm( creditability ~ ., family = "binomial", data = train_woe)
 # summary(m1)
 
 # Select a formula-based model by AIC
 m_step = step(m1, direction="both", trace = FALSE)
 m2 = eval(m_step$call)
+
 summary(m2)$coefficients
 ```
 
 ---
 
-## 4. 模型验证评估
+## 2.5 拒绝推断
+- 申请评分卡的模型开发过程中使用的数据实际上并不是从申请总体样本中随机选择的，而仅仅是从过去已经被接受的客户样本中选择的。因此，开发申请评分卡时将对被拒绝客户的状态进行推断并纳入模型开发数据集中，即拒绝推断过程。
+
+- 拒绝推断的常用方法包括，
+  - 简单赋值法：人为指定被拒绝账户的标签
+      - 忽略被拒绝申请
+      - 所有被拒申请赋值为违约标签
+      - 按比例赋值，使得其坏客户率是通过样本的2~5倍以上
+  - 强化法：通过外推法确定拒绝账户的标签
+      - 简单强化法：使用通过客户开发的模型对被拒绝客户评分，将其中低分段赋予违约标签。使得拒绝客户的坏客户率为通过的2~5倍以上
+      - 模糊强化法：通过模型计算得到正常和违约概率。
+      - 打包强化法：先用开发的评分卡对被拒客户评分，然后指定每个分值区间的违约客户数量。
+
+---
+
+class: inverse, center, middle
+# 三-3. 模型评估
+
+---
+
+## 3.1 模型验证评估
 
 评分卡要求备选的逻辑回归模型达到三个基本要求:
 
@@ -567,8 +577,8 @@ train_pred = predict(m2, type='response', train_woe)
 test_pred = predict(m2, type='response', test_woe)
 
 # performance 
-perf_train = perf_eva(train$creditability, train_pred, title="train")
-perf_test = perf_eva(test$creditability, test_pred, title="test")
+perf_train = perf_eva(train_woe$creditability, train_pred, title="train")
+perf_test = perf_eva(test_woe$creditability, test_pred, title="test")
 
 perf_train$pic
 ```
@@ -625,7 +635,28 @@ perf_train$pic
 
 ---
 
-## 5. 评分卡刻度与实施
+## 3.2 信用风控策略
+
+模型开发之后需要基于建模样本确定风控策略。一个好的风控策略应具备：
+  1. 增加客户数量
+  1. 减少风险损失
+  1. 最大化利润
+  
+常用的风控策略包括，
+  1. 评分临界值：实现通过率、坏客户率、或利润损失率等业务目标
+  2. 通过交叉决策矩阵实现风险定价，实现差异化的利率、额度等：
+      - 风险评分与利润损失比
+      - 风险评分与债务收入比
+      - 风险评分与流失倾向评分
+
+---
+
+class: inverse, center, middle
+# 三-4. 评分刻度与实施
+
+---
+
+## 4.1 评分刻度转换
 
 - 评分卡的分值刻度通过将分值表示为比率对数的线性表达式:
 $$score = A - B\ln(odds)$$
@@ -646,7 +677,7 @@ $$score = A - B\ln(odds)$$
 
 ---
 
-### 评分卡刻度
+### 评分刻度
 
 - 分值分配。将逻辑回归公式代入评分卡分值公式，可以得到
 $$\begin{eqnarray}
@@ -666,7 +697,7 @@ data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4]
 
 ---
 
-### 评分卡刻度(续)
+### 评分刻度(续)
 
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
 ```{r score, warning=FALSE, message=FALSE}
@@ -682,7 +713,24 @@ str(train_score2)
 
 ---
 
-### 评分稳定性指数
+## 4.2 监控报表
+
+- 运行报表
+  - 通过率分析
+  - 稳定性指数分析
+  
+- 绩效报表
+  - 绩效表现跟踪
+  - Vintage分析
+
+- 资产分析
+  - 不良分布
+  - 迁移率分析
+
+
+---
+
+### 稳定性指数
 
 稳定性指数`(population stability index, PSI)`是计算实际和预期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
 
@@ -690,13 +738,15 @@ str(train_score2)
 psi = perf_psi(
   score = list(train = train_score, test = test_score),
   label = list(train = train$creditability, test = test$creditability),
-  x_limits = c(250, 750),
+  x_limits = c(250, 700),
   x_tick_break = 50,
   return_distr_dat = TRUE)
 
-psi_cal = psi$dat$score[,.(bin, A=count_train/sum(count_train), E=count_test/sum(count_test))][,`:=`(
-  A_E=A-E, logA_E=log(A/E)
-)][,`:=`(PSI = A_E*logA_E, total_PSI = sum(A_E*logA_E))]
+psi_cal = psi$dat$score[,.(bin, 
+  A=count_train/sum(count_train, na.rm = TRUE),
+  E=count_test/sum(count_test, na.rm = TRUE)
+)][,`:=`(A_E=A-E, logA_E=log(A/E)
+)][,`:=`(PSI = A_E*logA_E, total_PSI = sum(A_E*logA_E, na.rm = TRUE))]
 ```
 
 
@@ -738,9 +788,7 @@ psi = perf_psi(
     test =test_score),
   label = list(
     train=train$creditability, 
-    test =test$creditability),
-  x_limits = c(250, 750),
-  x_tick_break = 50)
+    test =test$creditability))
 
 psi$psi
 ```
@@ -756,64 +804,69 @@ psi$pic
 **评分卡建模案例**
 
 ```r
-library(data.table)
 library(scorecard)
+
+# data prepare ------
 # load germancredit data
 data("germancredit")
 
-# rename creditability as y
-dt = setDT(germancredit)[, `:=`(
-  y = ifelse(creditability == "bad", 1, 0),
-  creditability = NULL)]
+# filter variable via missing rate, iv, identical value rate
+dt_s = var_filter(germancredit, y="creditability")
 
-# filter variable via iv, missing rate, identical value rate
-dt_s = var_filter(dt, "y")
-
-# breaking dt into train and test ------
-dt_list = split_df(dt_s, y="y", ratio = 0.6, seed = 30)
-train = dt_list$train; test = dt_list$test;
+# breaking dt into train and test
+dt_list = split_df(dt_s, y="creditability", ratio = 0.6, seed = 30)
+train = dt_list$train
+test = dt_list$test
 
 # woe binning ------
-bins = woebin(train, "y", print_step=0) # woebin_plot(bins)
+bins = woebin(dt_s, y="creditability")
+# woebin_plot(bins)
+
 # binning adjustment
-breaks_adj = list(age.in.years=c(26, 35, 40))
-bins_adj = woebin(dt_s,"y", breaks_list=breaks_adj, print_step=0)
+# # adjust breaks interactively
+# breaks_adj = woebin_adj(dt_s, "creditability", bins) 
+# bins_adj = woebin(dt_s, y="creditability", breaks_list=breaks_adj)
 
 # converting train and test into woe values
-train_woe = woebin_ply(train, bins_adj, print_step=0)
-test_woe = woebin_ply(test, bins_adj, print_step=0)
+train_woe = woebin_ply(train, bins_adj)
+test_woe = woebin_ply(test, bins_adj)
+
 ```
 
 ---
 
 ```r
 # glm ------
-m1 = glm( y ~ ., family = "binomial", data = train_woe) # summary(m1)
+m1 = glm( creditability ~ ., family = binomial(), data = train_woe)
+# summary(m1)
 
-# Select a formula-based model by AIC
-m_step = step(m1, direction="both", trace = FALSE)
-m2 = eval(m_step$call) # summary(m2)
+# Select a formula-based model by AIC (or by LASSO)
+m_step = step(m1, direction="both", trace=FALSE)
+m2 = eval(m_step$call)
+# summary(m2)
 
-# performance ------
+# performance ks & roc ------
 # predicted proability
 train_pred = predict(m2, train_woe, type='response')
 test_pred = predict(m2, test_woe, type='response')
 
-# ks & roc plot
-perf_eva(train$y, train_pred, title = "train")
-perf_eva(test$y, test_pred, title = "test")
+# performance
+train_perf = perf_eva(train$creditability, train_pred, title="train")
+test_perf = perf_eva(test$creditability, test_pred, title="test")
 
-# score
+# score ------
 card = scorecard(bins_adj, m2)
-# credit score, only_total_score = TRUE
-train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0)
-test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0)
+
+# credit score
+train_score = scorecard_ply(train, card, print_step=0)
+test_score = scorecard_ply(test, card, print_step=0)
 
 # psi
 perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train$y, test = test$y),
-  x_limits = c(250, 700), x_tick_break = 50 )
+  label = list(train = train$creditability, test = test$creditability)
+)
+
 ```
 
 ---
@@ -821,3 +874,4 @@ perf_psi(
 class: center, middle
 
 # 谢谢
+Email: xie@shichen.name
