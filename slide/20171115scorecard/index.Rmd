@@ -14,6 +14,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+# 网页地址: http://shichen.name/slide/20171115scorecard/
 options(htmltools.dir.version = FALSE)
 ```
 
@@ -444,7 +445,7 @@ $$\begin{eqnarray}
 \end{eqnarray}$$
 ]
 .pull-right[
-```{r sig, echo=FALSE, fig.width=4, fig.height=2}
+```{r sig, echo=FALSE, fig.width=4, fig.height=2, warning=FALSE}
 library(ggplot2) # sigmoid function
 ggplot(data.frame(x = c(-10, 10)), aes(x)) +
   stat_function(fun = function(x) 1/(1+exp(-x))) + 
