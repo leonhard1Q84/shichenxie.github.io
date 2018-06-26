@@ -331,7 +331,8 @@ $$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{
 
 .pull-left[
 ```{r iv1, comment='#', message=FALSE, warning=FALSE}
-# 信息值函数 scorecard::iv
+# 信息值函数 scorecard::iv，
+# 计算的原始信息值，即每个值为一组
 ivs = iv(germancredit, 
           y="creditability")
 
@@ -438,10 +439,10 @@ cbind(train[1:8,.(age.in.years)],
 
 ## 2.4 逻辑回归
 
-逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 $y=1/(1+e^{-z})$ 将线性回归模型 $z=\boldsymbol{w}^T\boldsymbol{x}+b$ 产生的预测值转换为一个接近0或1的拟合值 $\hat{y}$ ：
+逻辑回归`(logistic regression)`在信用评分卡开发中起到核心作用。逻辑回归通过`sigmoid`函数 $y=1/(1+e^{-z})$ 将线性回归模型 $z=\boldsymbol{w}^T\boldsymbol{x}+b$ 产生的预测值转换为一个接近0或1的拟合值：
 .pull-left[
 $$\begin{eqnarray} 
-\hat{y}&=&\frac{1}{1+e^{-z}} \\&=&\frac{1}{1+e^{-(\boldsymbol{w}^T\boldsymbol{x}+b)}}
+h(x)&=&\frac{1}{1+e^{-z}} \\&=&\frac{1}{1+e^{-(\boldsymbol{w}^T\boldsymbol{x}+b)}}
 \end{eqnarray}$$
 ]
 .pull-right[
@@ -455,7 +456,7 @@ ggplot(data.frame(x = c(-10, 10)), aes(x)) +
 
 --
 
-上式的 $\hat{y}$ 可视为事件发生的概率 $p(y=1|\boldsymbol{x})$ ，变换后得到：
+上式的 $h(x)$ 可视为事件发生的概率 $p(y=1|\boldsymbol{x})$ ，变换后得到：
 $$\ln\frac{p}{1-p}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$
 其中， $p/(1-p)$ 为比率(odds)，即违约概率与正常概率的比值。 $\ln{p/(1-p)}$ 为logit函数，即比率的自然对数。因此，逻辑回归实际上是用比率的自然对数作为因变量的线性回归模型。
 
@@ -463,14 +464,14 @@ $$\ln\frac{p}{1-p}=z=\boldsymbol{w}^T\boldsymbol{x}+b$$
 
 ### 逻辑回归代价函数(cost function)
 
-单个样本的损失函数(loss function):
-$$\ell(\hat{y},y)=-(y\ln{\hat{y}} + (1-y)\ln{(1-\hat{y})})$$
-对于整个训练集的代价函数(cost function):
+通过最大似然估计，得到似然函数（推导过程参见附录A）:
+$$\ell(\boldsymbol{w},b)=\sum_i{[y^{(i)}\ln{h(x)^{(i)}}+(1-y^{(i)})\ln{(1-h(x)^{(i)})}]}$$
+最大化上式等价于，最小化代价函数(cost function):
 $$\begin{eqnarray}
-J(\boldsymbol{w},b)&=&\frac{1}{m}\sum_i{\ell(\hat{y}^{(i)},y^{(i)})}
-\\&=&-\frac{1}{m}\sum_i{[y^{(i)}\ln{\hat{y}^{(i)}}+(1-y^{(i)})\ln{(1-\hat{y}^{(i)})}]}
+J(\boldsymbol{w},b)&=&-\frac{1}{m}\sum_i{\ell(\boldsymbol{w},b)}
+\\&=&-\frac{1}{m}\sum_i{[y^{(i)}\ln{h(x)^{(i)}}+(1-y^{(i)})\ln{(1-h(x)^{(i)})}]}
 \end{eqnarray}$$
-其中, $\hat{y}$ 为拟合值, $y$ 为实际标签, $m$ 为样本数量
+其中, $h(x)$ 为拟合值, $y$ 为实际标签, $m$ 为样本数量
 
 使用梯度下降(gradient descent), 找到合适的参数 $(\boldsymbol{w}, b)$ , 使得 $J(\boldsymbol{w},b)$ 尽可能小:
 .pull-left[
@@ -876,3 +877,26 @@ class: center, middle
 
 # 谢谢
 Email: xie@shichen.name
+
+---
+
+## 附录A. 损失函数推导
+
+通过逻辑回归模型 $h_\theta(x)=\frac{1}{1+e^{-\theta^Tx}}$，可以得到 $x$为类别1和类别0的概率分别为:
+$$\begin{eqnarray}
+&&P(y=1|x)=h_\theta(x) \\
+&&P(y=0|x)=1-h_\theta(x)
+\end{eqnarray}$$
+上式可综合写成:
+$$P(y|x;\theta)=(h_\theta(x))^{y}(h_\theta(x))^{1-y}$$
+则似然函数为: 
+$$\begin{eqnarray}
+L(\theta) = \prod_{i=1}^m{P(y^{(i)}|x^{(i)};\theta)} = \prod_{i=1}^m{(h_\theta(x^{(i)}))^{y^{(i)}}(h_\theta(x^{(i)}))^{1-y^{(i)}}}
+\end{eqnarray}$$
+对数似然函数为:
+$$\begin{eqnarray}
+l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{(y^{(i)}\ln{h_\theta(x^{(i)}})+(1-y^{(i)})\ln{h_\theta(x^{(i)}))}}
+\end{eqnarray}$$
+
+
+
