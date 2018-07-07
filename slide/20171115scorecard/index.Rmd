@@ -367,7 +367,7 @@ knitr::kable(iv_df, format = "html",caption = "信息值与预测力关系")
 
 --
 
-- `scorecard::woebin`函数chimerge方法分箱的原理参见[chimerge算法](http://blog.csdn.net/qunxingvip/article/details/50449376)或原论文[ChiMerge:Discretization of numeric attributs](http://www.aaai.org/Papers/AAAI/1992/AAAI92-019.pdf)
+- `scorecard::woebin`函数chimerge分箱为自底向上的数据离散化方法，即将具有最小卡方值的相邻区间合并在一起。具体内容参见[chimerge算法](http://blog.csdn.net/qunxingvip/article/details/50449376)或原论文[ChiMerge:Discretization of numeric attributs](http://www.aaai.org/Papers/AAAI/1992/AAAI92-019.pdf)
 
 .footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -898,5 +898,5 @@ $$\begin{eqnarray}
 l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{(y^{(i)}\ln{h_\theta(x^{(i)}})+(1-y^{(i)})\ln{h_\theta(x^{(i)}))}}
 \end{eqnarray}$$
 
-
+<!-- https://blog.csdn.net/ligang_csdn/article/details/53838743 -->
 
