@@ -513,6 +513,7 @@ fit = h2o.glm(y="creditability", training_frame=dth2o,
 family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
+library(data.table)
 varimp = data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) & coefficients > 0 & sign == "POS"]
 var_sel3 = c(varimp$names, "creditability")
 ```

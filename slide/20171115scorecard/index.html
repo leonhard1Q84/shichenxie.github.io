@@ -609,6 +609,12 @@ h(x)&amp;=&amp;\frac{1}{1+e^{-z}} \\&amp;=&amp;\frac{1}{1+e^{-(\boldsymbol{w}^T\
 \end{eqnarray}$$`
 ]
 .pull-right[
+
+```
+## Find out what's changed in ggplot2 at
+## http://github.com/tidyverse/ggplot2/releases.
+```
+
 ![](index_files/figure-html/sig-1.png)&lt;!-- --&gt;
 ]
 
@@ -660,6 +666,7 @@ fit = h2o.glm(y="creditability", training_frame=dth2o,
 family="binomial", nfolds=0, alpha=1, lambda_search=TRUE) # summary(fit)
 
 # variable importance
+library(data.table)
 varimp = data.table(h2o.varimp(fit))[names!=""][!is.na(coefficients) &amp; coefficients &gt; 0 &amp; sign == "POS"]
 var_sel3 = c(varimp$names, "creditability")
 ```
