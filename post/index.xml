@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on 谢士晨 | Shichen Xie</title>
-    <link>https://shichen.name/post/</link>
+    <link>/post/</link>
     <description>Recent content in Posts on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://shichen.name/post/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>[转]互联网金融的大数据风控</title>
-      <link>https://shichen.name/post/2018/01/10/fintech_credit/</link>
+      <link>/post/2018/01/10/fintech_credit/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2018/01/10/fintech_credit/</guid>
+      <guid>/post/2018/01/10/fintech_credit/</guid>
       <description> 大数据能够进行数据变现的商业模式目前主要包括，一是精准营销，典型的场景是商品推荐和精准广告投放，二是大数据风控，典型的场景是互联网金融的大数据风控。1
 金融的本质是风险管理，风控是所有金融业务的核心。典型的金融借贷业务例如抵押贷款、消费贷款、供应链金融、以及票据融资都需要数据风控识别欺诈用户及评估用户信用等级。
 传统金融的风控主要利用了信用属性强大的金融数据，一般采用20个纬度左右的数据，利用评分来识别客户的还款能力和还款意愿。信用相关程度强的数据纬度为十个左右，包含年龄、职业、收入、学历、工作单位、借贷情况、房产，汽车、单位、还贷记录等，金融企业参考用户提交的数据进行打分，最后得到申请人的信用评分，依据评分来决定是否贷款以及贷款额度。其他同信用相关的数据还有区域、产品、理财方式、行业、缴款方式、缴款记录、金额、时间、频率等。
@@ -55,10 +55,10 @@
     
     <item>
       <title>使用R语言开发信用评分卡模型案例</title>
-      <link>https://shichen.name/post/2018/01/05/scorecard/</link>
+      <link>/post/2018/01/05/scorecard/</link>
       <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2018/01/05/scorecard/</guid>
+      <guid>/post/2018/01/05/scorecard/</guid>
       <description>为了提高信用评分卡的建模效率，我为R语言社区贡献了一个开源项目scorecard包(Github, CRAN)。该R包提供了评分卡开发过程中的常用功能，例如：变量粗筛、最优分箱与分箱调整、模型评估、评分刻度转换等。
 评分卡模型的开发流程通常包括以下五个主要步骤：数据准备、变量筛选、模型开发、模型评估、评分卡刻度与实施。更加详细的模型开发请参考幻灯片-使用R语言开发评分卡模型。下面结合scorecard包完成一个简单的评分卡模型开发案例。
 # 加载[data.table](http://r-datatable.com)与scorecard包 library(data.table) # 一个超高性能的数据处理包 library(scorecard) # 数据准备 ------ # 加载scorecard包中的德国信贷数据集。该数据集包含了1000个信贷样本 # 20个特征，其详细介绍请参考[UCI的德国信贷数据集](https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data))。 data(&amp;quot;germancredit&amp;quot;) # dim(germancredit) # 数据集的违约标签为creditability # 将其中坏样本的标签赋值为1，好样本赋值为0。 dt = setDT(germancredit)[ , creditability := ifelse(creditability==&amp;quot;bad&amp;quot;,1,0)] # 样本粗筛 var_filter # 默认删除信息值小于0.02、缺失率大于95%或单类别比例大于95%的变量 # 可通过iv_limit, missing_limit, identical_limit分别设定。 # var_rm与var_kp指定需要强制删除或强制保留的变量 dt_s = var_filter(dt, &amp;quot;creditability&amp;quot;) # dim(dt_s) # 如果return_rm_reason=TRUE，则返回删除变量的原因 # dt_s = var_filter(dt, &amp;quot;creditability&amp;quot;, return_rm_reason=TRUE) # dt_s$rm # 删除变量的原因 # dt_s$dt # 粗筛之后的数据集 # 拆分数据集为训练集与测试集 split_df # y为标签，如果不指定则随机拆分，反之则按照y值分层拆分 # ratio为拆分后两个数据集样本数比例 # seed为随机种子，用于重现样本拆分 dt_list = split_df(dt_s, y=&amp;quot;creditability&amp;quot;, ratio=0.</description>
@@ -66,29 +66,29 @@
     
     <item>
       <title>stringr与regex函数对应关系</title>
-      <link>https://shichen.name/post/2017/07/25/datamani/</link>
+      <link>/post/2017/07/25/datamani/</link>
       <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2017/07/25/datamani/</guid>
+      <guid>/post/2017/07/25/datamani/</guid>
       <description>stringr是Hadley大神写的tidyverse1系列数据处理包中专门处理文本数据的，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看。
    stringr包中函数 功能说明 R Base中对应函数     使用正则表达式的函数     str_extract() 提取首个匹配模式的字符 regmatches()   str_extract_all() 提取所有匹配模式的字符 regmatches()   str_locate() 返回首个匹配模式的字符的位置 regexpr()   str_locate_all() 返回所有匹配模式的字符的位置 gregexpr()   str_replace() 替换首个匹配模式 sub()   str_replace_all() 替换所有匹配模式 gsub()   str_split() 按照模式分割字符串 strsplit()   str_split_fixed() 按照模式将字符串分割成指定个数 -   str_detect() 检测字符是否存在某些指定模式 grepl()   str_count() 返回指定模式出现的次数 -   其他重要函数     str_sub() 提取指定位置的字符 regmatches()   str_dup() 丢弃指定位置的字符 -   str_length() 返回字符的长度 nchar()   str_pad() 填补字符 -   str_trim() 丢弃填充，如去掉字符前后的空格 -   str_c() 连接字符 paste(),paste0()     r与python中三个数据处理系列包：data.</description>
     </item>
     
     <item>
       <title>Markdown相关资料</title>
-      <link>https://shichen.name/post/2017/04/05/markdown/</link>
+      <link>/post/2017/04/05/markdown/</link>
       <pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2017/04/05/markdown/</guid>
+      <guid>/post/2017/04/05/markdown/</guid>
       <description> John Gruber&amp;rsquo;s Markdown syntax (中文翻译) John MacFarlane&amp;rsquo;s Pandoc Markdown (中文翻译) Blackfriday Markdown (github) RMarkdown (github) MathJax (中文版)  </description>
     </item>
     
     <item>
       <title>在ubuntu上配置vnpy</title>
-      <link>https://shichen.name/post/2017/04/04/ubuntu-vnpy/</link>
+      <link>/post/2017/04/04/ubuntu-vnpy/</link>
       <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2017/04/04/ubuntu-vnpy/</guid>
+      <guid>/post/2017/04/04/ubuntu-vnpy/</guid>
       <description> vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主页。
 目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy1，主要包括三步，1.安装python环境anaconda2，2.安装mongodb与相关依赖工具，3.安装vnpy框架
 安装anaconda 出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从continuum官方网站下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:
@@ -103,10 +103,10 @@ git clone git@github.com:shichenxie/vnpy.git  在terminal中打开vn.trader文�
     
     <item>
       <title>博客搭建过程</title>
-      <link>https://shichen.name/post/2017/03/21/new-site/</link>
+      <link>/post/2017/03/21/new-site/</link>
       <pubDate>Tue, 21 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/post/2017/03/21/new-site/</guid>
+      <guid>/post/2017/03/21/new-site/</guid>
       <description>在“我网故我在”的召唤下，我用R语言的blogdown包1和GitHubPages在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。
 编辑网站文件 首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。益辉的blogdown让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用RStudio新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码
 # 安装blogdown包 devtools::install_github(&#39;rstudio/blogdown&#39;) setwd(path) # path为新建的项目文件夹路径 # 或者直接用rstudio打开*.Rproj文件 # 创建网站文件 blogdown::new_site() # &amp;gt; sessionInfo() # R语言系统环境 # R version 3.3.2 (2016-10-31) # Platform: x86_64-apple-darwin13.4.0 (64-bit) # Running under: macOS Sierra 10.12.3  创建GitHub Pages仓库 登录自己的github主页（https://github.com/shichenxie，其中shichenxie为我的github账号），新建名为shichenxie.github.io的项目仓库(repository)。

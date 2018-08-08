@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on 谢士晨 | Shichen Xie</title>
-    <link>https://shichen.name/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on 谢士晨 | Shichen Xie</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://shichen.name/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Credit</title>
-      <link>https://shichen.name/tags/credit/</link>
+      <link>/tags/credit/</link>
       <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/tags/credit/</guid>
+      <guid>/tags/credit/</guid>
       <description></description>
     </item>
     
     <item>
       <title>开源项目</title>
-      <link>https://shichen.name/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link>
+      <link>/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://shichen.name/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
+      <guid>/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</guid>
       <description></description>
     </item>
     
