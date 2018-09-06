@@ -889,14 +889,14 @@ $$\begin{eqnarray}
 &&P(y=0|x)=1-h_\theta(x)
 \end{eqnarray}$$
 上式可综合写成:
-$$P(y|x;\theta)=(h_\theta(x))^{y}(h_\theta(x))^{1-y}$$
+$$P(y|x;\theta)=(h_\theta(x))^{y}(1-h_\theta(x))^{1-y}$$
 则似然函数为: 
 $$\begin{eqnarray}
-L(\theta) = \prod_{i=1}^m{P(y^{(i)}|x^{(i)};\theta)} = \prod_{i=1}^m{(h_\theta(x^{(i)}))^{y^{(i)}}(h_\theta(x^{(i)}))^{1-y^{(i)}}}
+L(\theta) = \prod_{i=1}^m{P(y^{i}|x^{i};\theta)} = \prod_{i=1}^m{(h_\theta(x^{i}))^{y^{i}}(1-h_\theta(x^{i}))^{1-y^{i}}}
 \end{eqnarray}$$
 对数似然函数为:
 $$\begin{eqnarray}
-l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{(y^{(i)}\ln{h_\theta(x^{(i)}})+(1-y^{(i)})\ln{h_\theta(x^{(i)}))}}
+l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{\bigl[y^{i}\ln{h_\theta(x^{i}})+(1-y^{i})\ln{(1-h_\theta(x^{i}))\bigr]}}
 \end{eqnarray}$$
 
 <!-- https://blog.csdn.net/ligang_csdn/article/details/53838743 -->
