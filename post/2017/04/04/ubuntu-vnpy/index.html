@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.36" />
+<meta name="generator" content="Hugo 0.51" />
 
 
 <title>在ubuntu上配置vnpy - 谢士晨 | Shichen Xie</title>
@@ -73,7 +73,7 @@
 
 <p>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见<a href="http://github.com/vnpy/vnpy">github主页</a>、<a href="http://www.vnpy.org">官方主页</a>、<a href="https://zhuanlan.zhihu.com/vn-py">项目知乎专栏</a>、<a href="http://www.vnpie.com/forum.php">官方社区维恩派</a>、<a href="https://www.zhihu.com/people/traderusingpython/answers">作者知乎主页</a>。</p>
 
-<p>目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy<sup class="footnote-ref" id="fnref:vn-trader-Ubuntu"><a rel="footnote" href="#fn:vn-trader-Ubuntu">1</a></sup>，主要包括三步，<strong>1.</strong>安装python环境anaconda2，<strong>2.</strong>安装mongodb与相关依赖工具，<strong>3.</strong>安装vnpy框架</p>
+<p>目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy<sup class="footnote-ref" id="fnref:vn-trader-Ubuntu"><a href="#fn:vn-trader-Ubuntu">1</a></sup>，主要包括三步，<strong>1.</strong>安装python环境anaconda2，<strong>2.</strong>安装mongodb与相关依赖工具，<strong>3.</strong>安装vnpy框架</p>
 
 <h2 id="安装anaconda">安装anaconda</h2>
 
@@ -106,9 +106,9 @@
 <pre><code class="language-bash">git clone git@github.com:shichenxie/vnpy.git
 </code></pre>
 
-<p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行<code>python vtMain.py</code>。但是出现缺少PyQt4包的错误(<code>ImportError: No module named PyQt4.QtCore</code>)。原来新版anaconda已默认集成pyqt5<sup class="footnote-ref" id="fnref:vn-py-No-module"><a rel="footnote" href="#fn:vn-py-No-module">2</a></sup>，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(<code>conda install pyqtgraph</code>)</p>
+<p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行<code>python vtMain.py</code>。但是出现缺少PyQt4包的错误(<code>ImportError: No module named PyQt4.QtCore</code>)。原来新版anaconda已默认集成pyqt5<sup class="footnote-ref" id="fnref:vn-py-No-module"><a href="#fn:vn-py-No-module">2</a></sup>，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(<code>conda install pyqtgraph</code>)</p>
 
-<p>再次运行<code>python vtMain.py</code>，出现缺少talib包错误，解决方法<sup class="footnote-ref" id="fnref:ubuntu-ta-lib-ht"><a rel="footnote" href="#fn:ubuntu-ta-lib-ht">3</a></sup><code>conda install -chttps://conda.anaconda.org/quantopian ta-lib</code></p>
+<p>再次运行<code>python vtMain.py</code>，出现缺少talib包错误，解决方法<sup class="footnote-ref" id="fnref:ubuntu-ta-lib-ht"><a href="#fn:ubuntu-ta-lib-ht">3</a></sup><code>conda install -chttps://conda.anaconda.org/quantopian ta-lib</code></p>
 <div class="footnotes">
 
 <hr />
@@ -176,14 +176,17 @@
     
 
     
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-97064288-1', 'auto');
-ga('send', 'pageview');
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-97064288-1', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
   </body>
