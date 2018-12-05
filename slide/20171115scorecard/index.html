@@ -346,6 +346,13 @@ library(scorecard)
 data("germancredit")
 
 dt_sel=var_filter(germancredit, y="creditability") 
+```
+
+```
+# [INFO] filtering variables ...
+```
+
+```r
 str(dt_sel)
 ```
 
@@ -387,11 +394,11 @@ lapply(dt_list, dim)
 ```
 
 ```
-## $train
-## [1] 683  15
-## 
-## $test
-## [1] 317  15
+# $train
+# [1] 683  15
+# 
+# $test
+# [1] 317  15
 ```
 
 ---
@@ -403,6 +410,13 @@ lapply(dt_list, dim)
 
 ```r
 bins = woebin(dt_sel, y="creditability", method="tree")
+```
+
+```
+# [INFO] creating woe binning ...
+```
+
+```r
 class(bins)
 ```
 
@@ -551,7 +565,13 @@ bins_adj = woebin(
   dt_sel, y="creditability", 
   breaks_list=break_adj, 
   print_step=0)
+```
 
+```
+# [INFO] creating woe binning ...
+```
+
+```r
 woebin_plot(bins_adj$age.in.years)
 ```
 
@@ -578,8 +598,19 @@ breaks_adj = woebin_adj(
 # WOE转换
 train_woe = woebin_ply(
   train, bins_adj)
+```
+
+```
+# [INFO] converting into woe values ...
+```
+
+```r
 test_woe = woebin_ply(
   test, bins_adj)
+```
+
+```
+# [INFO] converting into woe values ...
 ```
 
 
@@ -683,48 +714,48 @@ summary(m2)$coefficients
 ```
 
 ```
-##                                                         Estimate
-## (Intercept)                                              -0.8544
-## status.of.existing.checking.account_woe                   0.8874
-## duration.in.month_woe                                     0.7021
-## credit.history_woe                                        0.6365
-## purpose_woe                                               0.7846
-## credit.amount_woe                                         0.8315
-## savings.account.and.bonds_woe                             1.1176
-## present.employment.since_woe                              0.6723
-## installment.rate.in.percentage.of.disposable.income_woe   1.8997
-## other.debtors.or.guarantors_woe                           1.7937
-## age.in.years_woe                                          0.6365
-## other.installment.plans_woe                               0.9320
-## housing_woe                                               0.5385
-##                                                         Std. Error z value
-## (Intercept)                                                 0.1030  -8.295
-## status.of.existing.checking.account_woe                     0.1360   6.524
-## duration.in.month_woe                                       0.2000   3.511
-## credit.history_woe                                          0.1944   3.274
-## purpose_woe                                                 0.2595   3.024
-## credit.amount_woe                                           0.2553   3.257
-## savings.account.and.bonds_woe                               0.2479   4.508
-## present.employment.since_woe                                0.3528   1.906
-## installment.rate.in.percentage.of.disposable.income_woe     0.7332   2.591
-## other.debtors.or.guarantors_woe                             0.7672   2.338
-## age.in.years_woe                                            0.2996   2.125
-## other.installment.plans_woe                                 0.4103   2.272
-## housing_woe                                                 0.3434   1.568
-##                                                          Pr(&gt;|z|)
-## (Intercept)                                             1.089e-16
-## status.of.existing.checking.account_woe                 6.853e-11
-## duration.in.month_woe                                   4.466e-04
-## credit.history_woe                                      1.061e-03
-## purpose_woe                                             2.495e-03
-## credit.amount_woe                                       1.126e-03
-## savings.account.and.bonds_woe                           6.531e-06
-## present.employment.since_woe                            5.670e-02
-## installment.rate.in.percentage.of.disposable.income_woe 9.570e-03
-## other.debtors.or.guarantors_woe                         1.939e-02
-## age.in.years_woe                                        3.362e-02
-## other.installment.plans_woe                             2.311e-02
-## housing_woe                                             1.169e-01
+#                                                         Estimate
+# (Intercept)                                              -0.8544
+# status.of.existing.checking.account_woe                   0.8874
+# duration.in.month_woe                                     0.7021
+# credit.history_woe                                        0.6365
+# purpose_woe                                               0.7846
+# credit.amount_woe                                         0.8315
+# savings.account.and.bonds_woe                             1.1176
+# present.employment.since_woe                              0.6723
+# installment.rate.in.percentage.of.disposable.income_woe   1.8997
+# other.debtors.or.guarantors_woe                           1.7937
+# age.in.years_woe                                          0.6365
+# other.installment.plans_woe                               0.9320
+# housing_woe                                               0.5385
+#                                                         Std. Error z value
+# (Intercept)                                                 0.1030  -8.295
+# status.of.existing.checking.account_woe                     0.1360   6.524
+# duration.in.month_woe                                       0.2000   3.511
+# credit.history_woe                                          0.1944   3.274
+# purpose_woe                                                 0.2595   3.024
+# credit.amount_woe                                           0.2553   3.257
+# savings.account.and.bonds_woe                               0.2479   4.508
+# present.employment.since_woe                                0.3528   1.906
+# installment.rate.in.percentage.of.disposable.income_woe     0.7332   2.591
+# other.debtors.or.guarantors_woe                             0.7672   2.338
+# age.in.years_woe                                            0.2996   2.125
+# other.installment.plans_woe                                 0.4103   2.272
+# housing_woe                                                 0.3434   1.568
+#                                                          Pr(&gt;|z|)
+# (Intercept)                                             1.089e-16
+# status.of.existing.checking.account_woe                 6.853e-11
+# duration.in.month_woe                                   4.466e-04
+# credit.history_woe                                      1.061e-03
+# purpose_woe                                             2.495e-03
+# credit.amount_woe                                       1.126e-03
+# savings.account.and.bonds_woe                           6.531e-06
+# present.employment.since_woe                            5.670e-02
+# installment.rate.in.percentage.of.disposable.income_woe 9.570e-03
+# other.debtors.or.guarantors_woe                         1.939e-02
+# age.in.years_woe                                        3.362e-02
+# other.installment.plans_woe                             2.311e-02
+# housing_woe                                             1.169e-01
 ```
 
 ---
@@ -909,12 +940,12 @@ data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4]
 ```
 
 ```
-##                   variable           bin     woe points
-## 1:              basepoints          &lt;NA&gt;      NA    449
-## 2:            age.in.years     [40, Inf) -0.1942      9
-## 3: other.installment.plans bank%,%stores  0.4776    -32
-## 4: other.installment.plans          none -0.1212      8
-## 5:                 housing          rent  0.4044    -16
+#                   variable           bin     woe points
+# 1:              basepoints          &lt;NA&gt;      NA    449
+# 2:            age.in.years     [40, Inf) -0.1942      9
+# 3: other.installment.plans bank%,%stores  0.4776    -32
+# 4: other.installment.plans          none -0.1212      8
+# 5:                 housing          rent  0.4044    -16
 ```
 
 ---
@@ -931,9 +962,9 @@ str(train_score)
 ```
 
 ```
-## Classes 'data.table' and 'data.frame':	683 obs. of  1 variable:
-##  $ score: num  334 614 433 318 546 698 351 217 489 416 ...
-##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
+# Classes 'data.table' and 'data.frame':	683 obs. of  1 variable:
+#  $ score: num  334 614 433 318 546 698 351 217 489 416 ...
+#  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
 ```r
@@ -943,21 +974,21 @@ str(train_score2)
 ```
 
 ```
-## Classes 'data.table' and 'data.frame':	683 obs. of  13 variables:
-##  $ status.of.existing.checking.account_points                : num  -39 75 -39 -39 75 75 -39 -39 -39 -39 ...
-##  $ duration.in.month_points                                  : num  -57 18 -27 -6 -27 18 -6 -57 18 -6 ...
-##  $ credit.history_points                                     : num  -4 34 -4 -4 -4 -4 34 -4 -4 34 ...
-##  $ purpose_points                                            : num  23 -16 -16 -16 -16 23 -16 -16 23 -16 ...
-##  $ credit.amount_points                                      : num  -23 15 -23 -23 -23 15 -23 -23 44 -2 ...
-##  $ savings.account.and.bonds_points                          : num  -22 -22 -22 -22 61 61 -22 -22 -22 -22 ...
-##  $ present.employment.since_points                           : num  -2 19 19 -2 -2 19 -21 -21 -2 11 ...
-##  $ installment.rate.in.percentage.of.disposable.income_points: num  21 21 21 -14 21 21 -14 -14 34 -14 ...
-##  $ other.debtors.or.guarantors_points                        : num  -4 -4 76 -4 -4 -4 -4 -4 -4 -4 ...
-##  $ age.in.years_points                                       : num  -24 9 9 9 26 9 -3 -24 -24 9 ...
-##  $ other.installment.plans_points                            : num  8 8 8 8 8 8 8 8 8 8 ...
-##  $ housing_points                                            : num  8 8 -18 -18 -18 8 8 -16 8 8 ...
-##  $ score                                                     : num  334 614 433 318 546 698 351 217 489 416 ...
-##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
+# Classes 'data.table' and 'data.frame':	683 obs. of  13 variables:
+#  $ status.of.existing.checking.account_points                : num  -39 75 -39 -39 75 75 -39 -39 -39 -39 ...
+#  $ duration.in.month_points                                  : num  -57 18 -27 -6 -27 18 -6 -57 18 -6 ...
+#  $ credit.history_points                                     : num  -4 34 -4 -4 -4 -4 34 -4 -4 34 ...
+#  $ purpose_points                                            : num  23 -16 -16 -16 -16 23 -16 -16 23 -16 ...
+#  $ credit.amount_points                                      : num  -23 15 -23 -23 -23 15 -23 -23 44 -2 ...
+#  $ savings.account.and.bonds_points                          : num  -22 -22 -22 -22 61 61 -22 -22 -22 -22 ...
+#  $ present.employment.since_points                           : num  -2 19 19 -2 -2 19 -21 -21 -2 11 ...
+#  $ installment.rate.in.percentage.of.disposable.income_points: num  21 21 21 -14 21 21 -14 -14 34 -14 ...
+#  $ other.debtors.or.guarantors_points                        : num  -4 -4 76 -4 -4 -4 -4 -4 -4 -4 ...
+#  $ age.in.years_points                                       : num  -24 9 9 9 26 9 -3 -24 -24 9 ...
+#  $ other.installment.plans_points                            : num  8 8 8 8 8 8 8 8 8 8 ...
+#  $ housing_points                                            : num  8 8 -18 -18 -18 8 8 -16 8 8 ...
+#  $ score                                                     : num  334 614 433 318 546 698 351 217 489 416 ...
+#  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
 ---
@@ -1193,8 +1224,7 @@ train = dt_list$train
 test = dt_list$test
 
 # woe binning ------
-bins = woebin(dt_s, y="creditability")
-# woebin_plot(bins)
+bins = woebin(dt_s, y="creditability") # woebin_plot(bins)
 
 # binning adjustment
 # # adjust breaks interactively
@@ -1204,20 +1234,17 @@ bins = woebin(dt_s, y="creditability")
 # converting train and test into woe values
 train_woe = woebin_ply(train, bins_adj)
 test_woe = woebin_ply(test, bins_adj)
-
 ```
 
 ---
 
 ```r
 # glm ------
-m1 = glm( creditability ~ ., family = binomial(), data = train_woe)
-# summary(m1)
+m1 = glm( creditability ~ ., family = binomial(), data = train_woe) # summary(m1)
 
 # Select a formula-based model by AIC (or by LASSO)
 m_step = step(m1, direction="both", trace=FALSE)
-m2 = eval(m_step$call)
-# summary(m2)
+m2 = eval(m_step$call) # summary(m2)
 
 # performance ks &amp; roc ------
 # predicted proability
@@ -1230,7 +1257,6 @@ test_perf = perf_eva(test$creditability, test_pred, title="test")
 
 # score ------
 card = scorecard(bins_adj, m2)
-
 # credit score
 train_score = scorecard_ply(train, card, print_step=0)
 test_score = scorecard_ply(test, card, print_step=0)
@@ -1238,9 +1264,7 @@ test_score = scorecard_ply(test, card, print_step=0)
 # psi
 perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train$creditability, test = test$creditability)
-)
-
+  label = list(train = train$creditability, test = test$creditability) )
 ```
 
 ---
@@ -1269,6 +1293,8 @@ L(\theta) = \prod_{i=1}^m{P(y^{i}|x^{i};\theta)} = \prod_{i=1}^m{(h_\theta(x^{i}
 `$$\begin{eqnarray}
 l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{\bigl[y^{i}\ln{h_\theta(x^{i}})+(1-y^{i})\ln{(1-h_\theta(x^{i}))\bigr]}}
 \end{eqnarray}$$`
+
+最大似然估计即求使得 `\(l(\theta)\)`取最大值时的 `\(\theta\)`。如果乘以一个负的系数 `\(J(\theta) = -\frac{1}{m}l(\theta)\)`，则 `\(J(\theta)\)`取最小值时的 `\(\theta\)`为最佳参数，可通过梯度下降计算。
 
 &lt;!-- https://blog.csdn.net/ligang_csdn/article/details/53838743 --&gt;
     </textarea>
@@ -1311,7 +1337,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

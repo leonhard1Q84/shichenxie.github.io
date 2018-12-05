@@ -293,7 +293,7 @@ str(dt_sel)
 ## 2.2 建模样本切分
 
 通常将样本分为训练集与测试集，通过评估模型在两个数据集上的表现，并进而选择模型。`scorecard::split_df`函数可随机将样本分层切分为训练集与测试集:
-```{r}
+```{r comment='#'}
 # 数据集切分为训练集与测试集
 dt_list = split_df(dt_sel, y="creditability", 
   ratio=0.7, seed=21)
@@ -522,7 +522,7 @@ var_sel3 = c(varimp$names, "creditability")
 
 ### 基于AIC筛选变量step
 
-```{r}
+```{r comment='#'}
 # glm ------
 m1 = glm( creditability ~ ., family = "binomial", data = train_woe)
 # summary(m1)
@@ -692,7 +692,7 @@ score &=& A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 --
 
 - `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds0=1/19, pdo=50`
-```{r card, warning=FALSE, message=FALSE}
+```{r card, comment='#', warning=FALSE, message=FALSE}
 # 创建评分卡刻度
 card = scorecard(bins_adj, m2) 
 data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4] 
@@ -703,7 +703,7 @@ data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4]
 ### 评分刻度(续)
 
 - `scorecard::scorecard_ply`函数可将原始数据集转换为信用评分
-```{r score, warning=FALSE, message=FALSE}
+```{r score, comment='#', warning=FALSE, message=FALSE}
 # 评分转换只有总分
 train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0) 
 test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0) 
@@ -737,7 +737,7 @@ str(train_score2)
 
 稳定性指数`(population stability index, PSI)`是计算实际和预期的分值分布之间差异的一个衡量指标,  $PSI=\sum_i{(A_i-E_i)\ln(A_i/E_i)}$ 。其计算过程见下表: 
 
-```{r psi, include=FALSE}
+```{r psi, comment='#', include=FALSE}
 psi = perf_psi(
   score = list(train = train_score, test = test_score),
   label = list(train = train$creditability, test = test$creditability),
@@ -822,8 +822,7 @@ train = dt_list$train
 test = dt_list$test
 
 # woe binning ------
-bins = woebin(dt_s, y="creditability")
-# woebin_plot(bins)
+bins = woebin(dt_s, y="creditability") # woebin_plot(bins)
 
 # binning adjustment
 # # adjust breaks interactively
@@ -833,20 +832,17 @@ bins = woebin(dt_s, y="creditability")
 # converting train and test into woe values
 train_woe = woebin_ply(train, bins_adj)
 test_woe = woebin_ply(test, bins_adj)
-
 ```
 
 ---
 
 ```r
 # glm ------
-m1 = glm( creditability ~ ., family = binomial(), data = train_woe)
-# summary(m1)
+m1 = glm( creditability ~ ., family = binomial(), data = train_woe) # summary(m1)
 
 # Select a formula-based model by AIC (or by LASSO)
 m_step = step(m1, direction="both", trace=FALSE)
-m2 = eval(m_step$call)
-# summary(m2)
+m2 = eval(m_step$call) # summary(m2)
 
 # performance ks & roc ------
 # predicted proability
@@ -859,7 +855,6 @@ test_perf = perf_eva(test$creditability, test_pred, title="test")
 
 # score ------
 card = scorecard(bins_adj, m2)
-
 # credit score
 train_score = scorecard_ply(train, card, print_step=0)
 test_score = scorecard_ply(test, card, print_step=0)
@@ -867,9 +862,7 @@ test_score = scorecard_ply(test, card, print_step=0)
 # psi
 perf_psi(
   score = list(train = train_score, test = test_score),
-  label = list(train = train$creditability, test = test$creditability)
-)
-
+  label = list(train = train$creditability, test = test$creditability) )
 ```
 
 ---
@@ -898,6 +891,8 @@ L(\theta) = \prod_{i=1}^m{P(y^{i}|x^{i};\theta)} = \prod_{i=1}^m{(h_\theta(x^{i}
 $$\begin{eqnarray}
 l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{\bigl[y^{i}\ln{h_\theta(x^{i}})+(1-y^{i})\ln{(1-h_\theta(x^{i}))\bigr]}}
 \end{eqnarray}$$
+
+最大似然估计即求使得 $l(\theta)$取最大值时的 $\theta$。如果乘以一个负的系数 $J(\theta) = -\frac{1}{m}l(\theta)$，则 $J(\theta)$取最小值时的 $\theta$为最佳参数，可通过梯度下降计算。
 
 <!-- https://blog.csdn.net/ligang_csdn/article/details/53838743 -->
 
