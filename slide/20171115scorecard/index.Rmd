@@ -427,7 +427,7 @@ test_woe = woebin_ply(
 
 ```
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r comment='#', echo=FALSE, message=FALSE, warning=FALSE}
 cbind(train[1:8,.(age.in.years)],
       train_woe[1:8,.(age.in.years_woe)])
 ```
