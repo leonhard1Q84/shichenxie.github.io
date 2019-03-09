@@ -130,7 +130,7 @@ cd path # path为public文件地址 git init # 初始化git git remote add origi
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/en-vitae/</guid>
-      <description>Shichen Xie Contact Information  Email: xie#shichen.name Homepage: http://shichen.name Address: Chaoyang, Beijing 100029
+      <description>Shichen Xie Contact Information  Email: xie@shichen.name Homepage: http://shichen.name Address: Chaoyang, Beijing 100029
   Research Interest Data Science, Macroeconomy and Investment
 Education Background  Oct.2010 ~ Dec.2014, Ph.D. in International Development, Graduate School of International Development, Nagoya University, Nagoya Sep.2007 ~ Mar.2010, M.Eng. of Environmental Engineering, School of Resources and Environmental Engineering, East China University of Science and Technology, Shanghai Sep.2002 ~ Jul.2006, B.Sc. of Environmental Science, School of Resources and Environment, Huazhong Agricultural University, Wuhan  Professional Experience Work Experience  Mar.</description>
     </item>
@@ -141,8 +141,8 @@ Education Background  Oct.2010 ~ Dec.2014, Ph.D. in International Development, G
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cn-vitae/</guid>
-      <description>谢士晨 联系方式  邮件: xie#shichen.name 主页: http://shichen.name 地址: 北京市朝阳区  研究兴趣 数据科学、宏观经济与金融投资
-教育背景  2010.10 ~ 2014.12 名古屋大学, 国际开发研究科, 国际开发学 博士 2007.09 ~ 2010.03 华东理工大学, 资源与环境工程学院, 环境工程 硕士 2002.09 ~ 2006.07 华中农业大学, 资源与环境学院, 环境科学 学士   工作经历 工作  2018.03 ~ 今 小米金服 数据分析师 主要从事风控相关的数据建模与分析工作。期间使用机器学习模型实现了小米金服的用户欺诈风险模型；使用faster-rcnn, ctpn与densenet完成了身份证OCR模型系统。 2017.05 ~ 2018.03 百融金服 数据分析师 主要从事信用风险模型开发与整体风控方案制定。为多家银行与消费金融机构提供了基于互联网大数据或人行征信报告的评分卡模型、及咨询与培训等相关服务. 2015.10 ~ 2017.04 久其龙信 数据分析师 主要从事财政经济等相关领域的数据分析。完成了多个省市财政与宏观经济的研究分析.  开源项目  2017.08 R包scorecard(, github, CRAN, homepage) 该包提高了评分卡模型的开发效率，提供了变量初筛、最优分箱、模型评估与评分刻度等多个功能。
+      <description>谢士晨 联系方式  邮件: xie@shichen.name 主页: http://shichen.name 地址: 北京市朝阳区  研究兴趣 数据科学、宏观经济与金融投资
+教育背景  2010.10 ~ 2014.12 名古屋大学, 国际开发研究科, 国际开发学 博士 2007.09 ~ 2010.03 华东理工大学, 资源与环境工程学院, 环境工程 硕士 2002.09 ~ 2006.07 华中农业大学, 资源与环境学院, 环境科学 学士   工作经历 工作  2018.03 ~ 今 小米金服 数据分析师 主要从事风控相关的数据建模与分析工作。期间使用机器学习模型实现了小米金服的用户欺诈风险模型；使用faster-rcnn, ctpn与densenet完成了身份证OCR模型系统。 2017.04 ~ 2018.03 百融金服 数据分析师 主要从事信用风险模型开发与整体风控方案制定。为多家银行与消费金融机构提供了基于互联网大数据或人行征信报告的评分卡模型、及咨询与培训等相关服务. 2015.10 ~ 2017.04 久其龙信 数据分析师 主要从事财政经济等相关领域的数据分析。完成了多个省市财政与宏观经济的研究分析.  开源项目  2017.08 R包scorecard(, github, CRAN, homepage) 该包提高了评分卡模型的开发效率，提供了变量初筛、最优分箱、模型评估与评分刻度等多个功能。
  2018.</description>
     </item>
     
