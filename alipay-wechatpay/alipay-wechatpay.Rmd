@@ -1,0 +1,13 @@
+---
+output: github_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  fig.path = "images/p-"
+)
+
+```
+
+![alt ><](images/p-alipay.jpg){width=0.50}
+![alt ><](images/p-wechatpay.jpg){width=0.50}
