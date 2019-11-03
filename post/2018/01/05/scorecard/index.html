@@ -76,7 +76,7 @@
 
 <p>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (<a href="http://github.com/shichenXie/scorecard">Github</a>, <a href="https://cran.r-project.org/web/packages/scorecard/index.html">CRAN</a>)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱与woe转换、模型评估、评分刻度转换等。</p>
 <p>评分卡模型的开发流程通常包括以下五个主要步骤：数据准备、WOE分箱、模型拟合、模型评估、评分卡刻度。下面结合 scorecard 包完成一个简单的评分卡模型开发案例。更加详细的评分卡模型开发介绍请参考<a href="http://shichen.name/slide/20171115scorecard/">幻灯片</a>。</p>
-<div class="section level2">
+<div id="数据准备" class="section level2">
 <h2>数据准备</h2>
 <p>首先加载 scorecard 包，并载入包内自带的德国信贷数据集。该数据集包含了1000个借款人的信贷数据，20个 X 特征与1个 Y 值。其详细信息参见 <a href="https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data)">UCI 的德国信贷数据集网站</a>。</p>
 <pre class="r"><code>library(scorecard)
@@ -92,7 +92,7 @@ dt = var_filter(germancredit, y = &#39;creditability&#39;)</code></pre>
 dt_list = split_df(dt, y=&quot;creditability&quot;, ratio = 0.6, seed = 30)
 label_list = lapply(dt_list, function(x) x$creditability)</code></pre>
 </div>
-<div id="woe" class="section level2">
+<div id="woe分箱" class="section level2">
 <h2>WOE分箱</h2>
 <p>接下来对数据集进行分箱与 woe 值转换。由于这个数据集样本量比较小，我们可以直接对全样本进行分箱处理。如果数据量允许，应该使用训练集进行分箱，并使用训练集得到的 woe 值对其他数据集进行woe替换。</p>
 <p>woebin 函数提供了树形 tree、卡方合并 chimerge、等宽 width 与等高 freq 四种分箱方法。以树形分箱为例，默认情形是当信息值增益率 stop_limit 小于0.1, 或分箱数 bin_num_limit 大于8(缺失值除外)时停止分箱，同时确保每一个分箱的样本占比 count_distr_limit 不小于5%。当然还能够通过 breaks_list 手动设定分箱节点。</p>
@@ -123,7 +123,7 @@ dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins))</code></pre>
 <pre><code>## [INFO] converting into woe values ... 
 ## [INFO] converting into woe values ...</code></pre>
 </div>
-<div class="section level2">
+<div id="模型拟合" class="section level2">
 <h2>模型拟合</h2>
 <p>当获得了 woe 值替换之后的数据集，可以使用逻辑回归进行拟合，并通过AIC、LASSO等方法对变量进一步筛选。下面使用基于 AIC 的逐步回归进一步筛选变量，最终得到了一个拥有13个变量的模型。</p>
 <pre class="r"><code># lr
@@ -136,34 +136,34 @@ m2 = eval(m_step$call)
 vif(m2, merge_coef = TRUE) # summary(m2)</code></pre>
 <pre><code>##                                                    variable Estimate
 ##  1:                                             (Intercept)  -0.9453
-##  2:                                        age.in.years_woe   0.8976
-##  3:                                       credit.amount_woe   0.7681
+##  2:                 status.of.existing.checking.account_woe   0.7872
+##  3:                                   duration.in.month_woe   0.8297
 ##  4:                                      credit.history_woe   0.8065
-##  5:                                   duration.in.month_woe   0.8297
-##  6:                                             housing_woe   0.7413
-##  7: installment.rate.in.percentage.of.disposable.income_woe   2.0048
-##  8:                         other.debtors.or.guarantors_woe   2.0676
-##  9:                             other.installment.plans_woe   0.8569
-## 10:                             personal.status.and.sex_woe   0.9633
-## 11:                                             purpose_woe   0.8241
-## 12:                           savings.account.and.bonds_woe   0.8684
-## 13:                 status.of.existing.checking.account_woe   0.7872
+##  5:                                             purpose_woe   0.8241
+##  6:                                       credit.amount_woe   0.7681
+##  7:                           savings.account.and.bonds_woe   0.8684
+##  8: installment.rate.in.percentage.of.disposable.income_woe   2.0048
+##  9:                             personal.status.and.sex_woe   0.9633
+## 10:                         other.debtors.or.guarantors_woe   2.0676
+## 11:                                        age.in.years_woe   0.8976
+## 12:                             other.installment.plans_woe   0.8569
+## 13:                                             housing_woe   0.7413
 ##     Std. Error z value Pr(&gt;|z|)  gvif
 ##  1:     0.1098  -8.608   0.0000    NA
-##  2:     0.3066   2.927   0.0034 1.077
-##  3:     0.2848   2.697   0.0070 1.249
+##  2:     0.1392   5.657   0.0000 1.050
+##  3:     0.2314   3.586   0.0003 1.188
 ##  4:     0.2046   3.942   0.0001 1.070
-##  5:     0.2314   3.586   0.0003 1.188
-##  6:     0.3679   2.015   0.0439 1.037
-##  7:     0.6894   2.908   0.0036 1.111
-##  8:     0.8908   2.321   0.0203 1.039
-##  9:     0.4390   1.952   0.0510 1.080
-## 10:     0.5322   1.810   0.0703 1.108
-## 11:     0.2770   2.975   0.0029 1.047
-## 12:     0.2611   3.326   0.0009 1.042
-## 13:     0.1392   5.657   0.0000 1.050</code></pre>
+##  5:     0.2770   2.975   0.0029 1.047
+##  6:     0.2848   2.697   0.0070 1.249
+##  7:     0.2611   3.326   0.0009 1.042
+##  8:     0.6894   2.908   0.0036 1.111
+##  9:     0.5322   1.810   0.0703 1.108
+## 10:     0.8908   2.321   0.0203 1.039
+## 11:     0.3066   2.927   0.0034 1.077
+## 12:     0.4390   1.952   0.0510 1.080
+## 13:     0.3679   2.015   0.0439 1.037</code></pre>
 </div>
-<div class="section level2">
+<div id="模型评估" class="section level2">
 <h2>模型评估</h2>
 <p>通过逻辑回归获得各变量的拟合系数之后，可以计算出各个样本为坏客户的概率，然后评估模型的预测效果。 perf_eva 函数能够计算的评估指标包括 mse, rmse, logloss, r2, ks, auc, gini，以及绘制多种可视化图形 ks, lift, gain, roc, lz, pr, f1, density。</p>
 <pre class="r"><code>## predicted proability
@@ -174,7 +174,7 @@ perf = perf_eva(pred = pred_list, label = label_list)</code></pre>
 <pre><code>## [INFO] The threshold of confusion matrix is 0.3749.</code></pre>
 <p><img src="../../../../../post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div class="section level2">
+<div id="评分卡刻度" class="section level2">
 <h2>评分卡刻度</h2>
 <p>当我们获得了各个变量的分箱结果，并且确定了最终进入模型的变量以及系数，则可以创建标准评分卡。</p>
 <p>有了评分卡之后，可用于对新样本进行打分，从而评估该客户的信用水平，并最终作出审批决策。</p>
