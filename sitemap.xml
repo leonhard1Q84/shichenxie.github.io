@@ -75,6 +75,7 @@
   
   <url>
     <loc>/donate/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
