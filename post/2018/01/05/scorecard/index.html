@@ -103,25 +103,18 @@ label_list = lapply(dt_list, function(x) x$creditability)</code></pre>
 bins = woebin(dt, &quot;creditability&quot;, print_step=0)</code></pre>
 <pre><code>## [INFO] creating woe binning ...</code></pre>
 <pre class="r"><code>bins[[12]]</code></pre>
-<pre><code>##        variable       bin count count_distr good bad badprob     woe
-## 1: age.in.years [-Inf,26)   190       0.190  110  80  0.4211  0.5288
-## 2: age.in.years   [26,28)   101       0.101   74  27  0.2673 -0.1609
-## 3: age.in.years   [28,35)   257       0.257  172  85  0.3307  0.1425
-## 4: age.in.years   [35,37)    79       0.079   67  12  0.1519 -0.8725
-## 5: age.in.years [37, Inf)   373       0.373  277  96  0.2574 -0.2124
-##      bin_iv total_iv breaks is_special_values
-## 1: 0.057921   0.1305     26             FALSE
-## 2: 0.002529   0.1305     28             FALSE
-## 3: 0.005359   0.1305     35             FALSE
-## 4: 0.048610   0.1305     37             FALSE
-## 5: 0.016080   0.1305    Inf             FALSE</code></pre>
+<pre><code>##                   variable           bin count count_distr good bad badprob     woe  bin_iv total_iv        breaks
+## 1: other.installment.plans bank%,%stores   186       0.186  110  76  0.4086  0.4776 0.04594  0.05759 bank%,%stores
+## 2: other.installment.plans          none   814       0.814  590 224  0.2752 -0.1212 0.01166  0.05759          none
+##    is_special_values
+## 1:             FALSE
+## 2:             FALSE</code></pre>
 <pre class="r"><code>woebin_plot(bins[[12]])</code></pre>
-<pre><code>## $age.in.years</code></pre>
+<pre><code>## $other.installment.plans</code></pre>
 <p><img src="../../../../../post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code># converting train and test into woe values
 dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins))</code></pre>
-<pre><code>## [INFO] converting into woe values ... 
-## [INFO] converting into woe values ...</code></pre>
+<pre><code>## [INFO] converting into woe values ...</code></pre>
 </div>
 <div id="模型拟合" class="section level2">
 <h2>模型拟合</h2>
@@ -134,34 +127,19 @@ m1 = glm( creditability ~ ., family = binomial(), data = dt_woe_list$train)
 m_step = step(m1, direction=&quot;both&quot;, trace = FALSE)
 m2 = eval(m_step$call)
 vif(m2, merge_coef = TRUE) # summary(m2)</code></pre>
-<pre><code>##                                                    variable Estimate
-##  1:                                             (Intercept)  -0.9453
-##  2:                 status.of.existing.checking.account_woe   0.7872
-##  3:                                   duration.in.month_woe   0.8297
-##  4:                                      credit.history_woe   0.8065
-##  5:                                             purpose_woe   0.8241
-##  6:                                       credit.amount_woe   0.7681
-##  7:                           savings.account.and.bonds_woe   0.8684
-##  8: installment.rate.in.percentage.of.disposable.income_woe   2.0048
-##  9:                             personal.status.and.sex_woe   0.9633
-## 10:                         other.debtors.or.guarantors_woe   2.0676
-## 11:                                        age.in.years_woe   0.8976
-## 12:                             other.installment.plans_woe   0.8569
-## 13:                                             housing_woe   0.7413
-##     Std. Error z value Pr(&gt;|z|)  gvif
-##  1:     0.1098  -8.608   0.0000    NA
-##  2:     0.1392   5.657   0.0000 1.050
-##  3:     0.2314   3.586   0.0003 1.188
-##  4:     0.2046   3.942   0.0001 1.070
-##  5:     0.2770   2.975   0.0029 1.047
-##  6:     0.2848   2.697   0.0070 1.249
-##  7:     0.2611   3.326   0.0009 1.042
-##  8:     0.6894   2.908   0.0036 1.111
-##  9:     0.5322   1.810   0.0703 1.108
-## 10:     0.8908   2.321   0.0203 1.039
-## 11:     0.3066   2.927   0.0034 1.077
-## 12:     0.4390   1.952   0.0510 1.080
-## 13:     0.3679   2.015   0.0439 1.037</code></pre>
+<pre><code>##                                                    variable Estimate Std. Error z value Pr(&gt;|z|)  gvif
+##  1:                                             (Intercept)  -0.9448     0.1094  -8.639   0.0000    NA
+##  2:                 status.of.existing.checking.account_woe   0.7756     0.1380   5.619   0.0000 1.042
+##  3:                                   duration.in.month_woe   0.7963     0.2291   3.476   0.0005 1.181
+##  4:                                      credit.history_woe   0.8308     0.2035   4.082   0.0000 1.064
+##  5:                                             purpose_woe   0.8632     0.2755   3.133   0.0017 1.043
+##  6:                                       credit.amount_woe   0.7669     0.2838   2.702   0.0069 1.251
+##  7:                           savings.account.and.bonds_woe   0.8545     0.2606   3.279   0.0010 1.039
+##  8: installment.rate.in.percentage.of.disposable.income_woe   1.8621     0.6822   2.730   0.0063 1.094
+##  9:                         other.debtors.or.guarantors_woe   2.1018     0.8922   2.356   0.0185 1.037
+## 10:                                        age.in.years_woe   1.0154     0.3001   3.383   0.0007 1.033
+## 11:                             other.installment.plans_woe   0.7623     0.4347   1.754   0.0795 1.060
+## 12:                                             housing_woe   0.7610     0.3665   2.077   0.0378 1.035</code></pre>
 </div>
 <div id="模型评估" class="section level2">
 <h2>模型评估</h2>
@@ -171,7 +149,7 @@ pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type=&#39;response&#3
 
 ## performance
 perf = perf_eva(pred = pred_list, label = label_list)</code></pre>
-<pre><code>## [INFO] The threshold of confusion matrix is 0.3749.</code></pre>
+<pre><code>## [INFO] The threshold of confusion matrix is 0.3133.</code></pre>
 <p><img src="../../../../../post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="评分卡刻度" class="section level2">
@@ -186,14 +164,8 @@ score_list = lapply(dt_list, function(x) scorecard_ply(x, card))
 
 ## psi
 perf_psi(score = score_list, label = label_list)</code></pre>
-<pre><code>## $pic
-## $pic$score</code></pre>
-<p><img src="../../../../../post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<pre><code>## 
-## 
-## $psi
-##    variable    dataset     psi
-## 1:    score train_test 0.02767</code></pre>
+<pre><code>## $psi
+## Null data.table (0 rows and 0 cols)</code></pre>
 <p>以上代码均可以在该项目的<a href="http://shichen.name/scorecard/">主页</a>获取。</p>
 </div>
 

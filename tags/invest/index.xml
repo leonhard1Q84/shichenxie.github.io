@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>invest on 谢士晨 | Shichen Xie</title>
+    <link>/tags/invest/</link>
+    <description>Recent content in invest on 谢士晨 | Shichen Xie</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Apr 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/invest/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>在ubuntu上配置vnpy</title>
+      <link>/post/2017/04/04/ubuntu-vnpy/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017/04/04/ubuntu-vnpy/</guid>
+      <description> vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主页。
+目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy1，主要包括三步，1.安装python环境anaconda2，2.安装mongodb与相关依赖工具，3.安装vnpy框架
+安装anaconda 出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从continuum官方网站下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:
+bash Anaconda2-4.3.1-Linux-x86_64.sh  安装mongodb 在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:
+sudo apt-get install mongodb  然后安装pymongo包与Qt黑色主题
+conda install pymongo qdarkstyle  以及编译API相关的工具
+sudo apt-get install git build-essential libboost-all-dev python-dev cmake  安装vnpy框架 最后从github上下载vnpy项目库。我先Fork了vnpy的GitHub项目库，然后clone到本地：
+git clone git@github.com:shichenxie/vnpy.git  在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行python vtMain.py。但是出现缺少PyQt4包的错误(ImportError: No module named PyQt4.QtCore)。原来新版anaconda已默认集成pyqt52，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(conda install pyqtgraph)
+再次运行python vtMain.py，出现缺少talib包错误，解决方法3conda install -chttps://conda.anaconda.org/quantopian ta-lib
+ 详细参考vn.trader的Ubuntu运行环境搭建教程 [return] 参考vn.py安装后无法打开，提示No module named PyQt4.QtCore [return] 参考ubuntu下面安装ta-lib库 [return]   </description>
+    </item>
+    
+  </channel>
+</rss>
