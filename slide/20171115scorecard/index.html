@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
     <title>信用评分卡模型开发与应用</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="author" content="谢士晨" />
+    <meta name="date" content="2017-11-15" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="zh-CN.css" type="text/css" />
   </head>
@@ -14,7 +15,7 @@ class: center, middle, inverse, title-slide
 # 信用评分卡模型开发与应用
 ## scorecard包简介
 ### 谢士晨
-### 2017年11月
+### 2017-11-15
 
 ---
 
@@ -36,8 +37,7 @@ class: inverse, center, middle
 
 ## 信用评分模型相关概念&lt;sup&gt;*&lt;/sup&gt;
 
-- **定义**：
-个人信用评分是对个人信用信息的一种量化描述。
+- **定义**：个人信用评分是对个人信用信息的一种量化描述。
 具体而言，信用评分模型运用数据挖掘技术和统计分析方法，通过对消费者的身份特征、信用历史、行为记录、交易记录等大量数据进行系统的分析，挖掘数据中蕴含的行为模式与信用特征，捕捉历史信息和未来信用表现之间的关系，发展出预测性的模型，以一个信用评分来综合评估消费者未来的某种信用表现。
 
 --
@@ -62,7 +62,7 @@ class: inverse, center, middle
 ---
 ## 信贷业务流程
 
-![信贷业务流程](./index_files/信贷业务流程.svg)
+![信贷业务流程](./imgs/信贷业务流程.svg)
 
 ---
 
@@ -80,59 +80,54 @@ class: inverse, center, middle
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; basepoints &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 327 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [-Inf,26) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 119 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [26,35) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 146 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [35,37) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -51 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 201 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; age.in.years &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; [37, Inf) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 162 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; rent &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 122 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; own &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 163 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; housing &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; for free &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 117 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; unemployed%,%... &amp;lt; 1 year &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 125 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1 &amp;lt;= ... &amp;lt; 4 years &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 148 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; present.employment.since &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 4 &amp;lt;= ... &amp;lt; 7 years%,%... &amp;gt;= 7 years &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 167 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -173,10 +168,10 @@ class: inverse, center, middle
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; -51 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 306 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 201 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 122 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 148 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 471 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -190,20 +185,23 @@ class: inverse, center, middle
 
 ## 软件安装与配置
 
-- **下载软件**: R([CRAN](https://cran.r-project.org)/[CRAN清华镜像(速度更快)](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), IDE([Rstudio](https://www.rstudio.com))
+- **下载软件**: R (
+[CRAN](https://cran.r-project.org),  [可选择离自己近的镜像](https://cran.r-project.org/mirrors.html),  [例如清华镜像](https://mirrors.tuna.tsinghua.edu.cn/CRAN/)), 
+IDE (
+[Rstudio](https://www.rstudio.com))
 
 --
 
 - **自定义启动环境**&lt;sup&gt;*&lt;/sup&gt;: 
-  - R启动时在用户主目录中寻找`.Rprofile`文件，并自动执行其中的R代码。
-  - 用户主目录路径可通过`Sys.getenv("HOME")`获取或者刚打开R时通过`getwd()`获得。
-  - 在R中执行`file.edit('~/.Rprofile')`，然后将相关代码(见下页)写入并保存。
+  - R 启动时在用户主目录中寻找 `.Rprofile` 文件，并自动执行其中的R代码。
+  - 用户主目录路径可通过 `Sys.getenv("HOME")` 获取或者刚打开R时通过 `getwd()` 获得。
+  - 在R中执行 `file.edit('~/.Rprofile')`，然后将相关代码(见下页)写入并保存。
 
 --
 
-- **Rstudio配置**: (菜单`Tools -&gt; Global Options`)
-  - 取消自动加载.RData到工作环境中: `General -&gt; Restore .RData into workspace at startup`
-  - 代码文件格式保存为UTF-8: `Code -&gt; Saving -&gt; Default text encoding -&gt; UTF-8`
+- **Rstudio配置**: (菜单 `Tools -&gt; Global Options`)
+  - 取消自动加载 .RData 到工作环境中: `General -&gt; Restore .RData into workspace at startup`
+  - 代码文件格式保存为 UTF-8: `Code -&gt; Saving -&gt; Default text encoding -&gt; UTF-8`
   - 代码自动换行: `Code -&gt; Editing -&gt; Soft-wrap R source files`
 
 
@@ -245,36 +243,40 @@ options(repos = c(CRAN = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/",
 ## R包与相关资料
 
 .pull-left[
-以`scorecard`包([Github](https://github.com/ShichenXie/scorecard), [Slides](http://shichen.name/slide/20171115scorecard/))为例: 
+以`scorecard`包为例: ( 
+[Github](https://github.com/ShichenXie/scorecard), 
+[HomePage](http://shichen.name/scorecard), 
+[Slides](http://shichen.name/slide/20171115scorecard/))
 
 - 安装包，
 
 ```r
 # install from CRAN
 install.packages("scorecard") 
+
 # install from github
 devtools::install_github(
   "shichenxie/scorecard") 
 ```
 
-- 加载包, `library(scorecard)`
+- 加载包 `library(scorecard)`
 
 - 获取帮助: 
   - 包的帮助 `help(package="scorecard")`
-  - 函数的帮助 `help(woebin)`或者`?woebin`
+  - 函数的帮助 `help(woebin)` 或者 `?woebin`
 ]
 
 --
 
 .pull-right[
-- 目前(2017.11)[CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html)上有11815个包，如何找到有用的R包: 
-  - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN将部分优质包分主题归纳，目前有35个Views
+- 截止目前(2017.11) [CRAN - Packages](https://mirrors.tuna.tsinghua.edu.cn/CRAN/web/packages/index.html) 上有11815个包，如何找到有用的R包: 
+  - [CRAN Task Views](https://cran.r-project.org/web/views/), CRAN 将部分优质包分主题归纳，目前有35个Views
   - [R语言学习路径](https://www.r-bloggers.com/how-to-learn-r-2/)
 
-- R语言相关网站: 
+- R 语言相关网站: 
   - 官网: [R官网](https://www.r-project.org), [Rstudio](https://www.rstudio.com/)
   - 论坛博客: [统计之都COS](https://cosx.org), [r-bloggers](http://r-bloggers.com/), [Quick-R](http://www.statmethods.net/)
-  - 各路大神: 谢益辉([HP](http://yihui.name), [GH](https://github.com/yihui)), Hadley([HP](http://hadley.nz), [GH](http://github.com/hadley/)), Matt([GH](https://github.com/mattdowle))
+  - 各路大神: 谢益辉 ([HomePage](http://yihui.name), [Github](https://github.com/yihui)), Hadley ([HomePage](http://hadley.nz), [Github](http://github.com/hadley/)), Matt ([Github](https://github.com/mattdowle))
 ]
 
 ---
@@ -286,28 +288,31 @@ class: inverse, center, middle
 
 ## 评分卡开发流程&lt;sup&gt;*&lt;/sup&gt;
 
-1. 数据准备
-  1. 数据清洗整合
-  1. 标签定义与特征衍生
+.pull-left[
+-1. 数据准备
+  - 数据清洗整合
+  - 标签定义与特征衍生
+
+-2. 模型训练
+  - 模型外变量选择
+  - 建模样本切分
+  - 分箱WOE转换
+  - 逻辑回归与模型内变量选择
+  - 拒绝推断（可选）
+]
+
 --
 
-1. 模型训练
-  1. 模型外变量选择
-  1. 建模样本切分
-  1. 分箱WOE转换
-  1. 逻辑回归与模型内变量选择
-  1. 拒绝推断（可选）
---
+.pull-right[
+-3. 模型评估
+  - 模型验证评估
+  - 信用风险策略
 
-1. 模型评估
-  1. 模型验证评估
-  1. 信用风险策略
---
-
-1. 评分刻度与实施
-  1. 评分刻度转换
-  1. 模型监控
+-4. 评分刻度与实施
+  - 评分刻度转换
+  - 模型监控
   
+]
 --
 
 .footnote[[*] 马姆杜·雷法特, 王松奇, 林治乾. 信用风险评分卡研究[M]. 社会科学文献出版社, 2013.]
@@ -321,19 +326,37 @@ class: inverse, center, middle
 
 ## 2.1 变量选择主要方法
 
-- 不使用预测模型
+.pull-left[
+- 过滤式 filter
+  - 基于相关统计指标衡量特征的重要性，然后再训练模型
+  - 常用统计指标包括缺失率、单类别率、iv值、gini系数、相关系数等
+
+- 包裹式 wrapper
+  - 基于模型评估指标选择子模型
+  - 例如：向前、向后、逐步回归
+
+- 嵌入式 embedding
+  - 模型训练的同时选择特征
+  - 例如：L1、L2正则化
+
+]
+
+--
+
+.pull-right[
+- 独立于模型
   - 有监督
       - 信息值、卡方统计量、基尼系数
   - 无监督
       - 相关性、聚类分析、主成分分析
     
-- 使用预测模型
+- 结合模型
   - 有监督
       - 逐步回归（forward, backward, stepwise）
       - 正则化（AIC, BIC, lasso, ridge）
       - 集成模型（RF, xgboost）
       - 交叉验证
-
+]
 ---
 
 ## 2.1 模型外变量选择
@@ -343,6 +366,14 @@ class: inverse, center, middle
 
 ```r
 library(scorecard)
+packageVersion('scorecard')
+```
+
+```
+# [1] '0.2.8.999'
+```
+
+```r
 data("germancredit")
 
 dt_sel=var_filter(germancredit, y="creditability") 
@@ -357,7 +388,7 @@ str(dt_sel)
 ```
 
 ```
-# Classes 'data.table' and 'data.frame':	1000 obs. of  15 variables:
+# Classes 'data.table' and 'data.frame':	1000 obs. of  14 variables:
 #  $ status.of.existing.checking.account                : Factor w/ 4 levels "... &lt; 0 DM","0 &lt;= ... &lt; 200 DM",..: 1 2 4 1 1 4 4 2 4 2 ...
 #  $ duration.in.month                                  : num  6 48 12 42 24 36 24 36 12 30 ...
 #  $ credit.history                                     : Factor w/ 5 levels "no credits taken/ all credits paid back duly",..: 5 3 5 3 4 3 3 3 3 5 ...
@@ -366,13 +397,12 @@ str(dt_sel)
 #  $ savings.account.and.bonds                          : Factor w/ 5 levels "... &lt; 100 DM",..: 5 1 1 1 1 5 3 1 4 1 ...
 #  $ present.employment.since                           : Factor w/ 5 levels "unemployed","... &lt; 1 year",..: 5 3 4 4 3 3 5 3 4 1 ...
 #  $ installment.rate.in.percentage.of.disposable.income: num  4 2 2 2 3 2 3 2 2 4 ...
-#  $ personal.status.and.sex                            : Factor w/ 5 levels "male : divorced/separated",..: 3 2 3 3 3 3 3 3 2 4 ...
 #  $ other.debtors.or.guarantors                        : Factor w/ 3 levels "none","co-applicant",..: 1 1 1 3 1 1 1 1 1 1 ...
 #  $ property                                           : Factor w/ 4 levels "real estate",..: 1 1 1 2 4 4 2 3 1 3 ...
 #  $ age.in.years                                       : num  67 22 49 45 53 35 53 35 61 28 ...
 #  $ other.installment.plans                            : Factor w/ 3 levels "bank","stores",..: 3 3 3 3 3 3 3 3 3 3 ...
 #  $ housing                                            : Factor w/ 3 levels "rent","own","for free": 2 2 2 3 3 3 2 1 2 2 ...
-#  $ creditability                                      : num  0 1 0 0 1 0 0 0 0 1 ...
+#  $ creditability                                      : int  0 1 0 0 1 0 0 0 0 1 ...
 #  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -385,46 +415,39 @@ str(dt_sel)
 ```r
 # 数据集切分为训练集与测试集
 dt_list = split_df(dt_sel, y="creditability", 
-  ratio=0.7, seed=21)
-
-train = dt_list$train
-test = dt_list$test
+  ratio=c(0.7, 0.3), name_dfs = c("train", "test"), seed=21)
 
 lapply(dt_list, dim)
 ```
 
 ```
 # $train
-# [1] 683  15
+# [1] 683  14
 # 
 # $test
-# [1] 317  15
+# [1] 317  14
 ```
 
 ---
 
-## 2.3 分箱WOE转换
+## 2.3 分箱 WOE 转换
 
-证据权重(Weight of Evidence, WOE)转换可以将logistic回归模型转变为标准评分卡格式。该转换过程能够简化模型的应用且增加业务解释性，同时能将特征与标签之间的非线性关系转化为线性的。`scorecard::woebin`函数提供了tree与chimerge两种分箱方法。
+.pull-left[
+证据权重 (Weight of Evidence, WOE) 转换可以将 logistic 回归模型转变为标准评分卡格式。该转换过程能够简化模型的应用且增加业务解释性，同时能将特征与标签之间的非线性关系转化为线性的。`scorecard::woebin`函数提供了四种分箱方法：
+]
+--
+.pull-right[
+- 树形分割 tree，至上而下逐步寻找最优切割点；
+- 卡方合并 chimerge, 至下而上合并类似的相邻分箱； 
+- 等高 freq, 每箱的样本量相等，只适用于数值变量；
+- 等宽 width, 切割点的间隔相等，只适用于数值变量；
+]
 
+--
 
-```r
-bins = woebin(dt_sel, y="creditability", method="tree")
-```
-
-```
-# [INFO] creating woe binning ...
-```
-
-```r
-class(bins)
-```
-
-```
-# [1] "list"
-```
 
 ```r
+bins = woebin(dt_sel, y="creditability", method="tree", print_info=FALSE)
 bins$age.in.years
 ```
 
@@ -445,13 +468,13 @@ bins$age.in.years
 
 ---
 
-- 分箱i的`WOE`值`(Weight of Evidence)`定义如下:   
+- 分箱i的 `WOE` 值 `(Weight of Evidence)` 定义如下:   
 `$$WOE_i=\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)=\ln\left(\frac{Bad_i/\sum{Bad_i}}{Good_i/\sum{Good_i}}\right)=\ln\left(\frac{Bad_i/Good_i}{\sum{Bad_i}/\sum{Good_i}}\right)$$`  
-即，`WOE`值是分箱i的坏客户分布与好客户分布的比值的对数，调整为分箱i的坏好比与总体样本的坏好比的比值的对数。其衡量了分箱i对整体坏好比的影响程度。
+即，`WOE` 值是分箱i的坏客户分布与好客户分布的比值的对数，转换后为分箱i的坏好比与总体样本的坏好比的比值的对数。其衡量了分箱i对整体坏好比的影响权重，与逻辑回归的 logit 值为线性关系。
 
 --
 
-- 信息值`(Information Value, IV)`是衡量一个二元变量y和一个名义变量x之间的关联性的指标。信息值定义如下:
+- 信息值 `(Information Value, IV)` 是衡量一个二元变量 y 和一个名义变量 x 之间的关联性的指标。信息值定义如下:
 `$$IV=\sum_i{\left(Bad\_Distr_i-Good\_Distr_i\right)\ln\left(\frac{Bad\_Distr_i}{Good\_Distr_i}\right)}$$`
 
 --
@@ -508,21 +531,21 @@ ivs[variable=="age.in.years",]
 ---
 
 
-- `scorecard::woebin`函数tree方法分箱的原理类似决策树过程。
+- `scorecard::woebin` 函数 tree 方法分箱的原理类似决策树过程。
 不同的变量类型的分箱过程稍有差异。常见的变量类型包括数值型、类别型、有序类别型三类，分别对应R中的numeric、character、factor。
     
-    - 数值型变量首先需等距细分段，通过`min_perc_fine_bin`参数控制，默认值为0.02，即初始等距分为50段。且极值&lt;sup&gt;*&lt;/sup&gt;单独分段。
+    - 数值型变量首先需等距细分段，通过 `init_count_distr` 参数控制，默认值为 0.02，即初始等距分为50段。且极值&lt;sup&gt;*&lt;/sup&gt;单独分段。
     
     - 对于类别变量，根据每个类别变量的坏客户率排序。
     
     - 通过上面两步连续变量与类别变量均转换为有序类别变量。
 
-    - 最后，采用贪心算法逐步搜索使得信息值最大且新增分箱中样本占比(`min_perc_coarse_bin`)不小于5%的分箱点。
-    - 分箱过程的停止条件是信息增益率(`stop_limit`)小于0.1与最大分箱数(`max_num_bin`)大于8。
+    - 最后，采用贪心算法至上而下逐步搜索使得信息值最大；且新增分箱中样本占比(`count_distr_limit`)不小于5%的分箱点。
+    - 分箱过程的停止条件是信息增益率(`stop_limit`)小于0.1；与最大分箱数(`bin_num_limit`)不大于8。
 
 --
 
-- `scorecard::woebin`函数chimerge分箱为自底向上的数据离散化方法，即将具有最小卡方值的相邻区间合并在一起。具体内容参见[chimerge算法](http://blog.csdn.net/qunxingvip/article/details/50449376)或原论文[ChiMerge:Discretization of numeric attributs](http://www.aaai.org/Papers/AAAI/1992/AAAI92-019.pdf)
+- `scorecard::woebin`函数 chimerge 分箱为自底向上的数据离散化方法，即将具有最小卡方值的相邻区间合并在一起。具体内容参见 [chimerge算法](http://blog.csdn.net/qunxingvip/article/details/50449376) 或原论文 [ChiMerge:Discretization of numeric attributs](http://www.aaai.org/Papers/AAAI/1992/AAAI92-019.pdf)
 
 .footnote[[*] 此处极端值定义为：均值上下3倍四分位距以外的值，其中四分位距指上下四分位数之差。]
 
@@ -530,7 +553,7 @@ ivs[variable=="age.in.years",]
 
 .pull-left[
 决策树最优分箱算法过程：
-![分箱算法过程](./index_files/bin.png)
+![分箱算法过程](./imgs/bin.png)
 
 ]
 
@@ -564,14 +587,8 @@ break_adj = list(
 bins_adj = woebin(
   dt_sel, y="creditability", 
   breaks_list=break_adj, 
-  print_step=0)
-```
+  print_info=FALSE)
 
-```
-# [INFO] creating woe binning ...
-```
-
-```r
 woebin_plot(bins_adj$age.in.years)
 ```
 
@@ -596,20 +613,11 @@ breaks_adj = woebin_adj(
 
 ```r
 # WOE转换
-train_woe = woebin_ply(
-  train, bins_adj)
+dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins_adj))
 ```
 
 ```
-# [INFO] converting into woe values ...
-```
-
-```r
-test_woe = woebin_ply(
-  test, bins_adj)
-```
-
-```
+# [INFO] converting into woe values ... 
 # [INFO] converting into woe values ...
 ```
 
@@ -703,7 +711,7 @@ var_sel3 = c(varimp$names, "creditability")
 
 ```r
 # glm ------
-m1 = glm( creditability ~ ., family = "binomial", data = train_woe)
+m1 = glm( creditability ~ ., family = "binomial", data = dt_woe_list$train)
 # summary(m1)
 
 # Select a formula-based model by AIC
@@ -715,47 +723,61 @@ summary(m2)$coefficients
 
 ```
 #                                                         Estimate
-# (Intercept)                                              -0.8544
-# status.of.existing.checking.account_woe                   0.8874
-# duration.in.month_woe                                     0.7021
-# credit.history_woe                                        0.6365
-# purpose_woe                                               0.7846
-# credit.amount_woe                                         0.8315
-# savings.account.and.bonds_woe                             1.1176
-# present.employment.since_woe                              0.6723
-# installment.rate.in.percentage.of.disposable.income_woe   1.8997
-# other.debtors.or.guarantors_woe                           1.7937
-# age.in.years_woe                                          0.6365
-# other.installment.plans_woe                               0.9320
-# housing_woe                                               0.5385
-#                                                         Std. Error z value
-# (Intercept)                                                 0.1030  -8.295
-# status.of.existing.checking.account_woe                     0.1360   6.524
-# duration.in.month_woe                                       0.2000   3.511
-# credit.history_woe                                          0.1944   3.274
-# purpose_woe                                                 0.2595   3.024
-# credit.amount_woe                                           0.2553   3.257
-# savings.account.and.bonds_woe                               0.2479   4.508
-# present.employment.since_woe                                0.3528   1.906
-# installment.rate.in.percentage.of.disposable.income_woe     0.7332   2.591
-# other.debtors.or.guarantors_woe                             0.7672   2.338
-# age.in.years_woe                                            0.2996   2.125
-# other.installment.plans_woe                                 0.4103   2.272
-# housing_woe                                                 0.3434   1.568
+# (Intercept)                                              -0.8581
+# status.of.existing.checking.account_woe                   0.8950
+# duration.in.month_woe                                     0.6952
+# credit.history_woe                                        0.6206
+# purpose_woe                                               0.7737
+# credit.amount_woe                                         0.8370
+# savings.account.and.bonds_woe                             1.1510
+# present.employment.since_woe                              0.6553
+# installment.rate.in.percentage.of.disposable.income_woe   1.8456
+# other.debtors.or.guarantors_woe                           1.7955
+# age.in.years_woe                                          0.6132
+# other.installment.plans_woe                               0.9286
+# housing_woe                                               0.5538
+#                                                         Std. Error
+# (Intercept)                                                 0.1033
+# status.of.existing.checking.account_woe                     0.1365
+# duration.in.month_woe                                       0.1999
+# credit.history_woe                                          0.1943
+# purpose_woe                                                 0.2596
+# credit.amount_woe                                           0.2549
+# savings.account.and.bonds_woe                               0.2481
+# present.employment.since_woe                                0.3527
+# installment.rate.in.percentage.of.disposable.income_woe     0.6502
+# other.debtors.or.guarantors_woe                             0.7693
+# age.in.years_woe                                            0.2990
+# other.installment.plans_woe                                 0.4110
+# housing_woe                                                 0.3439
+#                                                         z value
+# (Intercept)                                              -8.306
+# status.of.existing.checking.account_woe                   6.558
+# duration.in.month_woe                                     3.477
+# credit.history_woe                                        3.195
+# purpose_woe                                               2.980
+# credit.amount_woe                                         3.283
+# savings.account.and.bonds_woe                             4.639
+# present.employment.since_woe                              1.858
+# installment.rate.in.percentage.of.disposable.income_woe   2.839
+# other.debtors.or.guarantors_woe                           2.334
+# age.in.years_woe                                          2.051
+# other.installment.plans_woe                               2.259
+# housing_woe                                               1.610
 #                                                          Pr(&gt;|z|)
-# (Intercept)                                             1.089e-16
-# status.of.existing.checking.account_woe                 6.853e-11
-# duration.in.month_woe                                   4.466e-04
-# credit.history_woe                                      1.061e-03
-# purpose_woe                                             2.495e-03
-# credit.amount_woe                                       1.126e-03
-# savings.account.and.bonds_woe                           6.531e-06
-# present.employment.since_woe                            5.670e-02
-# installment.rate.in.percentage.of.disposable.income_woe 9.570e-03
-# other.debtors.or.guarantors_woe                         1.939e-02
-# age.in.years_woe                                        3.362e-02
-# other.installment.plans_woe                             2.311e-02
-# housing_woe                                             1.169e-01
+# (Intercept)                                             9.904e-17
+# status.of.existing.checking.account_woe                 5.455e-11
+# duration.in.month_woe                                   5.067e-04
+# credit.history_woe                                      1.400e-03
+# purpose_woe                                             2.883e-03
+# credit.amount_woe                                       1.027e-03
+# savings.account.and.bonds_woe                           3.501e-06
+# present.employment.since_woe                            6.317e-02
+# installment.rate.in.percentage.of.disposable.income_woe 4.531e-03
+# other.debtors.or.guarantors_woe                         1.959e-02
+# age.in.years_woe                                        4.027e-02
+# other.installment.plans_woe                             2.388e-02
+# housing_woe                                             1.073e-01
 ```
 
 ---
@@ -793,50 +815,48 @@ class: inverse, center, middle
 
 ---
 
-`scorecard::perf_eva`函数使用预测违约概率与实际违约标签，给出了模型评估的主要指标(`KS`值、`AUC`、`Gini`)与相应图表(`KS`曲线、`ROC`曲线、提升图、`PR`曲线)。
-
-
+`scorecard::perf_eva` 函数使用预测违约概率与实际违约标签，给出了模型评估的主要指标 (mse, rmse, logloss, r2, ks, auc, gini) 与相应曲线图表 (ks, lift, gain, roc, lz, pr, f1, density)。
 
 
 ```r
 # predicted proability
-train_pred = predict(m2, type='response', train_woe)
-test_pred = predict(m2, type='response', test_woe)
+pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type='response'))
 
 # performance 
-perf_train = perf_eva(train_woe$creditability, train_pred, title="train")
+label_list = lapply(dt_list, function(x) x$creditability)
+perf = perf_eva(pred = pred_list, label = label_list)
+```
+
+```
+## [INFO] The threshold of confusion matrix is 0.3851.
 ```
 
 ![](index_files/figure-html/perf_pic-1.png)&lt;!-- --&gt;
 
 ```r
-perf_test = perf_eva(test_woe$creditability, test_pred, title="test")
-```
-
-![](index_files/figure-html/perf_pic-2.png)&lt;!-- --&gt;
-
-```r
-perf_train$pic
+perf$pic
 ```
 
 ```
 ## TableGrob (1 x 2) "arrange": 2 grobs
-##      z     cells    name           grob
-## pks  1 (1-1,1-1) arrange gtable[layout]
-## proc 2 (1-1,2-2) arrange gtable[layout]
+##   z     cells    name           grob
+## 1 1 (1-1,1-1) arrange gtable[layout]
+## 2 2 (1-1,2-2) arrange gtable[layout]
 ```
 
 ---
 
 .pull-left[
-**KS**
-- `KS`(柯尔莫哥洛夫-斯米尔诺夫`kolmogorov-smirnow`)图纵轴为坏客户累计百分比，横轴为总体样本累计百分比。`perf_eva`函数绘制`KS`曲线过程:
+**KS 曲线与 KS 值**
+- `KS` (柯尔莫哥洛夫-斯米尔诺夫 `kolmogorov-smirnow`) 图纵轴为坏客户累计百分比，横轴为总体样本累计百分比。`perf_eva` 函数绘制 `KS` 曲线过程:
   - 先将样本随机排列，随机种子`seed`默认为`186`
   - 按照预测违约概率倒序排列(坏客户累计百分比曲线位于上方)
   - 分为`groupnum`(默认`20`)等份
   - 计算每一等份中违约与正常客户的累计百分比
   - 绘制出两者之间差值即为`KS`曲线
+  
 - `KS`曲线中的最大值即为`KS`值，其取值范围`0~1`。`KS`值越大模型的区分能力越好。
+
 - 通常申请评分卡要求`KS` `\(\ge\)` `0.3`。而且测试集与训练集的`KS`值相差小于`0.01`。
 
 ]
@@ -844,14 +864,16 @@ perf_train$pic
 --
 
 .pull-right[
-**ROC与AUC**
-- `ROC`(受试者工作特征曲线`Receiver Operating Charactersitic`)曲线纵轴为真正例率(`True Positive Rate, TPR`)，横轴为假正例率(`False Positive Rate, FPR`)：
+**ROC 曲线与 AUC 值**
+- `ROC` (受试者工作特征曲线 `Receiver Operating Charactersitic`)曲线纵轴为真正例率 (`True Positive Rate, TPR`)，横轴为假正例率 (`False Positive Rate, FPR`)：
   - 先将样本随机排列，随机种子`seed`默认为186
   - 按照预测违约概率降序排列
   - 分概率值计算好坏客户数量，然后计算`TPR=TP/(TP+FN)`与`FPR=FP/(TN+FP)`
   - 以`TPR`为纵轴`FPR`为横轴绘制散点图即为`ROC`曲线
-- `AUC(Area Under ROC Curve)`为`ROC`曲线下面积之和，其取值范围`0~1`。`AUC`值越大模型效果越好。
-- 行为评分卡通常要求`AUC` `\(\ge\)` `0.75`，申请评分卡的`AUC`相对低一些也能够接受。
+  
+- `AUC (Area Under ROC Curve)` 为 `ROC` 曲线下面积之和，其取值范围`0~1`。`AUC` 值越大模型效果越好。
+
+- 行为评分卡通常要求 `AUC` `\(\ge\)` `0.75`，申请评分卡的 `AUC` 相对低一些也能够接受。
 
 ]
 
@@ -882,10 +904,10 @@ perf_train$pic
 
 模型开发之后需要基于建模样本确定风控策略。一个好的风控策略应具备：
   1. 增加客户数量
-  1. 减少风险损失
-  1. 最大化利润
+  2. 减少风险损失
+  3. 最大化利润
   
-常用的风控策略包括，
+基于开发的评分卡，我们可以获得建模样本的审批决策表，参考 `gains_table` 函数。结合审批决策表与损失或者利润目标，制定常用风控策略：
   1. 评分临界值：实现通过率、坏客户率、或利润损失率等业务目标
   2. 通过交叉决策矩阵实现风险定价，实现差异化的利率、额度等：
       - 风险评分与利润损失比
@@ -907,11 +929,11 @@ class: inverse, center, middle
 
 --
 
-- 常数`A`和`B`的值可以通过两个假设代入上式计算得到：
+- 常数 `A` 和 `B` 的值可以通过两个假设代入上式计算得到：
 
-  - 基准坏好比率`(odds0)`对应的基准分值`(points0)`
+  - 基准坏好比率 `(odds0)` 对应的基准分值 `(points0)`
       - `\(points0=A-B\ln(odds0)\)`
-  - 坏好比率翻倍的分数`PDO(Points to Double the Odds)`
+  - 坏好比率翻倍的分数 `PDO(Points to Double the Odds)`
       - `\(points0-PDO=A-B\ln(2odds0)\)`
       
   - 解上述两方程，可以得到： 
@@ -931,7 +953,7 @@ score &amp;=&amp; A-B\ln(odds) = A-B(\boldsymbol{w}^T\boldsymbol{x}+b) \\
 
 --
 
-- `scorecard::scorecard`函数创建评分卡刻度，其默认设置`points0=600, odds0=1/19, pdo=50`
+- `scorecard::scorecard` 函数创建评分卡刻度，其默认设置 `points0=600, odds0=1/19, pdo=50`
 
 ```r
 # 创建评分卡刻度
@@ -941,7 +963,7 @@ data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4]
 
 ```
 #                   variable           bin     woe points
-# 1:              basepoints          &lt;NA&gt;      NA    449
+# 1:              basepoints          &lt;NA&gt;      NA    450
 # 2:            age.in.years     [40, Inf) -0.1942      9
 # 3: other.installment.plans bank%,%stores  0.4776    -32
 # 4: other.installment.plans          none -0.1212      8
@@ -956,38 +978,41 @@ data.table::rbindlist(card, fill=TRUE)[c(1,37:40),1:4]
 
 ```r
 # 评分转换只有总分
-train_score = scorecard_ply(train, card, only_total_score=TRUE, print_step=0) 
-test_score = scorecard_ply(test, card, only_total_score=TRUE, print_step=0) 
-str(train_score)
+score_list = lapply(dt_list, function(x) scorecard_ply(x, card, only_total_score=TRUE))
+str(score_list)
 ```
 
 ```
-# Classes 'data.table' and 'data.frame':	683 obs. of  1 variable:
-#  $ score: num  334 614 433 318 546 698 351 217 489 416 ...
-#  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
+# List of 2
+#  $ train:Classes 'data.table' and 'data.frame':	683 obs. of  1 variable:
+#   ..$ score: num [1:683] 337 618 435 339 552 706 343 240 479 408 ...
+#   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; 
+#  $ test :Classes 'data.table' and 'data.frame':	317 obs. of  1 variable:
+#   ..$ score: num [1:317] 604 621 414 336 436 396 667 648 330 381 ...
+#   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
 ```r
 # 评分转换包括变量分值
-train_score2 = scorecard_ply(train, card, only_total_score = FALSE, print_step=0) 
-str(train_score2)
+score_list2 = lapply(dt_list, function(x) scorecard_ply(x, card, only_total_score=FALSE))
+str(score_list2$train)
 ```
 
 ```
 # Classes 'data.table' and 'data.frame':	683 obs. of  13 variables:
-#  $ status.of.existing.checking.account_points                : num  -39 75 -39 -39 75 75 -39 -39 -39 -39 ...
-#  $ duration.in.month_points                                  : num  -57 18 -27 -6 -27 18 -6 -57 18 -6 ...
-#  $ credit.history_points                                     : num  -4 34 -4 -4 -4 -4 34 -4 -4 34 ...
+#  $ status.of.existing.checking.account_points                : num  -40 76 -40 -40 76 76 -40 -40 -40 -40 ...
+#  $ duration.in.month_points                                  : num  -57 17 -26 -5 -26 17 -5 -57 17 -5 ...
+#  $ credit.history_points                                     : num  -4 33 -4 -4 -4 -4 33 -4 -4 33 ...
 #  $ purpose_points                                            : num  23 -16 -16 -16 -16 23 -16 -16 23 -16 ...
-#  $ credit.amount_points                                      : num  -23 15 -23 -23 -23 15 -23 -23 44 -2 ...
-#  $ savings.account.and.bonds_points                          : num  -22 -22 -22 -22 61 61 -22 -22 -22 -22 ...
-#  $ present.employment.since_points                           : num  -2 19 19 -2 -2 19 -21 -21 -2 11 ...
-#  $ installment.rate.in.percentage.of.disposable.income_points: num  21 21 21 -14 21 21 -14 -14 34 -14 ...
+#  $ credit.amount_points                                      : num  -24 16 -24 -24 -24 16 -24 -24 44 -2 ...
+#  $ savings.account.and.bonds_points                          : num  -23 -23 -23 -23 63 63 -23 -23 -23 -23 ...
+#  $ present.employment.since_points                           : num  -2 19 19 -2 -2 19 -20 -20 -2 11 ...
+#  $ installment.rate.in.percentage.of.disposable.income_points: num  25 25 25 9 25 25 -21 9 25 -21 ...
 #  $ other.debtors.or.guarantors_points                        : num  -4 -4 76 -4 -4 -4 -4 -4 -4 -4 ...
-#  $ age.in.years_points                                       : num  -24 9 9 9 26 9 -3 -24 -24 9 ...
+#  $ age.in.years_points                                       : num  -23 9 9 9 25 9 -3 -23 -23 9 ...
 #  $ other.installment.plans_points                            : num  8 8 8 8 8 8 8 8 8 8 ...
-#  $ housing_points                                            : num  8 8 -18 -18 -18 8 8 -16 8 8 ...
-#  $ score                                                     : num  334 614 433 318 546 698 351 217 489 416 ...
+#  $ housing_points                                            : num  8 8 -19 -19 -19 8 8 -16 8 8 ...
+#  $ score                                                     : num  337 618 435 339 552 706 343 240 479 408 ...
 #  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 
@@ -1031,103 +1056,94 @@ str(train_score2)
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [150,250) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0158 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0041 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2976 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0012 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [-Inf,235) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0059 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0126 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0068 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.7676 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0052 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [250,300) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0410 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [235,291) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0381 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0347 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0063 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1667 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [300,350) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0849 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0883 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0034 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0394 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [350,400) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1420 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1356 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0064 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0459 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0034 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0926 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [400,450) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1552 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [291,346) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0922 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0820 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0102 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1174 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0012 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [346,402) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1493 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1609 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0115 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0744 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0009 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [402,457) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1625 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.1388 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0164 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0018 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [450,500) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1508 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0237 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.1577 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0069 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0449 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0037 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [500,550) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1259 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1672 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0413 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2835 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0117 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [457,512) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1728 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1830 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0102 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0574 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [550,600) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [512,568) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1288 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1514 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0226 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1615 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0036 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; [568,623) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 0.1362 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1041 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0321 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2685 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0086 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1167 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0194 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1541 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0030 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [600,650) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0878 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0789 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0090 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1079 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [623,679) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0776 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0726 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0050 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0672 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0003 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [650,700) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0469 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0631 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.0162 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.2976 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0048 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; [700,800) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0176 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0158 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0018 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.1079 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0311 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; [679, Inf) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0366 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0473 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.0107 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2568 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0028 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0216 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1172,100 +1188,88 @@ str(train_score2)
 
 `scorecard::perf_psi`函数计算两个样本的评分稳定性指数并绘制评分分布图。如果参数`score`输入多个评分或多个变量的评分，能够同时返回相应的稳定性指数。
 
-.pull-left[
 
 ```r
-psi = perf_psi(
-  score = list(
-    train=train_score, 
-    test =test_score),
-  label = list(
-    train=train$creditability, 
-    test =test$creditability))
-
-psi$psi
+psi = perf_psi(score = score_list2, label = label_list)
+psi$psi[,.(variable, psi)]
 ```
 
 ```
-##    variable     PSI
-## 1:    score 0.03113
+##                                                       variable       psi
+##  1:                 status.of.existing.checking.account_points 6.341e-03
+##  2:                                   duration.in.month_points 1.016e-02
+##  3:                                      credit.history_points 8.871e-03
+##  4:                                             purpose_points 3.988e-03
+##  5:                                       credit.amount_points 9.827e-03
+##  6:                           savings.account.and.bonds_points 3.878e-02
+##  7:                            present.employment.since_points 3.469e-02
+##  8: installment.rate.in.percentage.of.disposable.income_points 9.335e-03
+##  9:                         other.debtors.or.guarantors_points 5.599e-03
+## 10:                                        age.in.years_points 5.902e-03
+## 11:                             other.installment.plans_points 2.034e-07
+## 12:                                             housing_points 8.340e-03
+## 13:                                                      score 2.162e-02
 ```
-]
-
-.pull-right[
-
-```r
-psi$pic
-```
-
-```
-## $score
-```
-
-![](index_files/figure-html/psi_pic-1.png)&lt;!-- --&gt;
-]
 
 ---
 **评分卡建模案例**
 
 ```r
+# Traditional Credit Scoring Using Logistic Regression
 library(scorecard)
 
-# data prepare ------
+# data preparing ------
 # load germancredit data
 data("germancredit")
-
 # filter variable via missing rate, iv, identical value rate
-dt_s = var_filter(germancredit, y="creditability")
-
+dt_f = var_filter(germancredit, y="creditability")
 # breaking dt into train and test
-dt_list = split_df(dt_s, y="creditability", ratio = 0.6, seed = 30)
-train = dt_list$train
-test = dt_list$test
+dt_list = split_df(dt_f, y="creditability", ratio = 0.6, seed = 30)
+label_list = lapply(dt_list, function(x) x$creditability)
 
 # woe binning ------
-bins = woebin(dt_s, y="creditability") # woebin_plot(bins)
-
+bins = woebin(dt_f, y="creditability")
+# woebin_plot(bins)
 # binning adjustment
-# # adjust breaks interactively
-# breaks_adj = woebin_adj(dt_s, "creditability", bins) 
-# bins_adj = woebin(dt_s, y="creditability", breaks_list=breaks_adj)
-
-# converting train and test into woe values
-train_woe = woebin_ply(train, bins_adj)
-test_woe = woebin_ply(test, bins_adj)
+## adjust breaks interactively
+# breaks_adj = woebin_adj(dt_f, "creditability", bins) 
+## or specify breaks manually
+breaks_adj = list(age.in.years=c(26, 35, 40),
+  other.debtors.or.guarantors=c("none", "co-applicant%,%guarantor"))
+bins_adj = woebin(dt_f, y="creditability", breaks_list=breaks_adj)
 ```
 
 ---
 
 ```r
-# glm ------
-m1 = glm( creditability ~ ., family = binomial(), data = train_woe) # summary(m1)
+# converting train and test into woe values
+dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins_adj))
 
-# Select a formula-based model by AIC (or by LASSO)
-m_step = step(m1, direction="both", trace=FALSE)
-m2 = eval(m_step$call) # summary(m2)
+# glm / selecting variables ------
+m1 = glm( creditability ~ ., family = binomial(), data = dt_woe_list$train)
+# vif(m1, merge_coef = TRUE) # summary(m1)
+# Select a formula-based model by AIC (or by LASSO for large dataset)
+m_step = step(m1, direction="both", trace = FALSE)
+m2 = eval(m_step$call)
+# vif(m2, merge_coef = TRUE) # summary(m2)
 
 # performance ks &amp; roc ------
-# predicted proability
-train_pred = predict(m2, train_woe, type='response')
-test_pred = predict(m2, test_woe, type='response')
-
-# performance
-train_perf = perf_eva(train$creditability, train_pred, title="train")
-test_perf = perf_eva(test$creditability, test_pred, title="test")
+## predicted proability
+pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type='response'))
+## Adjusting for oversampling (support.sas.com/kb/22/601.html)
+# card_prob_adj = scorecard2(bins_adj, dt=dt_list$train, y='creditability', 
+#                x=sub('_woe$','',names(coef(m2))[-1]), badprob_pop=0.03, return_prob=TRUE)
+## performance
+perf = perf_eva(pred = pred_list, label = label_list)
 
 # score ------
+## scorecard &amp; score converting
 card = scorecard(bins_adj, m2)
-# credit score
-train_score = scorecard_ply(train, card, print_step=0)
-test_score = scorecard_ply(test, card, print_step=0)
-
-# psi
-perf_psi(
-  score = list(train = train_score, test = test_score),
-  label = list(train = train$creditability, test = test$creditability) )
+score_list = lapply(dt_list, function(x) scorecard_ply(x, card))
+## psi
+perf_psi(score = score_list, label = label_list)
 ```
+
 
 ---
 
@@ -1278,28 +1282,37 @@ Email: xie@shichen.name
 
 ## 附录A. 损失函数推导
 
-通过逻辑回归模型 `\(h_\theta(x)=\frac{1}{1+e^{-\theta^Tx}}\)`，可以得到 `\(x\)`为类别1和类别0的概率分别为:
+.pull-left[
+- 通过逻辑回归模型 `\(h_\theta(x)=\frac{1}{1+e^{-\theta^Tx}}\)`，可以得到 `\(x\)`为类别1和类别0的概率分别为:
 `$$\begin{eqnarray}
 &amp;&amp;P(y=1|x)=h_\theta(x) \\
 &amp;&amp;P(y=0|x)=1-h_\theta(x)
 \end{eqnarray}$$`
-上式可综合写成:
+
+- 上式可综合写成:
 `$$P(y|x;\theta)=(h_\theta(x))^{y}(1-h_\theta(x))^{1-y}$$`
-则似然函数为: 
+
+- 则似然函数为: 
 `$$\begin{eqnarray}
 L(\theta) = \prod_{i=1}^m{P(y^{i}|x^{i};\theta)} = \prod_{i=1}^m{(h_\theta(x^{i}))^{y^{i}}(1-h_\theta(x^{i}))^{1-y^{i}}}
 \end{eqnarray}$$`
-对数似然函数为:
+]
+
+.pull-right[
+- 对数似然函数为:
 `$$\begin{eqnarray}
 l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{\bigl[y^{i}\ln{h_\theta(x^{i}})+(1-y^{i})\ln{(1-h_\theta(x^{i}))\bigr]}}
 \end{eqnarray}$$`
 
-最大似然估计即求使得 `\(l(\theta)\)`取最大值时的 `\(\theta\)`。如果乘以一个负的系数 `\(J(\theta) = -\frac{1}{m}l(\theta)\)`，则 `\(J(\theta)\)`取最小值时的 `\(\theta\)`为最佳参数，可通过梯度下降计算。
+- 最大似然估计即求使得 `\(l(\theta)\)`取最大值时的 `\(\theta\)`。如果乘以一个负的系数 `\(J(\theta) = -\frac{1}{m}l(\theta)\)`，则 `\(J(\theta)\)`取最小值时的 `\(\theta\)`为最佳参数，可通过梯度下降计算。
+]
 
 &lt;!-- https://blog.csdn.net/ligang_csdn/article/details/53838743 --&gt;
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
+"ratio": "16:9",
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false
@@ -1307,16 +1320,74 @@ l(\theta) = \ln{L(\theta)} = \sum_{i=1}^m{\bigl[y^{i}\ln{h_\theta(x^{i}})+(1-y^{
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
-})();</script>
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -1330,7 +1401,8 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

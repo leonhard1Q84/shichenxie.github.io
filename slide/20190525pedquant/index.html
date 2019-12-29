@@ -62,7 +62,7 @@ help(package = 'pedquant')
 .pull-left[
 - 常用的量化分析 R 包见下表&lt;sup&gt;*&lt;/sup&gt;:
 
-![](img/pkg_list.png)
+![](imgs/pkg_list.png)
 ]
 
 .pull-right[
@@ -92,8 +92,25 @@ class: inverse, center, middle
 
 
 ```r
-library(pedquant)
 library(data.table)
+library(pedquant)
+```
+
+```
+## Registered S3 method overwritten by 'xts':
+##   method     from
+##   as.zoo.xts zoo
+```
+
+```r
+packageVersion('pedquant')
+```
+
+```
+## [1] '0.1.2.1'
+```
+
+```r
 # cpi of China
 dt_nbs = ed_nbs(symbol = c('A01010101','A01010201'), freq = 'monthly',
                geo_type = 'nation', date_range = 'max', na_rm = TRUE)
@@ -103,18 +120,18 @@ str(dt_nbs)
 
 ```
 ## List of 2
-##  $ A01010101:Classes 'data.table' and 'data.frame':	40 obs. of  6 variables:
-##   ..$ symbol: chr [1:40] "A01010101" "A01010101" "A01010101" "A01010101" ...
-##   ..$ name  : chr [1:40] "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" ...
-##   ..$ date  : Date[1:40], format: "2016-01-01" ...
-##   ..$ value : num [1:40] 102 102 102 102 102 ...
-##   ..$ geo   : chr [1:40] "china" "china" "china" "china" ...
-##   ..$ unit  : chr [1:40] "" "" "" "" ...
+##  $ A01010101:Classes 'data.table' and 'data.frame':	47 obs. of  6 variables:
+##   ..$ symbol: chr [1:47] "A01010101" "A01010101" "A01010101" "A01010101" ...
+##   ..$ name  : chr [1:47] "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" ...
+##   ..$ date  : Date[1:47], format: "2016-01-01" "2016-02-01" "2016-03-01" "2016-04-01" ...
+##   ..$ value : num [1:47] 102 102 102 102 102 ...
+##   ..$ geo   : chr [1:47] "china" "china" "china" "china" ...
+##   ..$ unit  : chr [1:47] "" "" "" "" ...
 ##   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; 
 ##  $ A01010201:Classes 'data.table' and 'data.frame':	348 obs. of  6 variables:
 ##   ..$ symbol: chr [1:348] "A01010201" "A01010201" "A01010201" "A01010201" ...
 ##   ..$ name  : chr [1:348] "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" "居民消费价格指数(上年同月=100)" ...
-##   ..$ date  : Date[1:348], format: "1987-01-01" ...
+##   ..$ date  : Date[1:348], format: "1987-01-01" "1987-02-01" "1987-03-01" "1987-04-01" ...
 ##   ..$ value : num [1:348] 105 105 106 107 108 ...
 ##   ..$ geo   : chr [1:348] "china" "china" "china" "china" ...
 ##   ..$ unit  : chr [1:348] "" "" "" "" ...
@@ -138,13 +155,13 @@ str(dt_fred)
 
 ```
 ## List of 1
-##  $ FLEXCPIM159SFRBATL:Classes 'data.table' and 'data.frame':	617 obs. of  6 variables:
-##   ..$ symbol: chr [1:617] "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" ...
-##   ..$ name  : chr [1:617] "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" ...
-##   ..$ date  : Date[1:617], format: "1967-12-01" ...
-##   ..$ value : num [1:617] 2.81 3.14 3.31 3.62 3.89 ...
-##   ..$ geo   : logi [1:617] NA NA NA NA NA NA ...
-##   ..$ unit  : chr [1:617] "Percent Change from Year Ago" "Percent Change from Year Ago" "Percent Change from Year Ago" "Percent Change from Year Ago" ...
+##  $ FLEXCPIM159SFRBATL:Classes 'data.table' and 'data.frame':	624 obs. of  6 variables:
+##   ..$ symbol: chr [1:624] "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" "FLEXCPIM159SFRBATL" ...
+##   ..$ name  : chr [1:624] "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" "Flexible Price Consumer Price Index" ...
+##   ..$ date  : Date[1:624], format: "1967-12-01" "1968-01-01" "1968-02-01" "1968-03-01" ...
+##   ..$ value : num [1:624] 2.81 3.14 3.31 3.62 3.89 ...
+##   ..$ geo   : chr [1:624] "usa" "usa" "usa" "usa" ...
+##   ..$ unit  : chr [1:624] "Percent Change from Year Ago" "Percent Change from Year Ago" "Percent Change from Year Ago" "Percent Change from Year Ago" ...
 ##   ..- attr(*, ".internal.selfref")=&lt;externalptr&gt; 
 ##   ..- attr(*, "sorted")= chr "date"
 ```
@@ -166,13 +183,13 @@ str(dt_yahoo[[1]][.N])
 ## Classes 'data.table' and 'data.frame':	1 obs. of  10 variables:
 ##  $ symbol   : chr "000001.SZ"
 ##  $ name     : chr "Ping An Bank Co., Ltd."
-##  $ date     : Date, format: "2019-05-24"
-##  $ open     : num 12.3
-##  $ high     : num 12.4
-##  $ low      : num 12.3
-##  $ close    : num 12.3
-##  $ close_adj: num 12.3
-##  $ volume   : num 49053220
+##  $ date     : Date, format: "2019-12-27"
+##  $ open     : num 16.5
+##  $ high     : num 16.9
+##  $ low      : num 16.4
+##  $ close    : num 16.6
+##  $ close_adj: num 16.6
+##  $ volume   : num 1.03e+08
 ##  $ unit     : chr "CNY"
 ##  - attr(*, ".internal.selfref")=&lt;externalptr&gt; 
 ##  - attr(*, "sorted")= chr "date"
@@ -186,22 +203,23 @@ str(dt_163[[1]][.N])
 ```
 
 ```
-## Classes 'data.table' and 'data.frame':	1 obs. of  13 variables:
+## Classes 'data.table' and 'data.frame':	1 obs. of  14 variables:
 ##  $ symbol    : chr "000001.SZ"
 ##  $ name      : chr "平安银行"
-##  $ date      : Date, format: "2019-05-24"
-##  $ open      : num 12.3
-##  $ high      : num 12.4
-##  $ low       : num 12.3
-##  $ close     : num 12.3
-##  $ volume    : num 49552620
-##  $ amount    : num 6.13e+08
-##  $ turnover  : num 0.289
-##  $ cap_market: num 2.12e+11
-##  $ cap_total : num 2.12e+11
+##  $ date      : Date, format: "2019-12-27"
+##  $ open      : num 16.5
+##  $ high      : num 16.9
+##  $ low       : num 16.4
+##  $ close     : num 16.6
+##  $ change_pct: num 0.972
+##  $ volume    : num 1.04e+08
+##  $ amount    : num 1.74e+09
+##  $ turnover  : num 0.537
+##  $ cap_market: num 3.23e+11
+##  $ cap_total : num 3.23e+11
 ##  $ unit      : chr "CNY"
+##  - attr(*, ".internal.selfref")=&lt;externalptr&gt; 
 ##  - attr(*, "sorted")= chr "date"
-##  - attr(*, ".internal.selfref")=&lt;externalptr&gt;
 ```
 ]
 
@@ -287,18 +305,14 @@ tail(dt_val[[1]], 3)
 ```
 
 ```
-##       symbol     name       date  open  high   low close   volume
-## 1: 000001.SZ 平安银行 2019-05-22 12.57 12.57 12.32 12.40 50623072
-## 2: 000001.SZ 平安银行 2019-05-23 12.24 12.42 12.14 12.29 66685543
-## 3: 000001.SZ 平安银行 2019-05-24 12.35 12.45 12.31 12.35 49552620
-##       amount turnover cap_market cap_total     pb pe_last pe_trailing
-## 1: 628437470   0.2948  2.129e+11 2.129e+11 0.8485   8.579       8.295
-## 2: 817850530   0.3884  2.110e+11 2.110e+11 0.8409   8.503       8.221
-## 3: 613106248   0.2886  2.121e+11 2.121e+11 0.8450   8.544       8.261
-##    pe_forward    ps   pcf unit
-## 1:      7.149 1.757 5.437  CNY
-## 2:      7.085 1.742 5.388  CNY
-## 3:      7.120 1.750 5.415  CNY
+##       symbol     name       date  open  high   low close change_pct    volume    amount turnover cap_market cap_total    pb
+## 1: 000001.SZ 平安银行 2019-12-25 16.45 16.56 16.24 16.30    -0.6098  41491798 6.797e+08   0.2138  3.163e+11 3.163e+11 1.098
+## 2: 000001.SZ 平安银行 2019-12-26 16.34 16.48 16.32 16.47     1.0429  37203386 6.104e+08   0.1917  3.196e+11 3.196e+11 1.109
+## 3: 000001.SZ 平安银行 2019-12-27 16.53 16.93 16.43 16.63     0.9715 104257472 1.741e+09   0.5373  3.227e+11 3.227e+11 1.120
+##    pe_last pe_trailing pe_forward    ps    pcf unit
+## 1:   12.75       11.30      10.04 2.378 -103.9  CNY
+## 2:   12.88       11.42      10.15 2.403 -105.0  CNY
+## 3:   13.00       11.53      10.25 2.426 -106.0  CNY
 ```
 
 
@@ -325,8 +339,8 @@ tail(dt_ti[[1]],2)
 
 ```
 ##    sma_20 sma_50 macd_macd macd_signal
-## 1:  13.01  13.11    -2.142      -1.504
-## 2:  12.93  13.12    -2.172      -1.638
+## 1:  15.91   16.2    0.8849      0.3926
+## 2:  15.98   16.2    1.0114      0.5164
 ```
 ]
 .pull-right[
@@ -469,7 +483,7 @@ w = pedquant:::pq_backtest(ssec, addti=ti,
 ---
 class: inverse, center, middle
 
-![](img/WechatIMG5.jpeg)
+![](imgs/WechatIMG5.jpeg)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -517,7 +531,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 (function() {

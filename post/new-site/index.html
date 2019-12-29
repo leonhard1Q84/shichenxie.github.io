@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>博客搭建过程 – Shichen</title>
+    
+
+
+<script defer src="/js/fuse.min.94c78ad70b02749822921660cf4e9f0b3701bc0680c421afb784a78228de0275.js"></script>
+
+<script>
+  
+  var runSearch = function() {
+    
+        var baseurl = "\/";
+    
+    
+    var searchResults = null;
+    var searchMenu = null;
+    var fuse = null;
+
+    function endsWith(str, suffix) {
+      return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+    function initFuse() {
+      if (!endsWith(baseurl, "/")) {
+        baseurl = baseurl + '/';
+      };
+
+      $.ajax({
+        type: "GET",
+        url: baseurl + "index.json",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+      })
+        .done(function (index) {
+          fuse = new Fuse(index, {
+            keys: ['title', 'description', 'content']
+          });
+        })
+        .fail(function (jqxhr, textStatus, error) {
+          var err = textStatus + ", " + error;
+          console.error("Error getting Hugo index file:", err);
+        });
+    }
+
+    function renderSearchResults(results) {
+      searchResults = document.getElementById('search-results');
+      searchMenu = document.getElementById('search-menu');
+      searchResults.setAttribute('class', 'dropdown is-active');
+
+      var content = document.createElement('div');
+      content.setAttribute('class', 'dropdown-content search-content');
+
+      if (results.length > 0) {
+        results.forEach(function (result) {
+          var item = document.createElement('a');
+          item.setAttribute('href', result.uri);
+          item.setAttribute('class', 'dropdown-item');
+          item.innerHTML = `<div class="menu-item"><div class="menu-item__title">📄 ${result.title}</div><div class="menu-item__desc">${result.description ? result.description : result.content}</div></div>`;
+          content.appendChild(item);
+        });
+      } else {
+        var item = document.createElement('span');
+        item.setAttribute('class', 'dropdown-item');
+        item.innerText = 'No results found';
+        content.appendChild(item);
+      }
+
+      while (searchMenu.hasChildNodes()) {
+        searchMenu.removeChild(
+          searchMenu.lastChild
+        );
+      }
+      searchMenu.appendChild(content);
+    }
+
+    function renderSearchResultsMobile(results) {
+      searchResults = document.getElementById('search-mobile-results');
+
+      var content = document.createElement('div');
+      content.setAttribute('class', 'mobile-search__content');
+
+      if (results.length > 0) {
+        results.forEach(function (result) {
+          var item = document.createElement('a');
+          item.setAttribute('href', result.uri);
+          item.innerHTML = `<div class="mobile-search__item"><div class="mobile-search__item--title">📄 ${result.title}</div><div class="mobile-search__item--desc">${result.description ? result.description : result.content}</div></div>`;
+          content.appendChild(item);
+        });
+      } else {
+        var item = document.createElement('span');
+        content.appendChild(item);
+      }
+
+      $('#search-mobile-results').empty();
+      searchResults.appendChild(content);
+    }
+
+    initFuse();
+
+    $("#search").on('input', function (e) {
+      if (!e.target.value) {
+        $('#search-results').attr('class', 'dropdown');
+        return null;
+      }
+
+      if ($(window).width() < 770) {
+        return null;
+      } 
+
+      var results = fuse.search(e.target.value);
+      renderSearchResults(results);
+    });
+
+    $('#search').on('blur', function () {
+      if ($(window).width() < 770) {
+        return null;
+      }
+      setTimeout(function () {
+        $('#search-results').attr('class', 'dropdown');
+      }, 100);
+    });
+
+    $('#search').on('click', function (e) {
+      if ($(window).width() < 770) {
+        return null;
+      }
+      if (!e.target.value) {
+        $('#search-results').attr('class', 'dropdown');
+        return null;
+      }
+      var results = fuse.search(e.target.value);
+      renderSearchResults(results);
+    });
+
+    $('#search').on('keydown', function (e) {
+      if ($(window).width() < 770) {
+        return null;
+      }
+      var items = $('#search-menu .dropdown-item');
+      var activeIndex = $('#search-menu .dropdown-item.is-active').index();
+
+      items.removeClass('is-active');
+      if (e.key === 'ArrowDown') {
+        items.eq(activeIndex + 1).addClass('is-active');
+      } else if (e.key === 'ArrowUp') {
+        items.eq(activeIndex - 1).addClass('is-active');
+      } else if (e.key === 'Enter') {
+        var currentItemLink = items.eq(activeIndex).attr('href');
+        if (currentItemLink) {
+          location.href = currentItemLink;
+        }
+      }
+    });
+
+    $("#search-mobile").on('input', function(e) {
+      if (!e.target.value) {
+        $('#search-mobile-results').empty();
+        return null;
+      }
+
+      var results = fuse.search(e.target.value);
+      renderSearchResultsMobile(results);
+    });
+  }
+</script>    
+    
+
+
+<link rel="stylesheet" href="/css/main.min.css">
+
+
+    <meta name="description" content="" />
+<meta name="keywords" content="">
+<meta name="created" content="2017-03-21T00:00:00&#43;0000">
+<meta name="modified" content="2017-03-21T00:00:00&#43;0000">
+<meta name="author" content="谢士晨">
+
+<meta property="og:site_name" content="Shichen">
+<meta property="og:title" content="博客搭建过程">
+<meta property="og:url" content="/post/new-site/">
+<meta property="og:type" content="article">
+
+<meta name="generator" content="Hugo 0.62.0" />
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="/post/new-site/">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/logo.svg" sizes="any" type="image/svg+xml" />
+<link rel="manifest" href="/manifest.json">
+
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "博客搭建过程",
+    "datePublished": "2017-03-21T00:00:00Z",
+    "dateModified": "2017-03-21T00:00:00Z",
+    "url" : "/post/new-site/",
+    "description": "在“我网故我在”的召唤下，我用R语言的blogdown包^[参考blogdown: Creating Websites with R Markdown]和GitHubPages在一小时",
+    "keywords": ["R"],
+    "author": {
+      "@type": "Person",
+      "name": "谢士晨"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Shichen",
+      "url": "/"
+    }
+  }
+</script>
+
+    
+
+
+
+
+
+    
+</head>
+
+<body id="root" class="theme__dark">
+    <script>
+        var localTheme = localStorage.getItem('theme');
+        if (localTheme) {
+            document.getElementById('root').className = `theme__${localTheme}`;
+        }        
+    </script>    
+    
+    <div id="body">
+        
+        <div class="container wrapper">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar__brand">
+    
+    <a href="/" title="主页" rel="home" class="navbar__logo-link">
+      <img data-src="/logo.png" src="data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' width='48px' height='48px'%3E%3Cpath fill='%2337474f' d='M24.648,4l0.29,0.002c0.52,0.008,1.23,0.109,1.857,0.198c0.314,0.045,0.616,0.088,0.883,0.119 c0.164,0.024,0.715,0.227,1.043,0.348C29.468,4.941,32,6.875,32,6.875L31,5c0,0,1.563,0.445,2.125,0.875C34.247,6.733,34.354,7,35,7 h0.375L35,6c0.375,0.19,1.78,1.289,1.968,1.541L37,7.583l0.036,0.039c1.411,1.495,2.095,2.462,2.595,3.169 c0.339,0.48,0.945,0.822,1.243,1.21C41.225,12.454,42,14,42,14v-0.998c0,0,0.776,1.029,1.25,2.373C44,17.5,44,19,44,19 s-0.25-0.625-1-0.875C43,19,44,21,44,24.002v6c-0.74,0.57-0.989,1.443-1.214,2.386c-0.328,1.372-0.605,2.294-1.444,2.593L41,35.002 l-0.08,0.277c-0.533,0.662-0.994,1.351-1.439,2.018c-1.446,2.163-2.495,3.705-4.481,3.705c-1.041,0-2.044,0.167-2.441,0.559 C32.128,41.987,32,42.662,32,43.002c-1.012,0.377-2.167,1-8,1c-5,0-9.4-1.756-12.262-4.545c-0.965-0.785-2.272-1.669-2.857-2.273 C6.976,35.593,6.047,33.058,6,33.002c1.184,0.985,5.245,4.636,7.091,4.636l0,0C13.301,37.416,12,35.684,12,35.002 C13.429,37.162,17.405,40,23,40c4.125,0,3.892-0.73,6-1c4.875-0.625,7.492-5.439,8.214-6.816c0.05-0.096,0.202-1.02,0.24-1.092 c0.368-0.376,0.463-1.167,0.607-2.371C38.17,27.815,39,26.75,39,25.625S38,24,38,24s0-3-0.625-5.375 C37.25,18.151,36.738,16.409,34,13v1.002c-2.125-1.127-3.668-2.545-4.125-2.752C28.435,10.599,26.831,10,25,10c-4,0-4.625,1-8,2 c0,0,1.25,0,2,0c0,0-1.867,1.445-3,2.125c-1.875,1.125-4,5.034-4,7.875c0,3-2.485,4-4,4c-2.453,0-4-2-4-4 c0-1.133,0.45-2.5,0.886-3.425c0.411-0.873,0.799-1.697,0.795-2.581c0.031-0.106,0.274-0.383,0.435-0.566 c0.466-0.531,1.083-1.234,1.224-2.252c1.106-0.927,3.13-3.015,3.155-3.041c0.162-0.171,0.324-0.304,0.511-0.457 c0.324-0.265,0.728-0.594,1.221-1.205l0.423-0.525c0.798-0.428,2.222-1.035,2.776-1.271c0.342-0.146,0.602-0.258,0.716-0.313 L19.75,5.75C19.966,5.75,20,5.238,20,5c0-0.227,0.106-0.198,0.324-0.273C22.139,4.099,22.799,4,24.648,4L24.648,4'/%3E%3C/svg%3E" alt="Home" class="lazyload navbar__logo">
+    </a>
+    
+    <a href="/" title="主页" rel="home" class="navbar__title-link">
+      <h6 class="navbar__title">home</h6>
+    </a>    
+  </div>
+  
+  
+<div class="theme-mobile">
+  <div class="dropdown">
+    <button class="dropdown-trigger navbar__slide-down" aria-label="Invert Colors" style="">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M24 0H0v24h24V0z"/><path fill="currentColor" d="M6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58s4.1-.78 5.66-2.34c3.12-3.12 3.12-8.19 0-11.31l-4.95-4.95c-.39-.39-1.02-.39-1.41 0L6.34 7.93zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>      
+    </button>
+    <div class="dropdown-content select-theme">
+      
+        
+        <a href="#" class="dropdown-item select-theme__item is-active">
+          dark
+        </a>
+        
+        <a href="#" class="dropdown-item select-theme__item ">
+          light
+        </a>
+        
+      
+    </div>
+  </div>
+</div>
+
+  
+<div id="mobileSearchBtn" class="mobile-search__btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+</div>
+
+<div id="search-mobile-container" class="mobile-search hide">
+  <div class="mobile-search__top">
+    <input id="search-mobile" type="text" aria-label="Mobile Search" placeholder="搜索" class="mobile-search__top--input"/>
+    <div id="search-mobile-close" class="mobile-search__top--icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path opacity=".87" fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.59-13L12 10.59 8.41 7 7 8.41 10.59 12 7 15.59 8.41 17 12 13.41 15.59 17 17 15.59 13.41 12 17 8.41z"/></svg>
+    </div>
+  </div>
+  <div id="search-mobile-results" class="mobile-search__body">
+    
+  </div>
+</div>
+
+  
+  <a role="button" class="navbar__burger" aria-label="menu" aria-expanded="false">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </a>  
+
+  <div class="navbar__menu">
+    
+<div class="theme">
+  <div class="dropdown">
+    <button class="dropdown-trigger navbar__slide-down" aria-label="Select Theme Button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"><path fill="none" d="M24 0H0v24h24V0z"/><path fill="currentColor" d="M6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58s4.1-.78 5.66-2.34c3.12-3.12 3.12-8.19 0-11.31l-4.95-4.95c-.39-.39-1.02-.39-1.41 0L6.34 7.93zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>      
+    </button>
+    <div class="dropdown-content select-theme">
+      
+        
+        <a href="#" class="dropdown-item select-theme__item is-active">
+          dark
+        </a>
+        
+        <a href="#" class="dropdown-item select-theme__item ">
+          light
+        </a>
+        
+      
+    </div>
+  </div>
+</div>
+
+    
+    <a href="/about" class="navbar__menu-item navbar__slide-down">关于</a>
+    
+    
+    <a href="/post" class="navbar__menu-item navbar__slide-down">博客</a>
+    
+    
+    <div class="navbar__dropdown navbar__slide-down">
+      <a href="/" class="navbar__menu-item">
+        开源项目
+        <span class="navbar__menu-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M8.12 9.29L12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41 0L6.7 10.7c-.39-.39-.39-1.02 0-1.41.39-.38 1.03-.39 1.42 0z"/></svg>
+        </span>
+      </a>        
+      <div class="navbar__dropdown--content">
+        
+        <a href="http://shichen.name/pedquant/" class="navbar__dropdown--item">pedquant</a>        
+        
+        <a href="http://shichen.name/scorecard/" class="navbar__dropdown--item">scorecard</a>        
+        
+      </div>
+    </div>
+    
+    
+    <a href="/slide" class="navbar__menu-item navbar__slide-down">幻灯片</a>
+    
+    
+    <a href="/archive" class="navbar__menu-item navbar__slide-down">归档</a>
+    
+    
+  </div>
+</nav>
+            
+            
+
+
+<script src="/js/enquire.min.72cb9edeb1ca1b92f5bf9df8d31a1ecd1e423d0b5e0f48a2a208b020dd5053fa.js"></script>
+
+<main class="main-main">
+  
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+  <ol>
+    
+  
+  
+  
+  
+  
+  <li >    
+    
+      <a href="/">Shichen</a>            
+        
+  </li>
+  
+  
+  <li >    
+    
+      <a href="/post/">Posts</a>
+        
+  </li>
+  
+  
+  <li  class="is-active" >    
+    
+      <a href="/post/new-site/">博客搭建过程</a>
+        
+  </li>
+  
+  </ol>
+  
+</nav>
+  
+  <div class="single">
+    <h2 class="single__title">博客搭建过程</h2>
+    <div class="single__meta">
+      <div class="single__infos">
+  <span class="single__info" title="创建日期">🕓2017年03月21日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕2 分钟 </span>
+  <span class="single__info">
+    
+  </span>
+</div>
+      <div class="single__tags caption">
+
+  
+    🏷️
+  
+  
+  <li>
+    <a href="/tags/r" class="single__tag" title="R">
+      #R
+    </a>
+  </li>
+    
+
+</div>
+    </div>    
+    <article class="single__contents">
+      <p>在“我网故我在”的召唤下，我用<a href="https://www.r-project.org">R语言</a>的<a href="https://github.com/rstudio/blogdown">blogdown包</a>^[参考<a href="https://bookdown.org/yihui/blogdown/">blogdown: Creating Websites with R Markdown</a>]和<a href="https://pages.github.com">GitHubPages</a>在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。</p>
+<h2 id="heading">编辑网站文件</h2>
+<p>首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。<a href="https://yihui.name">益辉</a>的<a href="https://github.com/rstudio/blogdown">blogdown</a>让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用<a href="https://www.rstudio.com">RStudio</a>新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># 安装blogdown包</span>
+<span class="n">devtools</span><span class="o">::</span><span class="nf">install_github</span><span class="p">(</span><span class="s">&#39;</span><span class="s">rstudio/blogdown&#39;</span><span class="p">)</span> 
+
+<span class="nf">setwd</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c1"># path为新建的项目文件夹路径</span>
+<span class="c1"># 或者直接用rstudio打开*.Rproj文件</span>
+
+<span class="c1"># 创建网站文件</span>
+<span class="n">blogdown</span><span class="o">::</span><span class="nf">new_site</span><span class="p">(</span><span class="p">)</span> 
+
+<span class="c1"># &gt; sessionInfo() # R语言系统环境</span>
+<span class="c1"># R version 3.3.2 (2016-10-31)</span>
+<span class="c1"># Platform: x86_64-apple-darwin13.4.0 (64-bit)</span>
+<span class="c1"># Running under: macOS Sierra 10.12.3</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="github-pages">创建GitHub Pages仓库</h2>
+<p>登录自己的github主页（<code>https://github.com/shichenxie</code>，其中<code>shichenxie</code>为我的github账号），新建名为<code>shichenxie.github.io</code>的项目仓库(repository)。</p>
+<p>然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码^[更详细的中文参考见<a href="http://alfred-sun.github.io/blog/2014/12/05/github-pages/">GitHub Pages 静态博客 - 个人建站实录</a>]</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> path <span class="c1"># path为public文件地址</span>
+
+git init <span class="c1"># 初始化git</span>
+git remote add origin git@github.com:shichenxie/shichenxie.github.io.git
+
+git add -A <span class="c1"># git中添加所有文件</span>
+git commit -m <span class="s1">&#39;init site&#39;</span> <span class="c1"># commit</span>
+git push -u origin master <span class="c1"># push</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="heading-1">绑定域名</h2>
+<p>首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为<code>shichen.name</code>)。上传CNAME文件到github之后，打开<code>shichenxie.github.io</code>自动定位到<code>shichen.name</code>，但是并不能显示网站内容，需要设置DNS解析。</p>
+<p>我的网站域名是从阿里云购买的(也可从<a href="https://www.godaddy.com">GoDaddy</a>购买)，故用阿里云的云解析DNS(也可用<a href="https://www.dnspod.cn">DNSPOD</a>提供的DNS解析服务)，添加如下三条记录：^[参考<a href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/">Using a custom domain with GitHub Pages</a>与<a href="https://help.aliyun.com/knowledge_detail/39788.html?spm=5176.7839782.2.12.358m2D">域名 CNAME 解析设置方法</a>]</p>
+<pre><code>@        A        192.30.252.153
+@        A        192.30.252.154
+www      CNAME    username.github.io.
+</code></pre><p>最后在浏览器中打开<a href="http://shichen.name"><code>shichen.name</code></a>，个人网站上线了。</p>
+
+    </article>
+    
+<div class="donation__message">
+  您的鼓励是我最大的动力
+</div>
+<div class="donation">  
+  
+    
+      
+        <div class="donation__item donation__dropup">
+          <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="22" height="22"><path fill="currentColor" d="M 5 5 L 5 27 L 27 27 L 27 5 L 5 5 z M 7 7 L 25 7 L 25 18.931641 L 18.929688 16.775391 C 19.528069 15.604874 19.872428 14.319295 20 13 L 17 13 L 17 12 L 21 12 L 21 11 L 17 11 L 17 9 L 15 9 L 15 11 L 10 11 L 10 12 L 15 12 L 15 13 L 11 13 L 11 14 L 18.042969 14 C 17.874523 14.798238 17.595556 15.553113 17.226562 16.220703 C 17.067744 16.141588 16.909631 16.060926 16.748047 15.988281 C 16.275047 15.769281 15.785203 15.594937 15.283203 15.460938 C 14.281203 15.185937 13.248844 15.029953 12.214844 15.001953 C 11.955844 14.994953 11.6955 15.005813 11.4375 15.007812 C 11.1535 15.021812 10.861031 15.045953 10.582031 15.126953 C 10.020031 15.271953 9.5026563 15.571516 9.0976562 15.978516 C 8.2506563 16.776516 7.9028281 17.969375 8.0488281 19.109375 C 8.1738281 20.285375 9.0837031 21.364953 10.220703 21.751953 C 10.770703 21.960953 11.416641 22.039422 11.931641 21.982422 C 12.202641 21.976422 12.472188 21.956297 12.742188 21.904297 C 13.013188 21.866297 13.281922 21.822234 13.544922 21.740234 C 14.607922 21.469234 15.606062 20.931031 16.414062 20.207031 C 16.818062 19.845031 17.187578 19.452297 17.517578 19.029297 C 17.673578 18.811297 17.84375 18.601328 17.96875 18.361328 C 17.986598 18.324421 17.999073 18.284503 18.017578 18.248047 L 25 22.044922 L 25 25 L 7 25 L 7 7 z M 11.427734 16.341797 L 12.109375 16.388672 C 13.020375 16.473672 13.909156 16.711516 14.785156 16.978516 C 15.220156 17.122516 15.651125 17.283172 16.078125 17.451172 C 16.169125 17.488172 16.257656 17.530313 16.347656 17.570312 C 16.265656 17.685312 16.183703 17.800109 16.095703 17.912109 C 15.835703 18.249109 15.532328 18.544703 15.236328 18.845703 C 14.636328 19.436703 13.928094 19.918141 13.121094 20.244141 C 12.921094 20.332141 12.710094 20.385547 12.496094 20.435547 C 12.284094 20.499547 12.06575 20.534594 11.84375 20.558594 C 11.37975 20.644594 11.008375 20.634062 10.609375 20.539062 C 9.834375 20.367062 9.1521562 19.755547 9.0351562 18.935547 C 8.8801563 18.121547 9.246 17.233016 9.875 16.791016 C 10.182 16.559016 10.534719 16.428234 10.886719 16.365234 C 11.064719 16.330234 11.241734 16.336797 11.427734 16.341797 z"/></svg>
+          alipay
+          <div class="donation__dropup--content">
+            <img data-src="/images/donation/p-alipay.png" alt="alipay QR Code" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24pt' height='24pt' viewBox='0 0 24 24' version='1.1'%3E%3Cg id='surface1035795'%3E%3Cpath style=' stroke:none;fill-rule:nonzero;fill:rgb(80%25,80%25,80%25);fill-opacity:1;' d='M 4 4 C 2.90625 4 2 4.90625 2 6 L 2 18 C 2 19.09375 2.90625 20 4 20 L 20 20 C 21.09375 20 22 19.09375 22 18 L 22 6 C 22 4.90625 21.09375 4 20 4 Z M 4 6 L 20 6 L 20 18 L 4 18 Z M 4 6 '/%3E%3C/g%3E%3C/svg%3E%0A" class="lazyload"/>
+          </div>        
+        </div>        
+      
+    
+  
+    
+  
+    
+  
+    
+      
+        <a href="https://www.paypal.me/shichenxie" title="paypal" aria-label="paypal" class="donation__item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M20.055,7.713c-0.677-0.842-1.673-1.41-2.764-1.615C16.773,3.971,14.877,3,13.045,3H5.846L2.647,18h4.114l-0.689,3h6.233 l1.17-5h1.398c3.365,0,5.38-1.445,5.989-4.295C21.278,9.752,20.653,8.456,20.055,7.713z M7.183,16H5.137L7.512,5h5.533 c0.293,0,1.5,0.061,2.078,1.013H9.351l-1.375,6.235L7.183,16z M18.906,11.287C18.5,13.188,17.293,14,14.873,14h-2.944l-1.207,5 H8.594l1.271-6h1.444c4.259,0,5.665-2.394,6.094-4.402c0.027-0.128,0.045-0.256,0.057-0.382c0.378,0.151,0.749,0.393,1.038,0.751 C18.971,9.557,19.108,10.337,18.906,11.287z"/></svg>
+
+          paypal
+        </a>
+      
+    
+  
+    
+      
+        <div class="donation__item donation__dropup">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M 10.5 3 C 5.813 3 2 6.14 2 10 C 2 11.363 2.4712344 12.668687 3.3652344 13.804688 L 3.0117188 17.771484 C 2.9747188 18.183484 3.4393906 18.447078 3.7753906 18.205078 L 6.5488281 16.197266 C 7.6878797 16.690511 8.9474402 16.953333 10.236328 16.986328 C 10.955859 19.275512 13.264379 20.957031 16 20.957031 C 16.848 20.957031 17.677703 20.788125 18.470703 20.453125 L 21.277344 21.609375 C 21.635344 21.757375 22.015125 21.455266 21.953125 21.072266 L 21.421875 17.783203 C 21.805875 17.043203 22 16.269516 22 15.478516 C 22 13.437939 20.76981 11.657677 18.953125 10.714844 C 18.982151 10.477946 19 10.240343 19 10 C 19 6.14 15.187 3 10.5 3 z M 8.0175781 6.75 C 8.7085781 6.75 9.2675781 7.3043281 9.2675781 7.9863281 C 9.2675781 8.6683281 8.7085781 9.25 8.0175781 9.25 C 7.3265781 9.25 6.7675781 8.6703281 6.7675781 7.9863281 C 6.7675781 7.3033281 7.3265781 6.75 8.0175781 6.75 z M 13.013672 6.75 C 13.695672 6.75 14.25 7.3043281 14.25 7.9863281 C 14.25 8.6703281 13.696672 9.25 13.013672 9.25 C 12.328672 9.25 11.75 8.6703281 11.75 7.9863281 C 11.75 7.3033281 12.329672 6.75 13.013672 6.75 z M 16 12 C 18.206 12 20 13.560516 20 15.478516 C 20 16.019516 19.839437 16.560031 19.523438 17.082031 L 19.332031 17.396484 L 19.550781 18.734375 L 18.404297 18.263672 L 17.994141 18.470703 C 17.355141 18.794703 16.685 18.957031 16 18.957031 C 13.794 18.957031 12 17.396516 12 15.478516 C 12 13.560516 13.794 12 16 12 z M 14.021484 14 C 13.469484 14 13 14.447 13 15 C 13 15.553 13.472484 16 14.021484 16 C 14.570484 16 15.015625 15.553 15.015625 15 C 15.015625 14.447 14.571484 14 14.021484 14 z M 17.992188 14 A 0.99299997 1 0 0 0 17 15 A 0.99299997 1 0 0 0 17.992188 16 A 0.99299997 1 0 0 0 18.986328 15 A 0.99299997 1 0 0 0 17.992188 14 z"/></svg>
+
+          wechat
+          <div class="donation__dropup--content">
+            <img data-src="/images/donation/p-wechatpay.png" alt="wechat QR Code" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='24pt' height='24pt' viewBox='0 0 24 24' version='1.1'%3E%3Cg id='surface1035795'%3E%3Cpath style=' stroke:none;fill-rule:nonzero;fill:rgb(80%25,80%25,80%25);fill-opacity:1;' d='M 4 4 C 2.90625 4 2 4.90625 2 6 L 2 18 C 2 19.09375 2.90625 20 4 20 L 20 20 C 21.09375 20 22 19.09375 22 18 L 22 6 C 22 4.90625 21.09375 4 20 4 Z M 4 6 L 20 6 L 20 18 L 4 18 Z M 4 6 '/%3E%3C/g%3E%3C/svg%3E%0A" class="lazyload"/>
+          </div>        
+        </div>        
+      
+    
+  
+</div>
+
+    
+    <section class="related">
+    
+    
+  </section>
+    <div class="grow"></div>
+<nav class="pagination-single">
+  
+  <div class="grow"></div>
+  
+    <a href="/post/ubuntu-vnpy/" class="pagination-single__right">      
+      <div class="pagination-single__right-title">在ubuntu上配置vnpy</div>
+      <div class="pagination-single__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg>
+      </div>
+    </a>
+  
+</nav>
+    
+  
+    <div id="comments-gitment"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/default.min.css" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  var gitment = new Gitment({
+    id: '2017-03-21 00:00:00 \x2b0000 UTC',
+    title: '博客搭建过程',
+    link: decodeURI(location.href),
+    desc: '在“我网故我在”的召唤下，我用R语言的blogdown包^[参考blogdown: Creating Websites with R Markdown]和GitHubPages在一小时',
+    owner: 'shichenxie',
+    repo: 'comment',
+    oauth: {
+      client_id: '1e406aa1fff4134e0552',
+      client_secret: '6e5887b928915046e4a31d5d71b6f2a484859653'
+    }
+  });
+  gitment.render('comments-gitment');
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://github.com/imsun/gitment">comments powered by gitment.</a></noscript>
+  
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+  
+  <div class="pswp__bg"></div>
+
+  
+  <div class="pswp__scroll-wrap">
+
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+
+    
+    <div class="pswp__ui pswp__ui--hidden">
+
+      <div class="pswp__top-bar">
+
+        
+
+        <div class="pswp__counter"></div>
+
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+        <button class="pswp__button pswp__button--share" title="Share"></button>
+
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+        
+        
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+    <div class="hide">
+    
+
+<div class="search">
+  <span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M15.5 14h-.79l-.28-.27c1.2-1.4 1.82-3.31 1.48-5.34-.47-2.78-2.79-5-5.59-5.34-4.23-.52-7.79 3.04-7.27 7.27.34 2.8 2.56 5.12 5.34 5.59 2.03.34 3.94-.28 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+  </span>
+  <input id="search" aria-label="Site Search" class="input" type="text" placeholder="搜索" autocomplete="off">
+  <div id="search-results" class="dropdown">
+    <div id="search-menu" class="dropdown-menu" role="menu">
+    </div>
+  </div>
+</div>
+
+
+    </div>
+  </div>
+</main>
+
+
+<aside class="main-side">
+  
+
+
+<section class="sidebar">
+  <div class="toc__flexbox" data-position="fixed">
+    <h6 class="toc__title">目录</h6>
+    
+      <label class="switch">
+        <input id="toggle-toc" aria-label="Toggle TOC" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+    
+  </div>
+  <div class="toc ">
+    <ul id="toc"></ul>
+  </div>
+</section>
+
+
+
+</aside>
+
+<script>
+  enquire.register("screen and (max-width: 769px)", {
+    match: function () {
+      if (document.getElementsByTagName('main')[0]) {
+        document.getElementsByTagName('main')[0].className = "main";
+      }
+      if (document.getElementsByTagName('aside')[0]) {
+        document.getElementsByTagName('aside')[0].className = "hide";
+      }
+    },
+    unmatch: function () {
+      if (document.getElementsByTagName('main')[0]) {
+        document.getElementsByTagName('main')[0].className = "main-main";
+      }
+      if (document.getElementsByTagName('aside')[0]) {
+        document.getElementsByTagName('aside')[0].className = "main-side";
+      }
+      document.getElementsByClassName('navbar__burger')[0].classList.remove('is-active');
+      document.getElementsByClassName('navbar__menu')[0].classList.remove('is-active');
+      document.getElementsByClassName('mobile-search')[0].classList.add('hide');
+    },
+    setup: function () { },
+    deferSetup: true,
+    destroy: function () { },
+  });
+</script>
+
+
+
+
+<script defer src="/js/jquery.min.0925e8ad7bd971391a8b1e98be8e87a6971919eb5b60c196485941c3c1df089a.js"></script>
+
+<script defer src="/js/enquire.min.72cb9edeb1ca1b92f5bf9df8d31a1ecd1e423d0b5e0f48a2a208b020dd5053fa.js"></script>
+
+<script defer src="/js/clipboard.min.1626706afc88d95ebe1173b553ec732c6dc82a576989315fdf5e7779af738a44.js"></script>
+
+<script defer src="/js/lazysizes.min.31dd6a2d3a1ec0f78a8df007535cf23f03aeb5c70f026e6d6a19dac3b3acc340.js"></script>
+
+<script defer src="/js/zzo.min.31d5b7d503557f488cc17574468cbc03fca4e45f61c15080d29bff7e38043ec8.js"></script>
+
+
+  
+  <script defer src="/lib/photoswipe/photoswipe.min.78fc260a16dbbd76ec3b4da56ccdc7a076d21d31c501e0a17a4175c4a25d95ea.js"></script>
+  
+  <script defer src="/lib/photoswipe/photoswipe-ui-default.min.50a9333a7ff0d660714662cb1ab49ec81e1ed716eba78c729600166f7338da95.js"></script>
+  
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css">
+  
+  <link rel="stylesheet" href="/lib/photoswipe/custom-skin.min.css">
+
+
+
+  
+  <script defer src="/js/jquery.toc.min.376e1b5d343786c1978dbad9ea7a0e23088947732993a91dcbad995883c96ceb.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  window.onload = function() {
+    (function () {
+      document.querySelectorAll('.single__contents > pre > code')
+        .forEach((element) => {
+          if (!$(element).attr('data-lang')) {
+            $(element).parent().wrap('<div data-lang="Code" class="language-code"></div>');
+          }
+        });
+    })();
+
+    function mapLang(name) {
+      return {
+        coffeescript: 'CoffeeScript',
+        cpp: 'C++',
+        cs: 'C#',
+        js: 'JavaScript',
+        json: 'JSON',
+        objectivec: 'Objective-C',
+        ts: 'TypeScript',
+        typescript: 'TypeScript',
+      }[name] || name.toUpperCase();
+    }
+
+    
+    runSearch();
+
+    
+    
+    
+    var enableBusuanzi = JSON.parse("false");
+    var busuanziPagePV = JSON.parse("true");
+    
+    if (enableBusuanzi && busuanziPagePV) {      
+      $('#busuanzi_value_page_pv').digits();
+    }    
+
+    var navbar = $('.navbar');
+
+    
+    
+    
+    
+    var enableToc = JSON.parse("true");
+    var toc = JSON.parse("null");
+    var hideToc = JSON.parse("null");
+    
+    if (enableToc || toc) {
+      $("#toc").toc({ content: ".single__contents", headings: "h1,h2,h3,h4" });
+      $('#toc > li').each(function () {
+        $(this).find('ul').css('display', 'none');
+      });
+      $('#toc a').each(function () {
+        $(this).click(function () {
+          navbar.removeClass('navbar--show');
+          navbar.removeClass('navbar--hide');
+          navbar.addClass('navbar--hide');
+
+          $(".single__contents :header").each(function () {
+            $('.toc a').removeClass('active');
+          });
+          $(this).addClass('active');
+
+          $('#toc > li').each(function () {
+            $(this).find('ul').css('display', 'none');
+          });
+          $(this).next().css('display', 'block');
+          $(this).parents('ul').css('display', 'block');
+        });
+      });
+
+      
+      $("#toggle-toc").change(function () {
+        if (this.checked) {
+          $('.toc').fadeIn(200);
+          $('main').removeClass('main-main').removeClass('main').addClass('main-main');
+          $('side').removeClass('main-side');
+          $('.toc__flexbox').attr('data-position', 'fixed');
+        } else {
+          $('.toc').fadeOut(200);
+          $('main').removeClass('main-main').removeClass('main').addClass('main');
+          $('side').removeClass('main-side');
+          $('.toc__flexbox').attr('data-position', 'absolute');
+        }
+      });
+    }    
+
+    
+    var text, clip = new ClipboardJS('.anchor');
+    var headers = $('.single__contents :header').not('h6').not('h5');
+    headers.append(function (index, html) {
+      var element = $(this);
+      var url = encodeURI(document.location.origin + document.location.pathname);
+      var link = url + "#" + element[0].id;
+      return " <span class='anchor hide' data-clipboard-text='" + link + "' style='position: relative;'>" +
+        "<span style='font-size: 1rem; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%)'>🔗</span>" +
+        "</span>"
+        ;
+    });
+    headers.on('mouseenter', function () {
+      $(this).find('.anchor').attr('class', 'anchor');
+    });
+    headers.on('mouseleave', function () {
+      $(this).find('.anchor').attr('class', 'anchor hide');
+    });
+
+    $(".anchor").on('mouseleave', function (e) {
+      $(this).attr('aria-label', null).removeClass('tooltipped tooltipped-s tooltipped-w');
+    });
+
+    clip.on('success', function (e) {
+      e.clearSelection();
+      $(e.trigger).attr('aria-label', 'Link copied to clipboard!').addClass('tooltipped tooltipped-s');
+    });
+    
+    $('.language-code').each(function (i, node) {
+      $(node).append('<span class="copy-to-clipboard" title="Copy to clipboard"/>');
+    });
+
+    
+    var clipInit = false;
+    $('pre.chroma code, .language-code code').each(function () {
+      var code = $(this),
+        text = code.text();
+
+      if (text.length > 30) {
+        if (!clipInit) {
+          var text, clip = new ClipboardJS('.copy-to-clipboard', {
+            text: function (trigger) {
+              console.log();
+              if ($(trigger).prev().find('code').length > 1) {                
+                text = $(trigger).prev().find(`code[class^="language-"]`).text();
+              } else {
+                text = $(trigger).prev().find('code').text();
+              }
+               
+              return text.replace(/^\$\s/gm, '');
+            }
+          });
+
+          var inPre;
+          clip.on('success', function (e) {
+            e.clearSelection();
+            inPre = $(e.trigger).parent().prop('tagName') == 'PRE';
+            $(e.trigger).attr('aria-label', 'Copied to clipboard!').addClass('tooltipped tooltipped-w');
+          });
+
+          clip.on('error', function (e) {
+            inPre = $(e.trigger).parent().prop('tagName') == 'PRE';
+            $(e.trigger).attr('aria-label', fallbackMessage(e.action)).addClass('tooltipped tooltipped-w');
+            $(document).one('copy', function () {
+              $(e.trigger).attr('aria-label', 'Copied to clipboard!').addClass('tooltipped tooltipped-w');
+            });
+          });
+
+          clipInit = true;
+        }
+
+        var notAllowedClass = ['language-mermaid', 'language-viz', 'language-wave', 'language-chart', 'language-msc', 'language-flowchart'];
+        var isNotAllowedIncluded = false;
+        var curClassName = code.attr('class');
+
+        for (let str of notAllowedClass) {
+          if (curClassName && curClassName.startsWith(str)) {
+            isNotAllowedIncluded = true;
+            break;
+          } 
+        }
+        
+        if (!isNotAllowedIncluded) {
+          if (curClassName) {
+            code.closest('div.chroma').append('<span class="copy-to-clipboard" title="Copy to clipboard" />');
+          }         
+        }        
+      }
+    });
+
+    
+    
+    var enablePhotoSwipe = JSON.parse("true");
+    
+    if (enablePhotoSwipe) {
+      var pswpElement = $('.pswp')[0];
+      var imgElements = $('.single__contents').find('img');
+      var items = [];
+
+      imgElements.each(function (i, v) {
+        $(this).click(function (e) {
+          initGallery(i);
+        });
+        $(this).css('cursor', 'pointer');
+        items.push({
+          src: v['src'],
+          w: 0,
+          h: 0,
+          title: filename(v['src']),
+        });
+      });
+
+      function filename(str) {
+        var s = str.replace(/\\/g, '/');
+        s = s.substring(s.lastIndexOf('/') + 1);
+        return str ? s.replace(/[?#].+$/, '') : s.split('.')[0];
+      }
+
+      function initGallery(index) {
+        var options = { index: index };
+        var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+        gallery.listen('imageLoadComplete', function (index, item) {
+          if (item.h < 1 || item.w < 1) {
+            let img = new Image();
+            img.onload = () => {
+              item.w = img.width;
+              item.h = img.height;
+              gallery.invalidateCurrItems();
+              gallery.updateSize(true);
+            }
+            img.src = item.src;
+          }
+        });
+        gallery.init();
+      }
+    }
+
+    
+    
+    var lib = JSON.parse("null");
+
+    if (lib && lib.includes('mermaid')) {
+      
+      var themeVariant = localStorage.getItem('theme') || JSON.parse("\"dark\"");
+
+      if (themeVariant === "dark" || themeVariant === "hacker") {
+        mermaid.initialize({ theme: 'dark' });
+      } else {
+        mermaid.initialize({ theme: 'default' });
+      }
+      
+      let mermaids = [];
+      [].push.apply(mermaids, document.getElementsByClassName('language-mermaid'));
+      for (i = 0; i < mermaids.length; i++) {
+        $(mermaids[i]).unwrap('pre');
+        $(mermaids[i]).replaceWith(function () {
+          return $("<div />").append($(this).contents()).addClass('mermaid').css('padding', '34px 4px 6px');
+        });
+      }
+    }
+
+    
+    if (lib && lib.includes('katex')) {
+      var mathElements = document.getElementsByClassName('math');
+      var options = [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ];
+
+      renderMathInElement(document.querySelector('.single__contents'), options);
+    }
+
+    
+    if (lib && lib.includes('flowchartjs')) {
+      
+      var options = JSON.parse("{\"arrow-end\":\"block\",\"element-color\":\"black\",\"fill\":\"white\",\"flowstate\":{\"approved\":{\"fill\":\"#58C4A3\",\"font-size\":12,\"no-text\":\"n/a\",\"yes-text\":\"APPROVED\"},\"current\":{\"fill\":\"yellow\",\"font-color\":\"red\",\"font-weight\":\"bold\"},\"future\":{\"fill\":\"#FFFF99\"},\"invalid\":{\"fill\":\"#444444\"},\"past\":{\"fill\":\"#CCCCCC\",\"font-size\":12},\"rejected\":{\"fill\":\"#C45879\",\"font-size\":12,\"no-text\":\"REJECTED\",\"yes-text\":\"n/a\"},\"request\":{\"fill\":\"blue\"}},\"font-color\":\"black\",\"font-size\":14,\"line-color\":\"black\",\"line-length\":50,\"line-width\":3,\"no-text\":\"no\",\"scale\":1,\"symbols\":{\"end\":{\"class\":\"end-element\"},\"start\":{\"element-color\":\"green\",\"fill\":\"yellow\",\"font-color\":\"red\"}},\"text-margin\":10,\"x\":0,\"y\":0,\"yes-text\":\"yes\"}");
+
+      var flowchartPrefix = "language-flowchart";
+      var index = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + flowchartPrefix + "]"), function(x){
+          x.style.display = 'none'
+          x.parentNode.style.backgroundColor = "transparent"
+          jsonContent = x.innerText;
+
+          node0 = document.createElement('div');
+          node0.id = 'flowchart' + index;
+          x.parentNode.insertBefore(node0, x);
+
+          var diagram = flowchart.parse(jsonContent);
+          diagram.drawSVG("flowchart"+index, options);
+
+          index +=1;
+      });      
+    }
+
+    
+    if (lib && lib.includes('mathjax')) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: false,
+          packages: { '[+]': ['noerrors'] }
+        },
+        loader: {
+          load: ['[tex]/noerrors']
+        },
+      };
+    }
+
+    
+    if (lib && lib.includes('msc')) {
+      
+      var options = JSON.parse("{\"theme\":\"hand\"}");    
+
+      var index = 0;
+      var chartPrefix = "language-msc";
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + chartPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        jsonContent = x.innerText;
+        node0 = document.createElement('div');
+        node0.id = 'msc' + index;
+        x.parentNode.insertBefore(node0, x);
+        var diagram = Diagram.parse(jsonContent);
+        diagram.drawSVG("msc" + index, options);
+        index += 1;
+      });
+    }
+
+    
+    if (lib && lib.includes('chart')) {
+      var borderColor = "#666";
+      var bgColor = "#ddd";
+      var borderWidth = 2;
+
+      Chart.defaults.global.elements.rectangle.borderWidth = borderWidth;
+      Chart.defaults.global.elements.rectangle.borderColor = borderColor;
+      Chart.defaults.global.elements.rectangle.backgroundColor = bgColor;
+
+      Chart.defaults.global.elements.line.borderWidth = borderWidth;
+      Chart.defaults.global.elements.line.borderColor = borderColor;
+      Chart.defaults.global.elements.line.backgroundColor = bgColor;
+
+      Chart.defaults.global.elements.point.borderWidth = borderWidth;
+      Chart.defaults.global.elements.point.borderColor = borderColor;
+      Chart.defaults.global.elements.point.backgroundColor = bgColor;
+
+      var chartPrefix = "language-chart";
+      var index = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + chartPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        jsonContent = x.innerText;
+        node0 = document.createElement('canvas');
+        node0.height = 200;
+        node0.style.height = 200;
+        node0.id = 'myChart' + index;
+        source = JSON.parse(jsonContent);
+        x.parentNode.insertBefore(node0, x);
+        var ctx = document.getElementById('myChart' + index).getContext('2d');
+        var myChart = new Chart(ctx, source);
+        index += 1;
+      });            
+    }
+
+    
+    if (lib && lib.includes('wavedrom')) {
+      var wavePrefix = "language-wave";
+      var index = 0;
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + wavePrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        jsonContent = x.innerText;
+        node0 = document.createElement('div');
+        node0.id = 'WaveDrom_Display_' + index;
+        source = JSON.parse(jsonContent);
+        x.parentNode.insertBefore(node0, x);
+        WaveDrom.RenderWaveForm(index, source, "WaveDrom_Display_");
+        index += 1;
+      });
+    }
+
+    
+    if (lib && lib.includes('viz')) {
+      var vizPrefix = "language-viz-";
+      Array.prototype.forEach.call(document.querySelectorAll("[class^=" + vizPrefix + "]"), function (x) {
+        x.style.display = 'none'
+        x.parentNode.style.backgroundColor = "transparent"
+        var engine;
+        x.getAttribute("class").split(" ").forEach(function (cls) {
+          if (cls.startsWith(vizPrefix)) {
+            engine = cls.substr(vizPrefix.length);
+          }
+        });
+        var viz = new Viz();
+        viz.renderSVGElement(x.innerText, { engine: engine })
+          .then(function (element) {
+            element.style.width = "100%";
+            x.parentNode.insertBefore(element, x);
+          })
+      });
+    }
+  }
+</script>
+
+
+            
+            <footer class="footer">
+    
+    
+    
+<div id="gtt">
+  <div class="gtt">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M8.12 14.71L12 10.83l3.88 3.88c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L12.7 8.71c-.39-.39-1.02-.39-1.41 0L6.7 13.3c-.39.39-.39 1.02 0 1.41.39.38 1.03.39 1.42 0z"/></svg>
+  </div>
+</div>
+
+    <hr />
+
+    
+    <div class="footer__poweredby">
+    
+
+                
+            <p class="caption">
+                
+                    ©2019, All Rights Reserved
+                
+            </p>
+        
+        <p class="caption">Powered by <a href="https://gohugo.io/" rel="noreferrer">Hugo</a> and the <a href="https://github.com/zzossig/hugo-theme-zzo" rel="noreferrer">Zzo theme</a></p>
+    </div>
+        
+</footer>
+        </div>    
+    </div>
+</body>
+
+</html>

@@ -11,7 +11,6 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      
 ---
 
 ```{r setup, include=FALSE}
@@ -60,7 +59,7 @@ help(package = 'pedquant')
 .pull-left[
 - 常用的量化分析 R 包见下表<sup>*</sup>:
 
-![](img/pkg_list.png)
+![](imgs/pkg_list.png)
 ]
 
 .pull-right[
@@ -89,8 +88,9 @@ class: inverse, center, middle
 - 其中，`symbol` 与 `subregion` 两个参数可分别通过 `ed_nbs_symbol` 与 `ed_nbs_subregion` 函数获得。
 
 ```{r dt_nbs}
-library(pedquant)
 library(data.table)
+library(pedquant)
+packageVersion('pedquant')
 # cpi of China
 dt_nbs = ed_nbs(symbol = c('A01010101','A01010201'), freq = 'monthly',
                geo_type = 'nation', date_range = 'max', na_rm = TRUE)
@@ -330,4 +330,4 @@ w = pedquant:::pq_backtest(ssec, addti=ti,
 ---
 class: inverse, center, middle
 
-![](img/WechatIMG5.jpeg)
+![](imgs/WechatIMG5.jpeg)
