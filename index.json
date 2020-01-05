@@ -1,20 +1,65 @@
 [
 {
-	"uri": "/archive/",
-	"title": "Archive",
-	"tags": [],
-	"categories": [],
-	"series": [],
-	"description": "Archive Page",
-	"content": ""
-},
-{
 	"uri": "/",
 	"title": "",
 	"tags": [],
 	"categories": [],
 	"series": [],
 	"description": "",
+	"content": ""
+},
+{
+	"uri": "/post/dt-pd/",
+	"title": "data.table 与 pandas",
+	"tags": ["R", "python"],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": " 常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率,是数据分析工作的基础。 数据框（data frame）是我们接触最多的数据形式，其每一列都是向量且长度一致。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 Database-like ops benchmark 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 data.table 与 pandas 实现常见的数据分析任务12。\n探索数据 读取 csv 文件 library(data.table) packageVersion(\u0026#39;data.table\u0026#39;) ## [1] \u0026#39;1.12.8\u0026#39; url = \u0026quot;https://vincentarelbundock.github.io/Rdatasets/csv/datasets/HairEyeColor.csv\u0026quot; dt = fread(url)  import pandas as pd pd.__version__ ## \u0026#39;0.25.3\u0026#39; url = \u0026quot;https://vincentarelbundock.github.io/Rdatasets/csv/datasets/HairEyeColor.csv\u0026quot; df = pd.read_csv(url)    查看数据结构 #数据类型 class(dt) str(dt) # 列名 names(dt) # 打印前后几行 head(dt, n=3) tail(dt, n=3) # 维度 dim(dt) nrow(dt) ncol(dt) # 汇总 summary(dt)  #数据类型 type(df) df.dtypes # 列名 list(df) # 打印前后几行 df.head(n=3) df.tail(n=3) # 维度 df.shape len(df.index) len(df.columns) # 汇总 df.describe()     行选择与排序 rows filter # 基于行所在位置筛选 dt[c(3,1,2)] # 单条件筛选 dt[Hair == \u0026#39;Red\u0026#39;] # 多条件筛选 dt[Hair == \u0026#39;Black\u0026#39; \u0026amp; Freq \u0026gt;= 10 \u0026amp; Eye %in% c(\u0026#39;Brown\u0026#39;, \u0026#39;Blue\u0026#39;)]   # 基于行所在位置筛选, 换成.loc则基于index筛选 df.iloc[[2,0,1]] df.loc[[2,0,1]] # 如果index未修改，效果一致 # 单条件筛选，去掉.loc效果一致 df.loc[df[\u0026#39;Hair\u0026#39;] == \u0026#39;Red\u0026#39;] # 多条件筛选时要用|, \u0026amp;,~分别代表or,and,not; 且每个条件用括号区分 df.loc[(df[\u0026#39;Hair\u0026#39;] == \u0026#39;Black\u0026#39;) \u0026amp; (df[\u0026#39;Freq\u0026#39;] \u0026gt;= 10) \u0026amp; (df[\u0026#39;Eye\u0026#39;].isin([\u0026#39;Brown\u0026#39;, \u0026#39;Blue\u0026#39;]))]   rows arrange dt[order(Sex, -Freq)]  df.sort_values([\u0026#39;Sex\u0026#39;, \u0026#39;Freq\u0026#39;], ascending=[True, False])     列选择、新建与计算 columns select dt[,.(Hair, Freq)] # or dt[,c(\u0026#39;Eye\u0026#39;, \u0026#39;Sex\u0026#39;), with=FALSE]  df[[\u0026#39;Hair\u0026#39;, \u0026#39;Freq\u0026#39;]] # or df.loc[:,[\u0026#39;Eye\u0026#39;, \u0026#39;Sex\u0026#39;]]    columns mutate # 新建一列 dt[, nc := 1:32] dt[,\u0026#39;nc0\u0026#39;] = 1:32 # 新建多列 dt[, `:=`( nc1 = 1:32, nc2 = paste0(Hair, Eye) )] # 基于条件新建列 dt[, nc3 := ifelse(Freq \u0026gt;= 10, 1, 0)] dt[Freq \u0026gt;= 20, nc4 := 2] # 删除列 dt[, nc := NULL] dt[, (c(\u0026#39;nc0\u0026#39;, \u0026#39;nc1\u0026#39;, \u0026#39;nc2\u0026#39;, \u0026#39;nc3\u0026#39;,\u0026#39;nc4\u0026#39;)) := NULL]  # 新建一列 df.loc[:,\u0026#39;nc\u0026#39;] = pd.Series(range(32), index=df.index) df = df.assign(nc0 = pd.Series(range(32))) # 新建多列 df = df.assign( nc1 = pd.Series(range(32)), nc2 = df.Hair + df.Eye ) # 基于条件新建列 df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq \u0026gt;= 10 else 0, axis=1)) df.loc[df.Freq \u0026gt;= 20, \u0026#39;nc4\u0026#39;] = 2 # 删除列 df = df.drop(\u0026#39;nc\u0026#39;, axis=1) df.drop([\u0026#39;nc0\u0026#39;,\u0026#39;nc1\u0026#39;,\u0026#39;nc2\u0026#39;,\u0026#39;nc3\u0026#39;,\u0026#39;nc4\u0026#39;], axis=1, inplace=True)    columns summarise # 基于列的计算 dt[, unique(Eye)] dt[, table(Eye)] dt[, max(Freq)]  # 基于列的计算 df.Eye.unique() df.Eye.value_counts() df.Freq.max()     分组汇总计算 grouped summarise # max freq dt[, .(freq_max = max(Freq)), by = \u0026#39;Sex\u0026#39;] # count dt[, .(freq_count = .N), keyby = c(\u0026#39;Hair\u0026#39;, \u0026#39;Sex\u0026#39;)]  # max freq # pandas的groupby会自动删除缺失变量 df.groupby(\u0026#39;Sex\u0026#39;).agg({\u0026#39;Freq\u0026#39;:\u0026#39;max\u0026#39;}).rename(columns={\u0026#39;Freq\u0026#39;:\u0026#39;freq_max\u0026#39;}) # count df.groupby([\u0026#39;Hair\u0026#39;, \u0026#39;Sex\u0026#39;]).agg({\u0026#39;Freq\u0026#39;:\u0026#39;count\u0026#39;}).rename(columns={\u0026#39;Freq\u0026#39;:\u0026#39;freq_count\u0026#39;})    grouped mutate \u0026amp; filter      行列转换 长宽表转换     多行合并切割      数据框合并 merge/join     .column-left{ float: left; width: 49.2%; text-align: left; } .column-right{ float: right; width: 49.2%; text-align: left; } .row:after { content: \"\"; display: table; clear: both; }   .col2 { columns: 2 200px; /* number of columns and width in pixels*/ -webkit-columns: 2 200px; /* chrome, safari */ -moz-columns: 2 200px; /* firefox */ } .col3 { columns: 3 100px; -webkit-columns: 3 100px; -moz-columns: 3 100px; }    Data Manipulation with Python Pandas and R Data.Table↩\n R for Data Science↩\n   "
+},
+{
+	"uri": "/post/",
+	"title": "Posts",
+	"tags": ["index"],
+	"categories": [],
+	"series": [],
+	"description": "Post page",
+	"content": ""
+},
+{
+	"uri": "/tags/python/",
+	"title": "python",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/r/",
+	"title": "R",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/tags/",
+	"title": "Tags",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "/archive/",
+	"title": "Archive",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "Archive Page",
 	"content": ""
 },
 {
@@ -36,49 +81,22 @@
 	"content": ""
 },
 {
-	"uri": "/post/",
-	"title": "Posts",
-	"tags": ["index"],
-	"categories": [],
-	"series": [],
-	"description": "Post page",
-	"content": ""
-},
-{
-	"uri": "/tags/",
-	"title": "Tags",
-	"tags": [],
-	"categories": [],
-	"series": [],
-	"description": "",
-	"content": ""
-},
-{
-	"uri": "/tags/r/",
-	"title": "R",
-	"tags": [],
-	"categories": [],
-	"series": [],
-	"description": "",
-	"content": ""
-},
-{
 	"uri": "/post/scorecard/",
-	"title": "使用R语言开发评分卡模型",
+	"title": "使用 R 语言开发评分卡模型",
 	"tags": ["R", "credit"],
 	"categories": [],
 	"series": [],
 	"description": "",
-	"content": " 为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱与woe转换、模型评估、评分刻度转换等。\n评分卡模型的开发流程通常包括以下五个主要步骤：数据准备、WOE分箱、模型拟合、模型评估、评分卡刻度。下面结合 scorecard 包完成一个简单的评分卡模型开发案例。更加详细的评分卡模型开发介绍请参考幻灯片。\n数据准备 首先加载 scorecard 包，并载入包内自带的德国信贷数据集。该数据集包含了1000个借款人的信贷数据，20个 X 特征与1个 Y 值。其详细信息参见 UCI 的德国信贷数据集网站。\nlibrary(scorecard) # load germancredit data data(germancredit) 载入数据集后，可先通过变量的 IV 值、缺失率以及单类别率对 X 特征进行初步筛选。var_filter 函数默认删除信息值小于0.02、缺失率大于95%或单类别比例大于95%的变量。var_filter 函数还能够人为设定需要删除或保留的变量，以及够返回变量删除的原因列表。\n# filter variable via missing rate, iv, identical rate dt = var_filter(germancredit, y = \u0026#39;creditability\u0026#39;) ## [INFO] filtering variables ... 将经过初筛的数据集拆分为训练集与测试集。在 split_df 函数中如果指定了 y 变量，那么将基于 y 变量分层拆分，如果没有指定，则随机拆分数据集。ratio 为拆分后两个数据集的样本量占比。 seed 为随机种子，用于重现拆分的样本。\n# breaking dt into train and test dt_list = split_df(dt, y=\u0026quot;creditability\u0026quot;, ratio = 0.6, seed = 30) label_list = lapply(dt_list, function(x) x$creditability)  WOE分箱 接下来对数据集进行分箱与 woe 值转换。由于这个数据集样本量比较小，我们可以直接对全样本进行分箱处理。如果数据量允许，应该使用训练集进行分箱，并使用训练集得到的 woe 值对其他数据集进行woe替换。\nwoebin 函数提供了树形 tree、卡方合并 chimerge、等宽 width 与等高 freq 四种分箱方法。以树形分箱为例，默认情形是当信息值增益率 stop_limit 小于0.1, 或分箱数 bin_num_limit 大于8(缺失值除外)时停止分箱，同时确保每一个分箱的样本占比 count_distr_limit 不小于5%。当然还能够通过 breaks_list 手动设定分箱节点。\nwoebin 函数输出的结果为多个 data.frame 组成的 list，可通过 data.table::rbindlist 或 dplyr::bind_rows 函数合并为一个数据框然后保存。当然 woebin 函数也能够直接输出一个由分箱切割点组成的 list 并保存，下次使用时直接通过 woebin 函数对 breaks_list 参数对新的数据集进行分箱。\nwoebin_adj 函数可逐个观察每个变量的分箱情况。如果不满意默认的分箱结果，可以手动修改。最终返回一个经过手动调整的分箱节点。\n分箱之后，需要使用 woebin_ply 函数将训练集与测试集转换为对应的 woe 值。\n# woe binning bins = woebin(dt, \u0026quot;creditability\u0026quot;, print_step=0) ## [INFO] creating woe binning ... bins[[12]] ## variable bin count count_distr good bad badprob woe bin_iv total_iv breaks ## 1: other.installment.plans bank%,%stores 186 0.186 110 76 0.4086 0.4776 0.04594 0.05759 bank%,%stores ## 2: other.installment.plans none 814 0.814 590 224 0.2752 -0.1212 0.01166 0.05759 none ## is_special_values ## 1: FALSE ## 2: FALSE woebin_plot(bins[[12]]) ## $other.installment.plans # converting train and test into woe values dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins)) ## [INFO] converting into woe values ...  模型拟合 当获得了 woe 值替换之后的数据集，可以使用逻辑回归进行拟合，并通过AIC、LASSO等方法对变量进一步筛选。下面使用基于 AIC 的逐步回归进一步筛选变量，最终得到了一个拥有13个变量的模型。\n# lr m1 = glm( creditability ~ ., family = binomial(), data = dt_woe_list$train) # vif(m1, merge_coef = TRUE) # summary(m1) # Select a formula-based model by AIC (or by LASSO for large dataset) m_step = step(m1, direction=\u0026quot;both\u0026quot;, trace = FALSE) m2 = eval(m_step$call) vif(m2, merge_coef = TRUE) # summary(m2) ## variable Estimate Std. Error z value Pr(\u0026gt;|z|) gvif ## 1: (Intercept) -0.9448 0.1094 -8.639 0.0000 NA ## 2: status.of.existing.checking.account_woe 0.7756 0.1380 5.619 0.0000 1.042 ## 3: duration.in.month_woe 0.7963 0.2291 3.476 0.0005 1.181 ## 4: credit.history_woe 0.8308 0.2035 4.082 0.0000 1.064 ## 5: purpose_woe 0.8632 0.2755 3.133 0.0017 1.043 ## 6: credit.amount_woe 0.7669 0.2838 2.702 0.0069 1.251 ## 7: savings.account.and.bonds_woe 0.8545 0.2606 3.279 0.0010 1.039 ## 8: installment.rate.in.percentage.of.disposable.income_woe 1.8621 0.6822 2.730 0.0063 1.094 ## 9: other.debtors.or.guarantors_woe 2.1018 0.8922 2.356 0.0185 1.037 ## 10: age.in.years_woe 1.0154 0.3001 3.383 0.0007 1.033 ## 11: other.installment.plans_woe 0.7623 0.4347 1.754 0.0795 1.060 ## 12: housing_woe 0.7610 0.3665 2.077 0.0378 1.035  模型评估 通过逻辑回归获得各变量的拟合系数之后，可以计算出各个样本为坏客户的概率，然后评估模型的预测效果。 perf_eva 函数能够计算的评估指标包括 mse, rmse, logloss, r2, ks, auc, gini，以及绘制多种可视化图形 ks, lift, gain, roc, lz, pr, f1, density。\n## predicted proability pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type=\u0026#39;response\u0026#39;)) ## performance perf = perf_eva(pred = pred_list, label = label_list) ## [INFO] The threshold of confusion matrix is 0.3133.  评分卡刻度 当我们获得了各个变量的分箱结果，并且确定了最终进入模型的变量以及系数，则可以创建标准评分卡。\n有了评分卡之后，可用于对新样本进行打分，从而评估该客户的信用水平，并最终作出审批决策。\n最后，评分卡模型的开发过程，还需要对模型的稳定性进行评估，即计算psi。\n## scorecard card = scorecard(bins, m2) ## credit score score_list = lapply(dt_list, function(x) scorecard_ply(x, card)) ## psi perf_psi(score = score_list, label = label_list) ## $psi ## Null data.table (0 rows and 0 cols) 以上代码均可以在该项目的主页获取。\n "
+	"content": " 为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱与 woe 转换、模型评估、评分刻度转换等。\n评分卡模型的开发流程通常包括以下五个主要步骤：数据准备、WOE 分箱、模型拟合、模型评估、评分卡刻度。下面结合 scorecard 包完成一个简单的评分卡模型开发案例。更加详细的评分卡模型开发介绍请参考幻灯片。\n数据准备 首先加载 scorecard 包，并载入包内自带的德国信贷数据集。该数据集包含了1000个借款人的信贷数据，20个 X 特征与1个 Y 值。其详细信息参见 UCI 的德国信贷数据集网站。\nlibrary(scorecard) # load germancredit data data(germancredit) 载入数据集后，可先通过变量的 IV 值、缺失率以及单类别率对 X 特征进行初步筛选。var_filter 函数默认删除信息值小于0.02、缺失率大于95%或单类别比例大于95%的变量。var_filter 函数还能够人为设定需要删除或保留的变量，以及够返回变量删除的原因列表。\n# filter variable via missing rate, iv, identical rate dt = var_filter(germancredit, y = \u0026#39;creditability\u0026#39;) ## [INFO] filtering variables ... 将经过初筛的数据集拆分为训练集与测试集。在 split_df 函数中如果指定了 y 变量，那么将基于 y 变量分层拆分，如果没有指定，则随机拆分数据集。ratio 为拆分后两个数据集的样本量占比。 seed 为随机种子，用于重现拆分的样本。\n# breaking dt into train and test dt_list = split_df(dt, y=\u0026quot;creditability\u0026quot;, ratio = 0.6, seed = 30) label_list = lapply(dt_list, function(x) x$creditability)  WOE分箱 接下来对数据集进行分箱与 woe 值转换。由于这个数据集样本量比较小，我们可以直接对全样本进行分箱处理。如果数据量允许，应该使用训练集进行分箱，并使用训练集得到的 woe 值对其他数据集进行woe替换。\nwoebin 函数提供了树形 tree、卡方合并 chimerge、等宽 width 与等高 freq 四种分箱方法。以树形分箱为例，默认情形是当信息值增益率 stop_limit 小于0.1, 或分箱数 bin_num_limit 大于8(缺失值除外)时停止分箱，同时确保每一个分箱的样本占比 count_distr_limit 不小于5%。当然还能够通过 breaks_list 手动设定分箱节点。\nwoebin 函数输出的结果为多个 data.frame 组成的 list，可通过 data.table::rbindlist 或 dplyr::bind_rows 函数合并为一个数据框然后保存。当然 woebin 函数也能够直接输出一个由分箱切割点组成的 list 并保存，下次使用时直接通过 woebin 函数对 breaks_list 参数对新的数据集进行分箱。\nwoebin_adj 函数可逐个观察每个变量的分箱情况。如果不满意默认的分箱结果，可以手动修改。最终返回一个经过手动调整的分箱节点。\n分箱之后，需要使用 woebin_ply 函数将训练集与测试集转换为对应的 woe 值。\n# woe binning bins = woebin(dt, \u0026quot;creditability\u0026quot;, print_step=0) ## [INFO] creating woe binning ... bins[[12]] ## variable bin count count_distr good bad badprob woe bin_iv total_iv breaks ## 1: other.installment.plans bank%,%stores 186 0.186 110 76 0.4086 0.4776 0.04594 0.05759 bank%,%stores ## 2: other.installment.plans none 814 0.814 590 224 0.2752 -0.1212 0.01166 0.05759 none ## is_special_values ## 1: FALSE ## 2: FALSE woebin_plot(bins[[12]]) ## $other.installment.plans # converting train and test into woe values dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins)) ## [INFO] converting into woe values ...  模型拟合 当获得了 woe 值替换之后的数据集，可以使用逻辑回归进行拟合，并通过AIC、LASSO等方法对变量进一步筛选。下面使用基于 AIC 的逐步回归进一步筛选变量，最终得到了一个拥有13个变量的模型。\n# lr m1 = glm( creditability ~ ., family = binomial(), data = dt_woe_list$train) # vif(m1, merge_coef = TRUE) # summary(m1) # Select a formula-based model by AIC (or by LASSO for large dataset) m_step = step(m1, direction=\u0026quot;both\u0026quot;, trace = FALSE) m2 = eval(m_step$call) vif(m2, merge_coef = TRUE) # summary(m2) ## variable Estimate Std. Error z value Pr(\u0026gt;|z|) gvif ## 1: (Intercept) -0.9448 0.1094 -8.639 0.0000 NA ## 2: status.of.existing.checking.account_woe 0.7756 0.1380 5.619 0.0000 1.042 ## 3: duration.in.month_woe 0.7963 0.2291 3.476 0.0005 1.181 ## 4: credit.history_woe 0.8308 0.2035 4.082 0.0000 1.064 ## 5: purpose_woe 0.8632 0.2755 3.133 0.0017 1.043 ## 6: credit.amount_woe 0.7669 0.2838 2.702 0.0069 1.251 ## 7: savings.account.and.bonds_woe 0.8545 0.2606 3.279 0.0010 1.039 ## 8: installment.rate.in.percentage.of.disposable.income_woe 1.8621 0.6822 2.730 0.0063 1.094 ## 9: other.debtors.or.guarantors_woe 2.1018 0.8922 2.356 0.0185 1.037 ## 10: age.in.years_woe 1.0154 0.3001 3.383 0.0007 1.033 ## 11: other.installment.plans_woe 0.7623 0.4347 1.754 0.0795 1.060 ## 12: housing_woe 0.7610 0.3665 2.077 0.0378 1.035  模型评估 通过逻辑回归获得各变量的拟合系数之后，可以计算出各个样本为坏客户的概率，然后评估模型的预测效果。 perf_eva 函数能够计算的评估指标包括 mse, rmse, logloss, r2, ks, auc, gini，以及绘制多种可视化图形 ks, lift, gain, roc, lz, pr, f1, density。\n## predicted proability pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type=\u0026#39;response\u0026#39;)) ## performance perf = perf_eva(pred = pred_list, label = label_list) ## [INFO] The threshold of confusion matrix is 0.3133.  评分卡刻度 当我们获得了各个变量的分箱结果，并且确定了最终进入模型的变量以及系数，则可以创建标准评分卡。\n有了评分卡之后，可用于对新样本进行打分，从而评估该客户的信用水平，并最终作出审批决策。\n最后，评分卡模型的开发过程，还需要对模型的稳定性进行评估，即计算psi。\n## scorecard card = scorecard(bins, m2) ## credit score score_list = lapply(dt_list, function(x) scorecard_ply(x, card)) ## psi perf_psi(score = score_list, label = label_list) ## $psi ## Null data.table (0 rows and 0 cols) 以上代码均可以在该项目的主页获取。\n "
 },
 {
 	"uri": "/post/stringr_regex/",
-	"title": "stringr与regex函数对应关系",
+	"title": "stringr 与 regex 函数对应关系",
 	"tags": ["R"],
 	"categories": [],
 	"series": [],
 	"description": "",
-	"content": "stringr是Hadley大神写的tidyverse^[r与python中三个数据处理系列包：data.table、tidyverse、pandas]系列数据处理包中专门用于处理文本数据的包，其函数命名统一易于记忆。而R基础包中的文本处理函数(regex)的命名规则不是特别统一。下表给出了主要函数的映射关系，便于以后查看（stringr网站也给出了两者的映射关系）。\n   stringr包中函数 功能说明 R Base中对应函数     使用正则表达式的函数     str_extract() 提取首个匹配模式的字符 regmatches()   str_extract_all() 提取所有匹配模式的字符 regmatches()   str_locate() 返回首个匹配模式的字符的位置 regexpr()   str_locate_all() 返回所有匹配模式的字符的位置 gregexpr()   str_replace() 替换首个匹配模式 sub()   str_replace_all() 替换所有匹配模式 gsub()   str_split() 按照模式分割字符串 strsplit()   str_split_fixed() 按照模式将字符串分割成指定个数 -   str_detect() 检测字符是否存在某些指定模式 grepl()   str_count() 返回指定模式出现的次数 -   其他重要函数     str_sub() 提取指定位置的字符 regmatches()   str_dup() 丢弃指定位置的字符 -   str_length() 返回字符的长度 nchar()   str_pad() 填补字符 -   str_trim() 丢弃填充，如去掉字符前后的空格 -   str_c() 连接字符 paste(),paste0()    "
+	"content": "stringr 是 Hadley 大神写的 tidyverse1 系列数据处理包中专门用于处理文本数据的，其函数命名统一易于记忆。而 R 基础包中的文本处理函数 (regex) 的命名规则不是特别统一。下表给出了主要函数之间的映射关系，便于以后查看2。\n   stringr包中函数 功能说明 R Base 中对应函数     使用正则表达式的函数     str_extract() 提取首个匹配模式的字符 regmatches()   str_extract_all() 提取所有匹配模式的字符 regmatches()   str_locate() 返回首个匹配模式的字符的位置 regexpr()   str_locate_all() 返回所有匹配模式的字符的位置 gregexpr()   str_replace() 替换首个匹配模式 sub()   str_replace_all() 替换所有匹配模式 gsub()   str_split() 按照模式分割字符串 strsplit()   str_split_fixed() 按照模式将字符串分割成指定个数 -   str_detect() 检测字符是否存在某些指定模式 grepl()   str_count() 返回指定模式出现的次数 -   其他重要函数     str_sub() 提取指定位置的字符 regmatches()   str_dup() 丢弃指定位置的字符 -   str_length() 返回字符的长度 nchar()   str_pad() 填补字符 -   str_trim() 丢弃填充，如去掉字符前后的空格 -   str_c() 连接字符 paste(),paste0()     r 与 python 中三个数据处理系列包：data.table、tidyverse、pandas \u0026#x21a9;\u0026#xfe0e;\n stringr 网站也给出了两者的映射关系 \u0026#x21a9;\u0026#xfe0e;\n   "
 },
 {
 	"uri": "/post/markdown/",
@@ -114,7 +132,7 @@
 	"categories": [],
 	"series": [],
 	"description": "",
-	"content": "在“我网故我在”的召唤下，我用R语言的blogdown包^[参考blogdown: Creating Websites with R Markdown]和GitHubPages在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建GitHub Pages仓库、域名绑定。\n编辑网站文件 首先需要编写网站文件，也就是一堆HTML、JS、CSS文件。益辉的blogdown让静态网站文件编写简单到了一条R语句。在编辑网站文件之前，最好用RStudio新建一个空的项目文件夹，便于文件管理。在R中敲入如下代码\n1 2 3 4 5 6 7 8 9 10 11 12 13  # 安装blogdown包 devtools::install_github(\u0026#39;rstudio/blogdown\u0026#39;) setwd(path) # path为新建的项目文件夹路径 # 或者直接用rstudio打开*.Rproj文件 # 创建网站文件 blogdown::new_site() # \u0026gt; sessionInfo() # R语言系统环境 # R version 3.3.2 (2016-10-31) # Platform: x86_64-apple-darwin13.4.0 (64-bit) # Running under: macOS Sierra 10.12.3   创建GitHub Pages仓库 登录自己的github主页（https://github.com/shichenxie，其中shichenxie为我的github账号），新建名为shichenxie.github.io的项目仓库(repository)。\n然后将blogdown创建的public文件夹上传到github pages文件夹中。在terminal中敲入如下代码^[更详细的中文参考见GitHub Pages 静态博客 - 个人建站实录]\n1 2 3 4 5 6 7 8  cd path # path为public文件地址 git init # 初始化git git remote add origin git@github.com:shichenxie/shichenxie.github.io.git git add -A # git中添加所有文件 git commit -m \u0026#39;init site\u0026#39; # commit git push -u origin master # push   绑定域名 首先在public文件夹添加名为CNAME的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名(我的网站域名为shichen.name)。上传CNAME文件到github之后，打开shichenxie.github.io自动定位到shichen.name，但是并不能显示网站内容，需要设置DNS解析。\n我的网站域名是从阿里云购买的(也可从GoDaddy购买)，故用阿里云的云解析DNS(也可用DNSPOD提供的DNS解析服务)，添加如下三条记录：^[参考Using a custom domain with GitHub Pages与域名 CNAME 解析设置方法]\n@ A 192.30.252.153 @ A 192.30.252.154 www CNAME username.github.io. 最后在浏览器中打开shichen.name，个人网站上线了。\n"
+	"content": "在“我网故我在”的召唤下，我使用 R 语言的 blogdown 包1 和 GitHubPages 在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建 GitHub Pages 仓库、域名绑定。\n编辑网站文件 首先需要编写网站文件，也就是一堆 HTML、JS、CSS 文件。益辉的 blogdown 让静态网站文件编写简单到了一条 R 语句。在编辑网站文件之前，最好用 RStudio 新建一个空的项目文件夹，便于文件管理。在 R 中敲入如下代码\n# 安装blogdown包 devtools::install_github('rstudio/blogdown') setwd(path) # path为新建的项目文件夹路径 # 或者直接用rstudio打开*.Rproj文件 # 创建网站文件 blogdown::new_site() # 默认主题 theme = \u0026quot;yihui/hugo-lithium\u0026quot; # \u0026gt; sessionInfo() # R语言系统环境 # R version 3.3.2 (2016-10-31) # Platform: x86_64-apple-darwin13.4.0 (64-bit) # Running under: macOS Sierra 10.12.3 创建GitHub Pages仓库 登录自己的 github 主页（例如我的主页 https://github.com/shichenxie，其中shichenxie为我的 github 账号），新建名为shichenxie.github.io的项目仓库 (repository)。\n然后将 blogdown 创建的 public 文件夹上传到 github pages 文件夹中。在 terminal 中敲入如下代码2\ncd path # path为public文件地址 git init # 初始化git git remote add origin git@github.com:shichenxie/shichenxie.github.io.git # shichenxie 为我的用户名 git add -A # git中添加所有文件 git commit -m 'init site' # commit git push -u origin master # push 绑定域名 首先在 public 文件夹添加名为 CNAME 的文件（无任何后缀名），然后用文本编辑器打开，写入网站域名 (我的网站域名为 shichen.name)。上传 CNAME 文件到 github 之后，打开shichenxie.github.io自动定位到shichen.name，但是并不能显示网站内容，需要设置 DNS 解析。\n我的网站域名是从阿里云购买的，阿里云提供了的云解析 DNS 服务(也可从 GoDaddy 购买，从 DNSPOD 获取 DNS 解析服务)，添加如下三条记录：3\n@ A 192.30.252.153 @ A 192.30.252.154 www CNAME username.github.io. 最后在浏览器中打开 shichen.name，铛铛\u0026hellip; 个人网站上线了。\n blogdown: Creating Websites with R Markdown \u0026#x21a9;\u0026#xfe0e;\n GitHub Pages 静态博客 - 个人建站实录 \u0026#x21a9;\u0026#xfe0e;\n Using a custom domain with GitHub Pages与域名 CNAME 解析设置方法 \u0026#x21a9;\u0026#xfe0e;\n   "
 },
 {
 	"uri": "/about/",

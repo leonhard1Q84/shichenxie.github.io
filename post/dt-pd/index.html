@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>在ubuntu上配置vnpy – Shichen</title>
+    <title>data.table 与 pandas – Shichen</title>
     
 
 
@@ -176,19 +176,19 @@
 
     <meta name="description" content="" />
 <meta name="keywords" content="">
-<meta name="created" content="2017-04-04T00:00:00&#43;0000">
-<meta name="modified" content="2017-04-04T00:00:00&#43;0000">
-<meta name="author" content="谢士晨">
+<meta name="created" content="2019-12-26T00:00:00&#43;0000">
+<meta name="modified" content="2019-12-26T00:00:00&#43;0000">
+<meta name="author" content="shichen xie">
 
 <meta property="og:site_name" content="Shichen">
-<meta property="og:title" content="在ubuntu上配置vnpy">
-<meta property="og:url" content="/post/ubuntu-vnpy/">
+<meta property="og:title" content="data.table 与 pandas">
+<meta property="og:url" content="/post/dt-pd/">
 <meta property="og:type" content="article">
 
 <meta name="generator" content="Hugo 0.62.0" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
-<link rel="canonical" href="/post/ubuntu-vnpy/">
+<link rel="canonical" href="/post/dt-pd/">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -200,15 +200,15 @@
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "在ubuntu上配置vnpy",
-    "datePublished": "2017-04-04T00:00:00Z",
-    "dateModified": "2017-04-04T00:00:00Z",
-    "url" : "/post/ubuntu-vnpy/",
-    "description": "vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主",
-    "keywords": ["invest"],
+    "headline": "data.table 与 pandas",
+    "datePublished": "2019-12-26T00:00:00Z",
+    "dateModified": "2019-12-26T00:00:00Z",
+    "url" : "/post/dt-pd/",
+    "description": "常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间",
+    "keywords": ["R","python"],
     "author": {
       "@type": "Person",
-      "name": "谢士晨"
+      "name": "shichen xie"
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -384,7 +384,7 @@
   
   <li  class="is-active" >    
     
-      <a href="/post/ubuntu-vnpy/">在ubuntu上配置vnpy</a>
+      <a href="/post/dt-pd/">data.table 与 pandas</a>
         
   </li>
   
@@ -393,10 +393,10 @@
 </nav>
   
   <div class="single">
-    <h2 class="single__title">在ubuntu上配置vnpy</h2>
+    <h2 class="single__title">data.table 与 pandas</h2>
     <div class="single__meta">
       <div class="single__infos">
-  <span class="single__info" title="创建日期">🕓2017年04月04日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕2 分钟 </span>
+  <span class="single__info" title="创建日期">🕓2019年12月26日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕2 分钟 </span>
   <span class="single__info">
     
   </span>
@@ -408,8 +408,17 @@
   
   
   <li>
-    <a href="/tags/invest" class="single__tag" title="invest">
-      #invest
+    <a href="/tags/r" class="single__tag" title="R">
+      #R
+    </a>
+  </li>
+    
+
+  
+  
+  <li>
+    <a href="/tags/python" class="single__tag" title="python">
+      #python
     </a>
   </li>
     
@@ -417,58 +426,310 @@
 </div>
     </div>    
     <article class="single__contents">
-      <p>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见<a href="http://github.com/vnpy/vnpy">github主页</a>、<a href="http://www.vnpy.org">官方主页</a>、<a href="https://zhuanlan.zhihu.com/vn-py">项目知乎专栏</a>、<a href="http://www.vnpie.com/forum.php">官方社区维恩派</a>、<a href="https://www.zhihu.com/people/traderusingpython/answers">作者知乎主页</a>。</p>
-<p>目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy^[详细参考<a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a>]，主要包括三步，**1.**安装python环境anaconda2，**2.**安装mongodb与相关依赖工具，**3.**安装vnpy框架</p>
-<h2 id="anaconda">安装anaconda</h2>
-<p>出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bash Anaconda2-4.3.1-Linux-x86_64.sh
-</code></pre></td></tr></table>
+      
+
+
+<p>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率,是数据分析工作的基础。
+<img src="https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png" /></p>
+<p>数据框（data frame）是我们接触最多的数据形式，其每一列都是向量且长度一致。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 <a href="https://h2oai.github.io/db-benchmark/">Database-like ops benchmark</a> 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 <a href="http://r-datatable.com">data.table</a> 与 <a href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> 实现常见的数据分析任务<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
+<div id="探索数据" class="section level3">
+<h3>探索数据</h3>
+<div id="读取-csv-文件" class="section level4">
+<h4>读取 csv 文件</h4>
+<div class="row">
+<div class="column-left">
+<pre class="r"><code>library(data.table)
+packageVersion(&#39;data.table&#39;)</code></pre>
+<pre><code>## [1] &#39;1.12.8&#39;</code></pre>
+<pre class="r"><code>url = &quot;https://vincentarelbundock.github.io/Rdatasets/csv/datasets/HairEyeColor.csv&quot;
+dt = fread(url)</code></pre>
 </div>
-</div><h2 id="mongodb">安装mongodb</h2>
-<p>在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install mongodb
-</code></pre></td></tr></table>
+<div class="column-right">
+<pre class="python"><code>import pandas as pd
+pd.__version__</code></pre>
+<pre><code>## &#39;0.25.3&#39;</code></pre>
+<pre class="python"><code>url = &quot;https://vincentarelbundock.github.io/Rdatasets/csv/datasets/HairEyeColor.csv&quot;
+df = pd.read_csv(url)</code></pre>
 </div>
-</div><p>然后安装pymongo包与Qt黑色主题</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">conda install pymongo qdarkstyle
-</code></pre></td></tr></table>
 </div>
-</div><p>以及编译API相关的工具</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git build-essential libboost-all-dev python-dev cmake
-</code></pre></td></tr></table>
 </div>
-</div><h2 id="vnpy">安装vnpy框架</h2>
-<p>最后从github上下载vnpy项目库。我先Fork了<a href="https://github.com/vnpy/vnpy">vnpy的GitHub项目库</a>，然后clone到本地：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git clone git@github.com:shichenxie/vnpy.git
-</code></pre></td></tr></table>
+<div id="查看数据结构" class="section level4">
+<h4>查看数据结构</h4>
+<div class="row">
+<div class="column-left">
+<pre><code>#数据类型
+class(dt)
+str(dt)
+
+# 列名
+names(dt)
+# 打印前后几行
+head(dt, n=3)
+tail(dt, n=3)
+
+# 维度
+dim(dt)
+nrow(dt)
+ncol(dt)
+
+# 汇总
+summary(dt)</code></pre>
 </div>
-</div><p>在terminal中打开vn.trader文件夹(cd vnpy/vn.trader)，运行<code>python vtMain.py</code>。但是出现缺少PyQt4包的错误(<code>ImportError: No module named PyQt4.QtCore</code>)。原来新版anaconda已默认集成pyqt5^[参考<a href="https://www.zhihu.com/question/51627423">vn.py安装后无法打开，提示No module named PyQt4.QtCore</a>]，解决方法是安装anaconda4.0版本或者安装需要pyqt4的python包(<code>conda install pyqtgraph</code>)</p>
-<p>再次运行<code>python vtMain.py</code>，出现缺少talib包错误，解决方法^[参考<a href="http://www.jianshu.com/p/555c02e30adb">ubuntu下面安装ta-lib库</a>]<code>conda install -chttps://conda.anaconda.org/quantopian ta-lib</code></p>
+<div class="column-right">
+<pre><code>#数据类型
+type(df)
+df.dtypes
+
+# 列名
+list(df)
+# 打印前后几行
+df.head(n=3)
+df.tail(n=3)
+
+# 维度
+df.shape
+len(df.index)
+len(df.columns)
+
+# 汇总
+df.describe()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="行选择与排序" class="section level3">
+<h3>行选择与排序</h3>
+<div id="rows-filter" class="section level4">
+<h4>rows filter</h4>
+<div class="row">
+<div class="column-left">
+<pre><code># 基于行所在位置筛选
+dt[c(3,1,2)]
+
+
+# 单条件筛选
+dt[Hair == &#39;Red&#39;]
+
+# 多条件筛选
+dt[Hair == &#39;Black&#39; &amp; 
+   Freq &gt;= 10 &amp; 
+   Eye %in% c(&#39;Brown&#39;, &#39;Blue&#39;)]
+</code></pre>
+</div>
+<div class="column-right">
+<pre><code># 基于行所在位置筛选, 换成.loc则基于index筛选
+df.iloc[[2,0,1]] 
+df.loc[[2,0,1]] # 如果index未修改，效果一致
+
+# 单条件筛选，去掉.loc效果一致
+df.loc[df[&#39;Hair&#39;] == &#39;Red&#39;] 
+
+# 多条件筛选时要用|, &amp;,~分别代表or,and,not; 且每个条件用括号区分 
+df.loc[(df[&#39;Hair&#39;] == &#39;Black&#39;) &amp; 
+       (df[&#39;Freq&#39;] &gt;= 10) &amp; 
+       (df[&#39;Eye&#39;].isin([&#39;Brown&#39;, &#39;Blue&#39;]))]</code></pre>
+</div>
+<!-- https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#boolean-indexing -->
+</div>
+<div id="rows-arrange" class="section level4">
+<h4>rows arrange</h4>
+<div class="row">
+<div class="column-left">
+<pre><code>dt[order(Sex, -Freq)]</code></pre>
+</div>
+<div class="column-right">
+<pre><code>df.sort_values([&#39;Sex&#39;, &#39;Freq&#39;], ascending=[True, False])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="列选择新建与计算" class="section level3">
+<h3>列选择、新建与计算</h3>
+<div id="columns-select" class="section level4">
+<h4>columns select</h4>
+<div class="row">
+<div class="column-left">
+<pre><code>dt[,.(Hair, Freq)]
+# or 
+dt[,c(&#39;Eye&#39;, &#39;Sex&#39;), with=FALSE]</code></pre>
+</div>
+<div class="column-right">
+<pre><code>df[[&#39;Hair&#39;, &#39;Freq&#39;]]
+# or 
+df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]]</code></pre>
+</div>
+</div>
+</div>
+<div id="columns-mutate" class="section level4">
+<h4>columns mutate</h4>
+<div class="row">
+<div class="column-left">
+<pre class="r"><code># 新建一列
+dt[, nc := 1:32]
+dt[,&#39;nc0&#39;] = 1:32
+
+# 新建多列
+dt[, `:=`(
+  nc1 = 1:32,
+  nc2 = paste0(Hair, Eye)
+)]
+
+# 基于条件新建列
+dt[, nc3 := ifelse(Freq &gt;= 10, 1, 0)]
+dt[Freq &gt;= 20, nc4 := 2]
+
+# 删除列
+dt[, nc := NULL]
+dt[, (c(&#39;nc0&#39;, &#39;nc1&#39;, &#39;nc2&#39;, &#39;nc3&#39;,&#39;nc4&#39;)) := NULL]</code></pre>
+</div>
+<div class="column-right">
+<pre class="python"><code># 新建一列
+df.loc[:,&#39;nc&#39;] = pd.Series(range(32), index=df.index)
+df = df.assign(nc0 = pd.Series(range(32)))
+
+# 新建多列
+df = df.assign(
+  nc1 = pd.Series(range(32)),
+  nc2 = df.Hair + df.Eye
+)
+
+# 基于条件新建列
+df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq &gt;= 10 else 0, axis=1))
+df.loc[df.Freq &gt;= 20, &#39;nc4&#39;] = 2
+
+# 删除列
+df = df.drop(&#39;nc&#39;, axis=1)
+df.drop([&#39;nc0&#39;,&#39;nc1&#39;,&#39;nc2&#39;,&#39;nc3&#39;,&#39;nc4&#39;], axis=1, inplace=True)</code></pre>
+</div>
+</div>
+</div>
+<div id="columns-summarise" class="section level4">
+<h4>columns summarise</h4>
+<div class="row">
+<div class="column-left">
+<pre><code># 基于列的计算
+dt[, unique(Eye)]
+dt[, table(Eye)]
+
+dt[, max(Freq)]</code></pre>
+</div>
+<div class="column-right">
+<pre><code># 基于列的计算
+df.Eye.unique()
+df.Eye.value_counts()
+
+df.Freq.max()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="分组汇总计算" class="section level3">
+<h3>分组汇总计算</h3>
+<div id="grouped-summarise" class="section level4">
+<h4>grouped summarise</h4>
+<div class="row">
+<div class="column-left">
+<pre><code># max freq
+dt[, .(freq_max = max(Freq)), by = &#39;Sex&#39;]
+
+# count
+dt[, .(freq_count = .N), keyby = c(&#39;Hair&#39;, &#39;Sex&#39;)]</code></pre>
+</div>
+<div class="column-right">
+<pre><code># max freq # pandas的groupby会自动删除缺失变量
+df.groupby(&#39;Sex&#39;).agg({&#39;Freq&#39;:&#39;max&#39;}).rename(columns={&#39;Freq&#39;:&#39;freq_max&#39;})
+
+# count
+df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}).rename(columns={&#39;Freq&#39;:&#39;freq_count&#39;})</code></pre>
+</div>
+</div>
+</div>
+<div id="grouped-mutate-filter" class="section level4">
+<h4>grouped mutate &amp; filter</h4>
+<div class="row">
+<div class="column-left">
+
+</div>
+<div class="column-right">
+
+</div>
+</div>
+</div>
+</div>
+<div id="行列转换" class="section level3">
+<h3>行列转换</h3>
+<div id="长宽表转换" class="section level4">
+<h4>长宽表转换</h4>
+<div class="row">
+<div class="column-left">
+
+</div>
+<div class="column-right">
+
+</div>
+</div>
+</div>
+<div id="多行合并切割" class="section level4">
+<h4>多行合并切割</h4>
+<div class="row">
+<div class="column-left">
+
+</div>
+<div class="column-right">
+
+</div>
+</div>
+</div>
+</div>
+<div id="数据框合并-mergejoin" class="section level3">
+<h3>数据框合并 merge/join</h3>
+<div class="row">
+<div class="column-left">
+
+</div>
+<div class="column-right">
+
+</div>
+</div>
+<!-- # https://stackoverflow.com/questions/31753897/2-column-section-in-r-markdown -->
+<style>
+.column-left{
+  float: left;
+  width: 49.2%;
+  text-align: left;
+}
+<!-- .column-center{ -->
+<!--   display: inline-block; -->
+<!--   width: 33%; -->
+<!--   text-align: center; -->
+<!-- } -->
+.column-right{
+  float: right;
+  width: 49.2%;
+  text-align: left;
+}
+.row:after { content: ""; display: table; clear: both; }
+</style>
+<style>
+  .col2 {
+    columns: 2 200px;         /* number of columns and width in pixels*/
+    -webkit-columns: 2 200px; /* chrome, safari */
+    -moz-columns: 2 200px;    /* firefox */
+  }
+  .col3 {
+    columns: 3 100px;
+    -webkit-columns: 3 100px;
+    -moz-columns: 3 100px;
+  }
+</style>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://datascience-enthusiast.com/R/pandas_datatable.html">Data Manipulation with Python Pandas and R Data.Table</a><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="https://r4ds.had.co.nz/">R for Data Science</a><a href="#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
 
     </article>
     
@@ -476,25 +737,41 @@
     <section class="related">
     
     
+    <h1 class="related__title">
+      <hr class="hr-dots"/>
+      <div>
+        相关内容
+      </div>
+      <hr class="hr-dots"/>
+    </h1>
+    <ul class="related-ul">
+        
+        <li>
+          <a href="/post/scorecard/" class="related__link">使用 R 语言开发评分卡模型</a>
+        </li>
+        
+        <li>
+          <a href="/post/stringr_regex/" class="related__link">stringr 与 regex 函数对应关系</a>
+        </li>
+        
+        <li>
+          <a href="/post/new-site/" class="related__link">博客搭建过程</a>
+        </li>
+        
+    </ul>
+    
   </section>
     <div class="grow"></div>
 <nav class="pagination-single">
   
-    <a href="/post/new-site/" class="pagination-single__left">
+    <a href="/post/fintech_credit/" class="pagination-single__left">
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
       </div>
-      <div class="pagination-single__left-title">博客搭建过程</div>      
+      <div class="pagination-single__left-title">[转]互联网金融的大数据风控</div>      
     </a>
   
   <div class="grow"></div>
-  
-    <a href="/post/markdown/" class="pagination-single__right">      
-      <div class="pagination-single__right-title">Markdown相关资料</div>
-      <div class="pagination-single__icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/></svg>
-      </div>
-    </a>
   
 </nav>
     
@@ -504,10 +781,10 @@
 <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
   var gitment = new Gitment({
-    id: '2017-04-04 00:00:00 \x2b0000 UTC',
-    title: '在ubuntu上配置vnpy',
+    id: '2019-12-26 00:00:00 \x2b0000 UTC',
+    title: 'data.table 与 pandas',
     link: decodeURI(location.href),
-    desc: 'vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主',
+    desc: '常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间',
     owner: 'shichenxie',
     repo: 'comment',
     oauth: {

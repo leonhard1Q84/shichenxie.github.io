@@ -9,7 +9,7 @@
     <managingEditor>xie@shichen.name (Shichen Xie)</managingEditor>
     <webMaster>xie@shichen.name (Shichen Xie)</webMaster>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
-    <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -17,20 +17,29 @@
     
       
       <item>
-        <title>credit</title>
-        <link>/tags/credit/</link>
-        <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+        <title>python</title>
+        <link>/tags/python/</link>
+        <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
         <author>xie@shichen.name (Shichen Xie)</author>
-        <guid>/tags/credit/</guid>
+        <guid>/tags/python/</guid>
         <description></description>
       </item>
       
       <item>
         <title>R</title>
         <link>/tags/r/</link>
-        <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
+        <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
         <author>xie@shichen.name (Shichen Xie)</author>
         <guid>/tags/r/</guid>
+        <description></description>
+      </item>
+      
+      <item>
+        <title>credit</title>
+        <link>/tags/credit/</link>
+        <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
+        <author>xie@shichen.name (Shichen Xie)</author>
+        <guid>/tags/credit/</guid>
         <description></description>
       </item>
       
