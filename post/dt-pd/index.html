@@ -396,7 +396,7 @@
     <h2 class="single__title">data.table 与 pandas</h2>
     <div class="single__meta">
       <div class="single__infos">
-  <span class="single__info" title="创建日期">🕓2019年12月26日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕2 分钟 </span>
+  <span class="single__info" title="创建日期">🕓2019年12月26日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕3 分钟 </span>
   <span class="single__info">
     
   </span>
@@ -584,8 +584,8 @@ dt[, (c(&#39;nc0&#39;, &#39;nc1&#39;, &#39;nc2&#39;, &#39;nc3&#39;,&#39;nc4&#39;
 </div>
 <div class="column-right">
 <pre class="python"><code># 新建一列
-df.loc[:,&#39;nc&#39;] = pd.Series(range(32), index=df.index)
 df = df.assign(nc0 = pd.Series(range(32)))
+df.loc[:,&#39;nc&#39;] = pd.Series(range(32), index=df.index)
 
 # 新建多列
 df = df.assign(
@@ -637,10 +637,14 @@ dt[, .(freq_count = .N), keyby = c(&#39;Hair&#39;, &#39;Sex&#39;)]</code></pre>
 </div>
 <div class="column-right">
 <pre><code># max freq # pandas的groupby会自动删除缺失变量
-df.groupby(&#39;Sex&#39;).agg({&#39;Freq&#39;:&#39;max&#39;}).rename(columns={&#39;Freq&#39;:&#39;freq_max&#39;})
+df.groupby(&#39;Sex&#39;).agg({&#39;Freq&#39;:&#39;max&#39;}).
+  rename(columns={&#39;Freq&#39;:&#39;freq_max&#39;}).
+  reset_index()
 
 # count
-df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}).rename(columns={&#39;Freq&#39;:&#39;freq_count&#39;})</code></pre>
+df.groupby([&#39;Hair&#39;,&#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}).
+  rename(columns={&#39;Freq&#39;:&#39;freq_count&#39;}).
+  reset_index()</code></pre>
 </div>
 </div>
 </div>
@@ -648,10 +652,18 @@ df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}
 <h4>grouped mutate &amp; filter</h4>
 <div class="row">
 <div class="column-left">
+<pre><code># 基于sex分组，新建一列等于freq的最大值
+dt[, freq_max := max(Freq), by = &#39;Sex&#39;]
 
+# 基于sex分组，选取freq最大的行
+dt[order(Freq)][, .SD[.N], by = &#39;Sex&#39;][]</code></pre>
 </div>
 <div class="column-right">
+<pre><code># 基于sex分组，新建一列等于freq的最大值
+df.loc[:,&#39;freq_max&#39;] = df.groupby(&#39;Sex&#39;)[&#39;Freq&#39;].transform(max)
 
+# 基于sex分组，选取freq最大的行
+df.sort_values(&#39;Freq&#39;).groupby(&#39;Sex&#39;).tail(1)</code></pre>
 </div>
 </div>
 </div>
@@ -662,10 +674,18 @@ df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}
 <h4>长宽表转换</h4>
 <div class="row">
 <div class="column-left">
+<pre class="r"><code># 长表转宽表
+dt_w = dcast(dt, Hair+Sex~Eye, fun.aggregate = sum, value.var = &#39;Freq&#39;)
 
+# 宽表转长表
+dt_l = melt(dt_w, id = c(&#39;Hair&#39;,&#39;Sex&#39;), variable.name = &#39;Eye&#39;, value.name = &#39;Freq&#39;)</code></pre>
 </div>
 <div class="column-right">
+<pre class="python"><code># 长表转宽表
+df_w = pd.pivot_table(df, index=[&#39;Hair&#39;,&#39;Sex&#39;], columns=&#39;Eye&#39;, values=&#39;Freq&#39;, aggfunc = sum).reset_index()
 
+# 宽表转长表
+df_l = df_w.melt(id_vars = [&#39;Hair&#39;,&#39;Sex&#39;], var_name=&#39;Freq&#39;)</code></pre>
 </div>
 </div>
 </div>
@@ -673,16 +693,25 @@ df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}
 <h4>多行合并切割</h4>
 <div class="row">
 <div class="column-left">
+<pre><code># 一行切割为多行
+dtr = dt[, paste0(Eye, collapse = &#39;,&#39;), keyby = c(&#39;Hair&#39;, &#39;Sex&#39;)]
+dtr[, .(Eye = unlist(strsplit(V1, &#39;,&#39;))), by = c(&#39;Hair&#39;, &#39;Sex&#39;)]
 
+# 一列切割为多列
+dtc = dt[, .(Hair, eye_sex = paste(Eye, Sex, sep = &#39;,&#39;))]
+dtc[, c(&#39;Eye&#39;, &#39;Sex&#39;) := tstrsplit(eye_sex, &#39;,&#39;)]</code></pre>
 </div>
 <div class="column-right">
+<pre><code># 一行切割为多行
+dfr = df.groupby([&#39;Hair&#39;,&#39;Sex&#39;])[&#39;Eye&#39;].apply(lambda x: &#39;,&#39;.join(x)).reset_index()
+dfr.assign(Eye = dfr[&#39;Eye&#39;].str.split(&#39;,&#39;)).explode(&#39;Eye&#39;)
 
+# 一列切割为多列
+dfc = df[[&#39;Hair&#39;]].assign(eye_sex = df.Eye+&#39;,&#39;+df.Sex)
+dfc[&#39;Eye&#39;], dfc[&#39;Sex&#39;]= dfc[&#39;eye_sex&#39;].str.split(&#39;,&#39;, 1).str</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div id="数据框合并-mergejoin" class="section level3">
-<h3>数据框合并 merge/join</h3>
+<!-- ### 数据框合并 merge/join -->
 <div class="row">
 <div class="column-left">
 
@@ -722,6 +751,7 @@ df.groupby([&#39;Hair&#39;, &#39;Sex&#39;]).agg({&#39;Freq&#39;:&#39;count&#39;}
     -moz-columns: 3 100px;
   }
 </style>
+</div>
 </div>
 <div class="footnotes">
 <hr />
