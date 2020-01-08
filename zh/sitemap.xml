@@ -126,6 +126,10 @@
   </url>
   
   <url>
+    <loc>/project/</loc>
+  </url>
+  
+  <url>
     <loc>/series/</loc>
     <xhtml:link
                 rel="alternate"

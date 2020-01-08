@@ -63,7 +63,7 @@ Main
 教育背景 {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
 
-### [名古屋大学](http://www.nagoya-u.ac.jp)
+### 名古屋大学
 
 博士 国际开发（环境经济方向）
 
@@ -73,7 +73,7 @@ Main
 
 <!-- Thesis: Dyadic wavelet and its application in edge detection -->
 
-### [华东理工大学](http://www.ecust.edu.cn)
+### 华东理工大学
 
 硕士 环境工程
 
@@ -83,7 +83,7 @@ Main
 
 <!-- Thesis: A multi-omics study for intra-individual divergence of the distributions between mRNA isoforms in mammals -->
 
-### [华中农业大学](http://www.hzau.edu.cn/)
+### 华中农业大学
 
 本科 环境科学
 
@@ -207,7 +207,7 @@ Main
 著作论文 {data-icon=file}
 --------------------------------------------------------------------------------
 
-###  [An Empirical Study on Energy Use, Carbon Emissions and Economic Growth in China.](http://hdl.handle.net/2237/21226)
+###  An Empirical Study on Energy Use, Carbon Emissions and Economic Growth in China. [[url](http://hdl.handle.net/2237/21226)]
 
 Doctoral dissertation
 
@@ -217,7 +217,7 @@ N/A
 
 **Xie, Shichen**.
 
-### [The driving forces of China’s energy use from 1992 to 2010: An empirical study of input–output and structural decomposition analysis.](http://dx.doi.org/10.1016/j.enpol.2014.05.035)
+### The driving forces of China’s energy use from 1992 to 2010: An empirical study of input–output and structural decomposition analysis. [[url](http://dx.doi.org/10.1016/j.enpol.2014.05.035)]
 
 Energy Policy, 73, 401–415. (SCI, IF=2.696)
 
@@ -227,7 +227,7 @@ N/A
 
 **Xie, Shichen**.
 
-### [Energy demand and carbon emissions under different development scenarios for Shanghai, China.](http://dx.doi.org/10.1016/j.enpol.2009.08.048)
+### Energy demand and carbon emissions under different development scenarios for Shanghai, China. [[url](http://dx.doi.org/10.1016/j.enpol.2009.08.048)]
 
 Energy Policy, 38 (9), 4797–4807. (SCI, IF=2.696)
 
@@ -237,7 +237,7 @@ N/A
 
 Li, L., Chen, C., **Xie, Shichen**, et al.
 
-### [上海市能源消费 CO2 排放清单与碳流通图.](http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&longsign=be81b707246cfe6c7d5b1f943d8d812b&title=上海市能源消费CO_2排放清单与碳流通图)
+### 上海市能源消费 CO2 排放清单与碳流通图. [[url](http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&longsign=be81b707246cfe6c7d5b1f943d8d812b&title=上海市能源消费CO_2排放清单与碳流通图)]
 
 中国环境科学, 29 (11), 1215–1220. (中国自然科学重点核心, EI)
 
@@ -247,7 +247,7 @@ N/A
 
 **谢士晨**, 陈长虹, 李莉, 等.
 
-### [2006 年中国能流图.](http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&longsign=883fce3829ea8205e21f523ced2e272b&title=2006年中国能流图)
+### 2006 年中国能流图. [[url](http://xueshu.baidu.com/usercenter/data/paperhelp?cmd=paper_forward&longsign=883fce3829ea8205e21f523ced2e272b&title=2006年中国能流图)]
 
 中国能源, 31 (3), 21–23. (中国科技核心)
 

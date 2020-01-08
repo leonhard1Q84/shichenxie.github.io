@@ -328,7 +328,7 @@
     
     
     <div class="navbar__dropdown navbar__slide-down">
-      <a href="/" class="navbar__menu-item">
+      <a href="/project" class="navbar__menu-item">
         项目 Projects
         <span class="navbar__menu-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M8.12 9.29L12 13.17l3.88-3.88c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-4.59 4.59c-.39.39-1.02.39-1.41 0L6.7 10.7c-.39-.39-.39-1.02 0-1.41.39-.38 1.03-.39 1.42 0z"/></svg>
@@ -377,7 +377,7 @@
   
   <li >    
     
-      <a href="/post/">Posts</a>
+      <a href="/post/">Post</a>
         
   </li>
   
@@ -429,7 +429,7 @@
       
 
 
-<p>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率,是数据分析工作的基础。
+<p>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率，是开展数据分析工作的基础。
 <img src="https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png" /></p>
 <p>数据框（data frame）是我们接触最多的数据形式，其每一列都是向量且长度一致。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 <a href="https://h2oai.github.io/db-benchmark/">Database-like ops benchmark</a> 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 <a href="http://r-datatable.com">data.table</a> 与 <a href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> 实现常见的数据分析任务<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
 <div id="探索数据" class="section level3">
@@ -517,14 +517,14 @@ dt[Hair == &#39;Black&#39; &amp;
 </code></pre>
 </div>
 <div class="column-right">
-<pre><code># 基于行所在位置筛选, 换成.loc则基于index筛选
-df.iloc[[2,0,1]] 
-df.loc[[2,0,1]] # 如果index未修改，效果一致
+<pre><code># 基于行所在位置筛选
+df.iloc[[2,0,1]] # python序数从0开始，2代表第三行
+df.loc[[2,0,1]] # 如果index未修改，效果与iloc的一致
 
 # 单条件筛选，去掉.loc效果一致
 df.loc[df[&#39;Hair&#39;] == &#39;Red&#39;] 
 
-# 多条件筛选时要用|, &amp;,~分别代表or,and,not; 且每个条件用括号区分 
+# pandas 多条件筛选时要用|, &amp;,~分别代表or,and,not; 且每个条件用括号区分 
 df.loc[(df[&#39;Hair&#39;] == &#39;Black&#39;) &amp; 
        (df[&#39;Freq&#39;] &gt;= 10) &amp; 
        (df[&#39;Eye&#39;].isin([&#39;Brown&#39;, &#39;Blue&#39;]))]</code></pre>
@@ -556,7 +556,7 @@ dt[,c(&#39;Eye&#39;, &#39;Sex&#39;), with=FALSE]</code></pre>
 <div class="column-right">
 <pre><code>df[[&#39;Hair&#39;, &#39;Freq&#39;]]
 # or 
-df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]]</code></pre>
+df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]] #选一列时也要保留[]，否则与df.Eye一样为series</code></pre>
 </div>
 </div>
 </div>
@@ -565,13 +565,13 @@ df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]]</code></pre>
 <div class="row">
 <div class="column-left">
 <pre class="r"><code># 新建一列
-dt[, nc := 1:32]
+dt[, nc := .I] # .I .N .SD为特殊符号,查看帮助?`.I`
 dt[,&#39;nc0&#39;] = 1:32
 
 # 新建多列
 dt[, `:=`(
   nc1 = 1:32,
-  nc2 = paste0(Hair, Eye)
+  nc2 = paste(Hair, Eye, sep=&#39;,&#39;)
 )]
 
 # 基于条件新建列
@@ -580,17 +580,17 @@ dt[Freq &gt;= 20, nc4 := 2]
 
 # 删除列
 dt[, nc := NULL]
-dt[, (c(&#39;nc0&#39;, &#39;nc1&#39;, &#39;nc2&#39;, &#39;nc3&#39;,&#39;nc4&#39;)) := NULL]</code></pre>
+dt[, (c(&#39;nc0&#39;,&#39;nc1&#39;,&#39;nc2&#39;,&#39;nc3&#39;,&#39;nc4&#39;)) := NULL]</code></pre>
 </div>
 <div class="column-right">
 <pre class="python"><code># 新建一列
-df = df.assign(nc0 = pd.Series(range(32)))
-df.loc[:,&#39;nc&#39;] = pd.Series(range(32), index=df.index)
+df = df.assign(nc = pd.Series(range(32)))
+df.loc[:,&#39;nc0&#39;] = pd.Series(range(32), index=df.index)
 
 # 新建多列
 df = df.assign(
   nc1 = pd.Series(range(32)),
-  nc2 = df.Hair + df.Eye
+  nc2 = df.Hair + &#39;,&#39; + df.Eye
 )
 
 # 基于条件新建列
@@ -607,18 +607,26 @@ df.drop([&#39;nc0&#39;,&#39;nc1&#39;,&#39;nc2&#39;,&#39;nc3&#39;,&#39;nc4&#39;],
 <h4>columns summarise</h4>
 <div class="row">
 <div class="column-left">
-<pre><code># 基于列的计算
+<pre><code># 对一列进行计算
 dt[, unique(Eye)]
 dt[, table(Eye)]
 
-dt[, max(Freq)]</code></pre>
+dt[, max(Freq)]
+
+# 对多列进行计算
+dt[, lapply(.SD, max)] # 所有列的最大值
+dt[, lapply(.SD, function(x) mean(is.na(x)))] # 所有列的缺失率</code></pre>
 </div>
 <div class="column-right">
 <pre><code># 基于列的计算
 df.Eye.unique()
 df.Eye.value_counts()
 
-df.Freq.max()</code></pre>
+df.Freq.max()
+
+# 对多列进行计算
+df.max() # 所有列的最大值
+df.isnull().mean() # 所有列的缺失率</code></pre>
 </div>
 </div>
 </div>
@@ -675,7 +683,7 @@ df.sort_values(&#39;Freq&#39;).groupby(&#39;Sex&#39;).tail(1)</code></pre>
 <div class="row">
 <div class="column-left">
 <pre class="r"><code># 长表转宽表
-dt_w = dcast(dt, Hair+Sex~Eye, fun.aggregate = sum, value.var = &#39;Freq&#39;)
+dt_w = dcast(dt, Hair+Sex~Eye, value.var = &#39;Freq&#39;, fun.aggregate = sum)
 
 # 宽表转长表
 dt_l = melt(dt_w, id = c(&#39;Hair&#39;,&#39;Sex&#39;), variable.name = &#39;Eye&#39;, value.name = &#39;Freq&#39;)</code></pre>
@@ -689,8 +697,8 @@ df_l = df_w.melt(id_vars = [&#39;Hair&#39;,&#39;Sex&#39;], var_name=&#39;Freq&#3
 </div>
 </div>
 </div>
-<div id="多行合并切割" class="section level4">
-<h4>多行合并切割</h4>
+<div id="行列合并切割" class="section level4">
+<h4>行列合并切割</h4>
 <div class="row">
 <div class="column-left">
 <pre><code># 一行切割为多行
