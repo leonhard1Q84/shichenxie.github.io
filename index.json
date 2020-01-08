@@ -162,15 +162,6 @@
 	"content": ""
 },
 {
-	"uri": "/slide/",
-	"title": "Presentations",
-	"tags": [],
-	"categories": [],
-	"series": [],
-	"description": "Presentation list with reveal.js",
-	"content": ""
-},
-{
 	"uri": "/project/",
 	"title": "Project",
 	"tags": [],
@@ -187,4 +178,13 @@
 	"series": [],
 	"description": "",
 	"content": ""
+},
+{
+	"uri": "/slide/",
+	"title": "Slide",
+	"tags": [],
+	"categories": [],
+	"series": [],
+	"description": "Slides list with reveal.js",
+	"content": "1. 信用评分卡模型开发与应用, 2017-11-15  第十一届中国 R 语言会议 (北京)，2018 厦门大学金融学院暑期班，2018  2. 财经数据分析之 pedquant 包, 2019-05-25  第十二届中国 R 语言会议 (北京)，2019  "
 }]
