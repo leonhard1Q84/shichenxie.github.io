@@ -16,7 +16,6 @@ Aside
 
 <!-- ![谢士晨](){width=80%} -->
 
-
 联系信息 {#contact}
 --------------------------------------------------------------------------------
 
@@ -39,7 +38,10 @@ Aside
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
-本简历在线版本 [**shichen.name/vitae**](http://shichen.name/vitae/)
+[简历在线版本 **shichen.name/vitae**](http://shichen.name/vitae/)
+
+<i class='fas fa-download'></i> [下载简历 pdf 版本](http://shichen.name/vitae/index.pdf)
+
 <!-- This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown). -->
 
 <!-- Last updated on `r Sys.Date()`. -->
