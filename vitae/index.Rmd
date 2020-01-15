@@ -13,8 +13,9 @@ output:
 Aside
 ================================================================================
 
+![谢士晨](index_files/xie.jpg){width=80%} 
 
-<!-- ![谢士晨](){width=80%} -->
+<i class='fas fa-download'></i> [下载简历 pdf 版本](http://shichen.name/vitae/index.pdf)
 
 联系信息 {#contact}
 --------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ Aside
 - <i class="fa fa-home"></i> [shichen.name](http://shichen.name)
 - <i class="fa fa-github"></i> [github.com/shichenxie](https://github.com/shichenxie)
 - <i class="fa fa-location-arrow"></i> 北京朝阳
-
+- 更多联系方式请邮件沟通
 
 技能特点 {#skills}
 --------------------------------------------------------------------------------
@@ -39,8 +40,6 @@ Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
 [简历在线版本 **shichen.name/vitae**](http://shichen.name/vitae/)
-
-<i class='fas fa-download'></i> [下载简历 pdf 版本](http://shichen.name/vitae/index.pdf)
 
 <!-- This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown). -->
 
