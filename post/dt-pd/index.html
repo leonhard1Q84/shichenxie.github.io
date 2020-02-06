@@ -399,7 +399,7 @@
     <h2 class="single__title">data.table 与 pandas</h2>
     <div class="single__meta">
       <div class="single__infos">
-  <span class="single__info" title="创建日期">🕓2019年12月26日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕3 分钟 </span>
+  <span class="single__info" title="创建日期">🕓2019年12月26日 </span>  &middot; <span class="single__info" title="阅读时长"> ☕4 分钟 </span>
   <span class="single__info">
     
   </span>
@@ -581,6 +581,10 @@ dt[, `:=`(
 dt[, nc3 := ifelse(Freq &gt;= 10, 1, 0)]
 dt[Freq &gt;= 20, nc4 := 2]
 
+# 基于函数新建列
+ncols = c(&#39;nc&#39;, &#39;nc0&#39;) 
+dt[, (ncols) := lapply(.SD, function(x) x^0.5 + 1), .SDcols = ncols]
+
 # 删除列
 dt[, nc := NULL]
 dt[, (c(&#39;nc0&#39;,&#39;nc1&#39;,&#39;nc2&#39;,&#39;nc3&#39;,&#39;nc4&#39;)) := NULL]</code></pre>
@@ -600,6 +604,10 @@ df = df.assign(
 df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq &gt;= 10 else 0, axis=1))
 df.loc[df.Freq &gt;= 20, &#39;nc4&#39;] = 2
 
+# 基于函数新建列
+ncols = [&#39;nc&#39;, &#39;nc0&#39;]
+df.loc[:, ncols] = df[ncols].apply(lambda x: x**0.5 + 1)
+
 # 删除列
 df = df.drop(&#39;nc&#39;, axis=1)
 df.drop([&#39;nc0&#39;,&#39;nc1&#39;,&#39;nc2&#39;,&#39;nc3&#39;,&#39;nc4&#39;], axis=1, inplace=True)</code></pre>
@@ -617,8 +625,14 @@ dt[, table(Eye)]
 dt[, max(Freq)]
 
 # 对多列进行计算
-dt[, lapply(.SD, max)] # 所有列的最大值
-dt[, lapply(.SD, function(x) mean(is.na(x)))] # 所有列的缺失率</code></pre>
+## 所有列的最大值
+dt[, lapply(.SD, max)] 
+## 所有列的缺失率
+dt[, lapply(.SD, function(x) mean(is.na(x)))] 
+
+## 对部分列计算缺失率，且可扩展到其他函数
+sel_cols = c(&#39;Hair&#39;, &#39;Sex&#39;, &#39;Freq&#39;)
+dt[, lapply(.SD, function(x) mean(is.na(x))), .SDcols = sel_cols]</code></pre>
 </div>
 <div class="column-right">
 <pre><code># 基于列的计算
@@ -628,8 +642,14 @@ df.Eye.value_counts()
 df.Freq.max()
 
 # 对多列进行计算
-df.max() # 所有列的最大值
-df.isnull().mean() # 所有列的缺失率</code></pre>
+## 所有列的最大值
+df.max() 
+## 所有列的缺失率 
+df.isnull().mean() 
+
+## 对部分列计算缺失率，且可扩展到其他函数
+sel_cols = [&#39;Hair&#39;, &#39;Sex&#39;, &#39;Freq&#39;]
+df[sel_cols].apply(lambda x: x.isnull().mean())</code></pre>
 </div>
 </div>
 </div>
@@ -722,13 +742,49 @@ dfc = df[[&#39;Hair&#39;]].assign(eye_sex = df.Eye+&#39;,&#39;+df.Sex)
 dfc[&#39;Eye&#39;], dfc[&#39;Sex&#39;]= dfc[&#39;eye_sex&#39;].str.split(&#39;,&#39;, 1).str</code></pre>
 </div>
 </div>
-<!-- ### 数据框合并 merge/join -->
+</div>
+</div>
+<div id="数据框合并" class="section level3">
+<h3>数据框合并</h3>
+<div id="数据框行合并" class="section level4">
+<h4>数据框行合并</h4>
 <div class="row">
 <div class="column-left">
+<pre class="r"><code># 合并两个数据框
+dtr1 = rbind(dt[sample(.N,2)], dt[sample(.N,3)])
+# 如果两个数据框的列名不一致，需要添加fill为TRUE
+dtr2 = rbind(dt[sample(.N,2)], dt[sample(.N,3), .(Hair)], fill=TRUE)
 
+# 直接合并多个数据框组成的 list
+dt_lst = list(
+  dt1 = dt[sample(.N,2)], 
+  dt2 = dt[sample(.N,3)], 
+  dt3 = dt[sample(.N,4)])
+dt_bind = rbindlist(dt_lst, idcol = &#39;dt&#39;)</code></pre>
 </div>
 <div class="column-right">
+<pre class="python"><code># 合并两个数据框
+dfr1 = pd.concat([df.sample(n=2), df.sample(n=3)])
+# 如果两个数据框的列名不一致
+dfr2 = pd.concat([df.sample(n=2), df.sample(n=3)[[&#39;Hair&#39;]]], sort=False)
 
+# 直接合并多个数据框组成的 list
+df_lst = [
+  df.sample(2), 
+  df.sample(3), 
+  df.sample(4)]
+df_con = pd.concat(df_lst, axis=0)</code></pre>
+</div>
+</div>
+</div>
+<div id="数据框列合并" class="section level4">
+<h4>数据框列合并</h4>
+<div class="row">
+<div class="column-left">
+<pre class="r"><code># merge</code></pre>
+</div>
+<div class="column-right">
+<pre class="python"><code># pd.merge</code></pre>
 </div>
 </div>
 <!-- # https://stackoverflow.com/questions/31753897/2-column-section-in-r-markdown -->

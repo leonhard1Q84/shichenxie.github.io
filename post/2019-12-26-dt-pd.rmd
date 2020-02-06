@@ -174,6 +174,10 @@ dt[, `:=`(
 dt[, nc3 := ifelse(Freq >= 10, 1, 0)]
 dt[Freq >= 20, nc4 := 2]
 
+# 基于函数新建列
+ncols = c('nc', 'nc0') 
+dt[, (ncols) := lapply(.SD, function(x) x^0.5 + 1), .SDcols = ncols]
+
 # 删除列
 dt[, nc := NULL]
 dt[, (c('nc0','nc1','nc2','nc3','nc4')) := NULL]
@@ -195,6 +199,10 @@ df = df.assign(
 df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq >= 10 else 0, axis=1))
 df.loc[df.Freq >= 20, 'nc4'] = 2
 
+# 基于函数新建列
+ncols = ['nc', 'nc0']
+df.loc[:, ncols] = df[ncols].apply(lambda x: x**0.5 + 1)
+
 # 删除列
 df = df.drop('nc', axis=1)
 df.drop(['nc0','nc1','nc2','nc3','nc4'], axis=1, inplace=True)
@@ -213,8 +221,14 @@ dt[, table(Eye)]
 dt[, max(Freq)]
 
 # 对多列进行计算
-dt[, lapply(.SD, max)] # 所有列的最大值
-dt[, lapply(.SD, function(x) mean(is.na(x)))] # 所有列的缺失率
+## 所有列的最大值
+dt[, lapply(.SD, max)] 
+## 所有列的缺失率
+dt[, lapply(.SD, function(x) mean(is.na(x)))] 
+
+## 对部分列计算缺失率，且可扩展到其他函数
+sel_cols = c('Hair', 'Sex', 'Freq')
+dt[, lapply(.SD, function(x) mean(is.na(x))), .SDcols = sel_cols]
 ```
 </div>
 <div class='column-right'>
@@ -226,8 +240,14 @@ df.Eye.value_counts()
 df.Freq.max()
 
 # 对多列进行计算
-df.max() # 所有列的最大值
-df.isnull().mean() # 所有列的缺失率
+## 所有列的最大值
+df.max() 
+## 所有列的缺失率 
+df.isnull().mean() 
+
+## 对部分列计算缺失率，且可扩展到其他函数
+sel_cols = ['Hair', 'Sex', 'Freq']
+df[sel_cols].apply(lambda x: x.isnull().mean())
 ```
 </div>
 </div>
@@ -329,17 +349,52 @@ dfc['Eye'], dfc['Sex']= dfc['eye_sex'].str.split(',', 1).str
 </div>
 </div>
 
-<!-- ### 数据框合并 merge/join -->
+### 数据框合并
+#### 数据框行合并
 <div class="row">
 <div class='column-left'>
 ```{r}
+# 合并两个数据框
+dtr1 = rbind(dt[sample(.N,2)], dt[sample(.N,3)])
+# 如果两个数据框的列名不一致，需要添加fill为TRUE
+dtr2 = rbind(dt[sample(.N,2)], dt[sample(.N,3), .(Hair)], fill=TRUE)
 
-
+# 直接合并多个数据框组成的 list
+dt_lst = list(
+  dt1 = dt[sample(.N,2)], 
+  dt2 = dt[sample(.N,3)], 
+  dt3 = dt[sample(.N,4)])
+dt_bind = rbindlist(dt_lst, idcol = 'dt')
 ```
 </div>
 <div class='column-right'>
 ```{python}
+# 合并两个数据框
+dfr1 = pd.concat([df.sample(n=2), df.sample(n=3)])
+# 如果两个数据框的列名不一致
+dfr2 = pd.concat([df.sample(n=2), df.sample(n=3)[['Hair']]], sort=False)
 
+# 直接合并多个数据框组成的 list
+df_lst = [
+  df.sample(2), 
+  df.sample(3), 
+  df.sample(4)]
+df_con = pd.concat(df_lst, axis=0)
+```
+</div>
+</div>
+
+
+#### 数据框列合并
+<div class="row">
+<div class='column-left'>
+```{r}
+# merge
+```
+</div>
+<div class='column-right'>
+```{python}
+# pd.merge
 ```
 </div>
 </div>
