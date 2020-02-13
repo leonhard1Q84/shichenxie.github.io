@@ -6,8 +6,8 @@
     <description>Recent content in R on Shichen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <managingEditor>xie@shichen.name (Shichen Xie)</managingEditor>
-    <webMaster>xie@shichen.name (Shichen Xie)</webMaster>
+    <managingEditor>xie#shichen.name (#-&gt;@) (Shichen Xie)</managingEditor>
+    <webMaster>xie#shichen.name (#-&gt;@) (Shichen Xie)</webMaster>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
     
@@ -20,7 +20,7 @@
         <title>data.table 与 pandas</title>
         <link>/post/dt-pd/</link>
         <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-        <author>xie@shichen.name (Shichen Xie)</author>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>/post/dt-pd/</guid>
         <description>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间</description>
       </item>
@@ -29,7 +29,7 @@
         <title>使用 R 语言开发评分卡模型</title>
         <link>/post/scorecard/</link>
         <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
-        <author>xie@shichen.name (Shichen Xie)</author>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>/post/scorecard/</guid>
         <description>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱</description>
       </item>
@@ -38,7 +38,7 @@
         <title>stringr 与 regex 函数对应关系</title>
         <link>/post/stringr_regex/</link>
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
-        <author>xie@shichen.name (Shichen Xie)</author>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>/post/stringr_regex/</guid>
         <description>stringr 是 Hadley 大神写的 tidyverse1 系列数据处理包中专门用于处理文本数据的，其函数命名统一易于记忆。而 R 基础包中的文本处理函数 (regex) 的命名规则不是特别统一。下表给出</description>
       </item>
@@ -47,7 +47,7 @@
         <title>博客搭建过程</title>
         <link>/post/new-site/</link>
         <pubDate>Tue, 21 Mar 2017 00:00:00 +0000</pubDate>
-        <author>xie@shichen.name (Shichen Xie)</author>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>/post/new-site/</guid>
         <description>在“我网故我在”的召唤下，我使用 R 语言的 blogdown 包1 和 GitHubPages 在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建 GitHub Pages 仓库、域名绑定。 编辑网</description>
       </item>

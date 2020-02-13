@@ -6,8 +6,8 @@
     <description>Recent content in python on Shichen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <managingEditor>xie@shichen.name (Shichen Xie)</managingEditor>
-    <webMaster>xie@shichen.name (Shichen Xie)</webMaster>
+    <managingEditor>xie#shichen.name (#-&gt;@) (Shichen Xie)</managingEditor>
+    <webMaster>xie#shichen.name (#-&gt;@) (Shichen Xie)</webMaster>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
     
@@ -20,7 +20,7 @@
         <title>data.table 与 pandas</title>
         <link>/post/dt-pd/</link>
         <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-        <author>xie@shichen.name (Shichen Xie)</author>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>/post/dt-pd/</guid>
         <description>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间</description>
       </item>

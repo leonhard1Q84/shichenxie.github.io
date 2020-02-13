@@ -527,7 +527,8 @@ df.loc[[2,0,1]] # 如果index未修改，效果与iloc的一致
 # 单条件筛选，去掉.loc效果一致
 df.loc[df[&#39;Hair&#39;] == &#39;Red&#39;] 
 
-# pandas 多条件筛选时要用|, &amp;,~分别代表or,and,not; 且每个条件用括号区分 
+# pandas 多条件筛选时要用 |, &amp;, ~分别代表or, and, not; 
+# 且每个条件用括号区分 
 df.loc[(df[&#39;Hair&#39;] == &#39;Black&#39;) &amp; 
        (df[&#39;Freq&#39;] &gt;= 10) &amp; 
        (df[&#39;Eye&#39;].isin([&#39;Brown&#39;, &#39;Blue&#39;]))]</code></pre>
@@ -541,7 +542,9 @@ df.loc[(df[&#39;Hair&#39;] == &#39;Black&#39;) &amp;
 <pre><code>dt[order(Sex, -Freq)]</code></pre>
 </div>
 <div class="column-right">
-<pre><code>df.sort_values([&#39;Sex&#39;, &#39;Freq&#39;], ascending=[True, False])</code></pre>
+<pre><code>df.sort_values(
+  [&#39;Sex&#39;, &#39;Freq&#39;], 
+  ascending = [True, False] )</code></pre>
 </div>
 </div>
 </div>
@@ -559,7 +562,7 @@ dt[,c(&#39;Eye&#39;, &#39;Sex&#39;), with=FALSE]</code></pre>
 <div class="column-right">
 <pre><code>df[[&#39;Hair&#39;, &#39;Freq&#39;]]
 # or 
-df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]] #选一列时也要保留[]，否则与df.Eye一样为series</code></pre>
+df.loc[:,[&#39;Eye&#39;, &#39;Sex&#39;]] # 选一列时也要保留[]，否则与df.Eye一样为series</code></pre>
 </div>
 </div>
 </div>
@@ -583,7 +586,9 @@ dt[Freq &gt;= 20, nc4 := 2]
 
 # 基于函数新建列
 ncols = c(&#39;nc&#39;, &#39;nc0&#39;) 
-dt[, (ncols) := lapply(.SD, function(x) x^0.5 + 1), .SDcols = ncols]
+dt[, 
+   (ncols) := lapply(.SD, function(x) x^0.5 + 1), 
+   .SDcols = ncols]
 
 # 删除列
 dt[, nc := NULL]
@@ -601,7 +606,7 @@ df = df.assign(
 )
 
 # 基于条件新建列
-df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq &gt;= 10 else 0, axis=1))
+df = df.assign(nc3 = df.Freq.apply(lambda x: 1 if x &gt;= 10 else 0))
 df.loc[df.Freq &gt;= 20, &#39;nc4&#39;] = 2
 
 # 基于函数新建列

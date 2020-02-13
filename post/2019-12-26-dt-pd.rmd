@@ -116,7 +116,8 @@ df.loc[[2,0,1]] # 如果index未修改，效果与iloc的一致
 # 单条件筛选，去掉.loc效果一致
 df.loc[df['Hair'] == 'Red'] 
 
-# pandas 多条件筛选时要用|, &,~分别代表or,and,not; 且每个条件用括号区分 
+# pandas 多条件筛选时要用 |, &, ~分别代表or, and, not; 
+# 且每个条件用括号区分 
 df.loc[(df['Hair'] == 'Black') & 
        (df['Freq'] >= 10) & 
        (df['Eye'].isin(['Brown', 'Blue']))]
@@ -132,7 +133,9 @@ dt[order(Sex, -Freq)]
 </div>
 <div class='column-right'>
 ```
-df.sort_values(['Sex', 'Freq'], ascending=[True, False])
+df.sort_values(
+  ['Sex', 'Freq'], 
+  ascending = [True, False] )
 ```
 </div>
 </div>
@@ -151,7 +154,7 @@ dt[,c('Eye', 'Sex'), with=FALSE]
 ```
 df[['Hair', 'Freq']]
 # or 
-df.loc[:,['Eye', 'Sex']] #选一列时也要保留[]，否则与df.Eye一样为series
+df.loc[:,['Eye', 'Sex']] # 选一列时也要保留[]，否则与df.Eye一样为series
 ```
 </div>
 </div>
@@ -176,7 +179,9 @@ dt[Freq >= 20, nc4 := 2]
 
 # 基于函数新建列
 ncols = c('nc', 'nc0') 
-dt[, (ncols) := lapply(.SD, function(x) x^0.5 + 1), .SDcols = ncols]
+dt[, 
+   (ncols) := lapply(.SD, function(x) x^0.5 + 1), 
+   .SDcols = ncols]
 
 # 删除列
 dt[, nc := NULL]
@@ -196,7 +201,7 @@ df = df.assign(
 )
 
 # 基于条件新建列
-df = df.assign(nc3 = df.apply(lambda x: 1 if x.Freq >= 10 else 0, axis=1))
+df = df.assign(nc3 = df.Freq.apply(lambda x: 1 if x >= 10 else 0))
 df.loc[df.Freq >= 20, 'nc4'] = 2
 
 # 基于函数新建列
