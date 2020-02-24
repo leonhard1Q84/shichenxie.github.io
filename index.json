@@ -168,7 +168,7 @@
 	"categories": [],
 	"series": [],
 	"description": "Project page",
-	"content": "1. R 包 scorecard, 2017     提高了评分卡模型的开发效率，提供了特征预处理、变量初筛、最优分箱、模型评估、评分刻度转换与模型报告输出等多个功能。  2. python 包 scorecardpy, 2018     该包是 python 版本的 R 包 scorecard。提高了用 python 开发评分卡模型的效率，提供了变量初筛、最优分箱、模型评估与评分刻度等多个功能。  3. R 包 pedquant, 2019     pedquant 能够获取国家统计局 NBS、美联储财经数据 FRED、全球股票、国内期货等财经数据，并提供了可视化与量化分析等功能。  "
+	"content": "1. R 包 scorecard, 2017      提高了评分卡模型的开发效率，提供了特征预处理、变量初筛、最优分箱、模型评估、评分刻度转换与模型报告输出等多个功能。  2. python 包 scorecardpy, 2018      该包是 python 版本的 R 包 scorecard。提高了用 python 开发评分卡模型的效率，提供了变量初筛、最优分箱、模型评估与评分刻度等多个功能。  3. R 包 pedquant, 2019      pedquant 能够获取国家统计局 NBS、美联储财经数据 FRED、全球股票、国内期货等财经数据，并提供了可视化与量化分析等功能。  "
 },
 {
 	"uri": "/series/",

@@ -175,8 +175,9 @@ Main
 
 ### R 包 scorecard 
 
-[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/scorecard) [![](https://img.shields.io/badge/HomePage-%20-green)](http://shichen.name/scorecard) [![](http://cranlogs.r-pkg.org/badges/grand-total/scorecard)](https://cran.r-project.org/package=scorecard)
-
+[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/scorecard) [![](https://img.shields.io/badge/HomePage-%20-green)](http://shichen.name/scorecard)
+<!-- [![](http://cranlogs.r-pkg.org/badges/grand-total/scorecard)](https://cran.r-project.org/package=scorecard) -->
+[![](http://cranlogs.r-pkg.org/badges/scorecard)](https://cran.r-project.org/package=scorecard)
 
 <!-- Beijing, China --> N/A
 
@@ -186,17 +187,21 @@ Main
 
 ### python 包 scorecardpy 
 
-[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/scorecardpy) [![](https://img.shields.io/badge/HomePage-%20-green)](http://shichen.name/scorecard) [![](http://pepy.tech/badge/scorecardpy)](http://pepy.tech/project/scorecardpy)
+[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/scorecardpy) [![](https://img.shields.io/badge/HomePage-%20-green)](http://shichen.name/scorecard)
+<!-- [![](http://pepy.tech/badge/scorecardpy)](http://pepy.tech/project/scorecardpy) -->
+[![Downloads](https://pepy.tech/badge/scorecardpy/month)](https://pepy.tech/project/scorecardpy/month)
 
 <!-- Beijing, China -->N/A
 
 2018
 
-- 该包是 python 版本的 R 包 scorecard。提高了用 python 开发评分卡模型的效率，提供了变量初筛、最优分箱、模型评估与评分刻度等多个功能。
+- 该包是 python 版本的 R 包 scorecard。提高了用 python 开发评分卡模型的效率，提供了变量初筛、最优分箱、模型评估与评分刻度等功能。
 
 ### R 包 pedquant 
 
-[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/pedquant) [![](https://img.shields.io/badge/HomePage-%20-green)](http://pedquant.com/) [![](http://cranlogs.r-pkg.org/badges/grand-total/pedquant)](https://cran.r-project.org/package=pedquant)
+[![](https://img.shields.io/badge/GitHub-%20-red)](https://github.com/ShichenXie/pedquant) [![](https://img.shields.io/badge/HomePage-%20-green)](http://pedquant.com/) 
+<!-- [![](http://cranlogs.r-pkg.org/badges/grand-total/pedquant)](https://cran.r-project.org/package=pedquant) -->
+[![](http://cranlogs.r-pkg.org/badges/pedquant)](https://cran.r-project.org/package=pedquant)
 
 <!-- Beijing, China -->N/A
 
