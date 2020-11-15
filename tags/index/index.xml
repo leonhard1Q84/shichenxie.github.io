@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>index on Shichen</title>
+    <link>http://shichen.name/tags/index/</link>
+    <description>Recent content in index on Shichen</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <managingEditor>xie#shichen.name (#-&gt;@) (Shichen Xie)</managingEditor>
+    <webMaster>xie#shichen.name (#-&gt;@) (Shichen Xie)</webMaster>
+    <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
+    
+        <atom:link href="http://shichen.name/tags/index/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+      
+      <item>
+        <title>Post</title>
+        <link>http://shichen.name/post/</link>
+        <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
+        <guid>http://shichen.name/post/</guid>
+        <description></description>
+      </item>
+      
+    
+  </channel>
+</rss>

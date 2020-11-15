@@ -185,7 +185,7 @@
 <meta property="og:url" content="http://shichen.name/post/ubuntu-vnpy/">
 <meta property="og:type" content="article">
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.78.1" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="http://shichen.name/post/ubuntu-vnpy/">
@@ -422,7 +422,7 @@
     <article class="single__contents">
       <p>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见<a href="http://github.com/vnpy/vnpy">github主页</a>、<a href="http://www.vnpy.org">官方主页</a>、<a href="https://zhuanlan.zhihu.com/vn-py">项目知乎专栏</a>、<a href="http://www.vnpie.com/forum.php">官方社区维恩派</a>、<a href="https://www.zhihu.com/people/traderusingpython/answers">作者知乎主页</a>。</p>
 <p>目前CTP只提供Windows和Linux的接口，所以在ubuntu上配置vnpy^[详细参考<a href="https://zhuanlan.zhihu.com/p/21354681">vn.trader的Ubuntu运行环境搭建教程</a>]，主要包括三步，**1.**安装python环境anaconda2，**2.**安装mongodb与相关依赖工具，**3.**安装vnpy框架</p>
-<h2 id="anaconda">安装anaconda</h2>
+<h2 id="安装anaconda">安装anaconda</h2>
 <p>出于速度方面的考虑，目前vnpy官方建议使用python2.*环境。从<a href="https://www.continuum.io/downloads">continuum官方网站</a>下载Python 2.7版Linux 64位的anaconda安装文件，我这里下载了anaconda2-4.3.1（官方建议下载4.0版本）。然后在terminal中cd到下载的anaconda文件夹，运行如下命令:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -432,7 +432,7 @@
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bash Anaconda2-4.3.1-Linux-x86_64.sh
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="mongodb">安装mongodb</h2>
+</div><h2 id="安装mongodb">安装mongodb</h2>
 <p>在ubuntu中安装mongodb非常简单，在terminal中输入如下命令:</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -460,7 +460,7 @@
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt-get install git build-essential libboost-all-dev python-dev cmake
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="vnpy">安装vnpy框架</h2>
+</div><h2 id="安装vnpy框架">安装vnpy框架</h2>
 <p>最后从github上下载vnpy项目库。我先Fork了<a href="https://github.com/vnpy/vnpy">vnpy的GitHub项目库</a>，然后clone到本地：</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -507,7 +507,7 @@
 <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
   var gitment = new Gitment({
-    id: '2017-04-04 00:00:00 \x2b0000 UTC',
+    id: '2017-04-04 00:00:00 \u002b0000 UTC',
     title: '在ubuntu上配置vnpy',
     link: decodeURI(location.href),
     desc: 'vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主',

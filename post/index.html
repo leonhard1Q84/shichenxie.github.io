@@ -186,7 +186,7 @@
 <meta property="og:url" content="http://shichen.name/post/">
 <meta property="og:type" content="website">
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.78.1" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="http://shichen.name/post/">
@@ -407,7 +407,7 @@
       <div>
         <div class="summary-classic__text p2">
           
-          常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间
+          数据分析项目通常可以分解为以下过程，数据加载-数据清洗-(特征处理、可视化、模型训练)-成果汇报1。其中，数据清洗与特征处理或者称为数据预处
           
         </div>
       </div>
@@ -431,6 +431,29 @@
         <div class="summary-classic__text p2">
           
           大数据能够进行数据变现的商业模式目前主要包括，一是精准营销，典型的场景是商品推荐和精准广告投放，二是大数据风控，典型的场景是互联网金融的大数
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+</article>
+
+            
+                
+  <article class="summary-classic">
+  <div class="summary-classic__flex-box">
+    
+    
+    <div class="summary-classic__content">
+      <header>
+        <h5 class="title h5"><a href='http://shichen.name/post/scorecard/'> 使用 R 语言开发评分卡模型</a> </h5>
+        <h6 class="subtitle caption"><span title="创建日期">🕓 2018年01月05日 </span>  <span title="阅读时长"> &middot; ☕4 分钟 </span></h6>
+      </header>
+      <div>
+        <div class="summary-classic__text p2">
+          
+          为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱
           
         </div>
       </div>
@@ -476,7 +499,7 @@
       <div>
         <div class="summary-classic__text p2">
           
-          John Gruber's Markdown syntax (中文翻译) John MacFarlane's Pandoc Markdown (中文翻译) Blackfriday Markdown (github) RMarkdown (github) MathJax (中文版)
+          John Gruber&rsquo;s Markdown syntax (中文翻译) John MacFarlane&rsquo;s Pandoc Markdown (中文翻译) Blackfriday Markdown (github) RMarkdown (github) MathJax (中文版)
           
         </div>
       </div>
@@ -532,29 +555,6 @@
 </article>
 
             
-                
-  <article class="summary-classic">
-  <div class="summary-classic__flex-box">
-    
-    
-    <div class="summary-classic__content">
-      <header>
-        <h5 class="title h5"><a href='http://shichen.name/post/2018-01-05-scorecard/'> </a> </h5>
-        <h6 class="subtitle caption"><span title="创建日期">🕓 0001年01月01日 </span>  <span title="阅读时长"> &middot; ☕21 分钟 </span></h6>
-      </header>
-      <div>
-        <div class="summary-classic__text p2">
-          
-          使用 R 语言开发评分卡模型 /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */ !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0a?b:0);return this.pushStack(c=0&&bc?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);ih;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"
-          
-        </div>
-      </div>
-    </div>
-  </div>
-  <hr />
-</article>
-
-            
         </div>
     </article>    
 
@@ -600,6 +600,13 @@
     </section>
     
     <section class="sidebar-recent">
+        <a href="/post/scorecard/" class="sidebar-recent__title p1">使用 R 语言开发评分卡模型</a>
+        <ul class="sidebar-recent__ul">
+            
+        </ul>
+    </section>
+    
+    <section class="sidebar-recent">
         <a href="/post/stringr_regex/" class="sidebar-recent__title p1">stringr 与 regex 函数对应关系</a>
         <ul class="sidebar-recent__ul">
             
@@ -608,13 +615,6 @@
     
     <section class="sidebar-recent">
         <a href="/post/markdown/" class="sidebar-recent__title p1">Markdown相关资料</a>
-        <ul class="sidebar-recent__ul">
-            
-        </ul>
-    </section>
-    
-    <section class="sidebar-recent">
-        <a href="/post/ubuntu-vnpy/" class="sidebar-recent__title p1">在ubuntu上配置vnpy</a>
         <ul class="sidebar-recent__ul">
             
         </ul>
@@ -639,6 +639,19 @@
                 <a href="/tags/credit/" class="is-tags taxo__link">
                     <span class="taxo__text">
                         credit
+                    </span>
+                    <span class="taxo__num">
+                        2
+                    </span>
+                </a>
+            </span>
+        
+        
+        
+            <span class="tag">
+                <a href="/tags/index/" class="is-tags taxo__link">
+                    <span class="taxo__text">
+                        index
                     </span>
                     <span class="taxo__num">
                         1
@@ -680,7 +693,7 @@
                         R
                     </span>
                     <span class="taxo__num">
-                        3
+                        4
                     </span>
                 </a>
             </span>

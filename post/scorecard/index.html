@@ -185,7 +185,7 @@
 <meta property="og:url" content="http://shichen.name/post/scorecard/">
 <meta property="og:type" content="article">
 
-<meta name="generator" content="Hugo 0.62.0" />
+<meta name="generator" content="Hugo 0.78.1" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="http://shichen.name/post/scorecard/">
@@ -430,6 +430,8 @@
     </div>    
     <article class="single__contents">
       
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (<a href="http://shichen.name/scorecard/">HomePage</a>, <a href="http://github.com/shichenXie/scorecard">Github</a>, <a href="https://cran.r-project.org/web/packages/scorecard/index.html">CRAN</a>)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱与 woe 转换、模型评估、评分刻度转换等。</p>
@@ -447,8 +449,9 @@ dt = var_filter(germancredit, y = &#39;creditability&#39;)</code></pre>
 <pre><code>## [INFO] filtering variables ...</code></pre>
 <p>将经过初筛的数据集拆分为训练集与测试集。在 split_df 函数中如果指定了 y 变量，那么将基于 y 变量分层拆分，如果没有指定，则随机拆分数据集。ratio 为拆分后两个数据集的样本量占比。 seed 为随机种子，用于重现拆分的样本。</p>
 <pre class="r"><code># breaking dt into train and test
-dt_list = split_df(dt, y=&quot;creditability&quot;, ratio = 0.6, seed = 30)
-label_list = lapply(dt_list, function(x) x$creditability)</code></pre>
+dt_list = split_df(dt, y=&quot;creditability&quot;, ratio = 0.6, seed = 30)</code></pre>
+<pre><code>## Warning in split_df(dt, y = &quot;creditability&quot;, ratio = 0.6, seed = 30): The ratios is set to c(0.6, 0.4)</code></pre>
+<pre class="r"><code>label_list = lapply(dt_list, function(x) x$creditability)</code></pre>
 </div>
 <div id="woe分箱" class="section level2">
 <h2>WOE分箱</h2>
@@ -461,9 +464,9 @@ label_list = lapply(dt_list, function(x) x$creditability)</code></pre>
 bins = woebin(dt, &quot;creditability&quot;, print_step=0)</code></pre>
 <pre><code>## [INFO] creating woe binning ...</code></pre>
 <pre class="r"><code>bins[[12]]</code></pre>
-<pre><code>##                   variable           bin count count_distr good bad badprob     woe  bin_iv total_iv        breaks
-## 1: other.installment.plans bank%,%stores   186       0.186  110  76  0.4086  0.4776 0.04594  0.05759 bank%,%stores
-## 2: other.installment.plans          none   814       0.814  590 224  0.2752 -0.1212 0.01166  0.05759          none
+<pre><code>##                   variable           bin count count_distr neg pos posprob     woe  bin_iv total_iv        breaks
+## 1: other.installment.plans bank%,%stores   186       0.186 110  76  0.4086  0.4776 0.04594  0.05759 bank%,%stores
+## 2: other.installment.plans          none   814       0.814 590 224  0.2752 -0.1212 0.01166  0.05759          none
 ##    is_special_values
 ## 1:             FALSE
 ## 2:             FALSE</code></pre>
@@ -472,7 +475,8 @@ bins = woebin(dt, &quot;creditability&quot;, print_step=0)</code></pre>
 <p><img src="/post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code># converting train and test into woe values
 dt_woe_list = lapply(dt_list, function(x) woebin_ply(x, bins))</code></pre>
-<pre><code>## [INFO] converting into woe values ...</code></pre>
+<pre><code>## [INFO] converting into woe values ... 
+## [INFO] converting into woe values ...</code></pre>
 </div>
 <div id="模型拟合" class="section level2">
 <h2>模型拟合</h2>
@@ -507,7 +511,6 @@ pred_list = lapply(dt_woe_list, function(x) predict(m2, x, type=&#39;response&#3
 
 ## performance
 perf = perf_eva(pred = pred_list, label = label_list)</code></pre>
-<pre><code>## [INFO] The threshold of confusion matrix is 0.3133.</code></pre>
 <p><img src="/post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="评分卡刻度" class="section level2">
@@ -522,8 +525,14 @@ score_list = lapply(dt_list, function(x) scorecard_ply(x, card))
 
 ## psi
 perf_psi(score = score_list, label = label_list)</code></pre>
-<pre><code>## $psi
-## Null data.table (0 rows and 0 cols)</code></pre>
+<pre><code>## $pic
+## $pic$score</code></pre>
+<p><img src="/post/2018-01-05-scorecard_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre><code>## 
+## 
+## $psi
+##    variable    dataset     psi
+## 1:    score train_test 0.04345</code></pre>
 <p>以上代码均可以在该项目的<a href="http://shichen.name/scorecard/">主页</a>获取。</p>
 </div>
 
@@ -580,7 +589,7 @@ perf_psi(score = score_list, label = label_list)</code></pre>
 <script src="https://cdn.jsdelivr.net/gh/theme-next/theme-next-gitment@1/gitment.browser.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
   var gitment = new Gitment({
-    id: '2018-01-05 00:00:00 \x2b0000 UTC',
+    id: '2018-01-05 00:00:00 \u002b0000 UTC',
     title: '使用 R 语言开发评分卡模型',
     link: decodeURI(location.href),
     desc: '为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱',

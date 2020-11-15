@@ -22,7 +22,7 @@
         <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
         <guid>http://shichen.name/post/dt-pd/</guid>
-        <description>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间</description>
+        <description>数据分析项目通常可以分解为以下过程，数据加载-数据清洗-(特征处理、可视化、模型训练)-成果汇报1。其中，数据清洗与特征处理或者称为数据预处</description>
       </item>
       
     

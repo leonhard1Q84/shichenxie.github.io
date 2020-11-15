@@ -25,6 +25,15 @@
         <description>大数据能够进行数据变现的商业模式目前主要包括，一是精准营销，典型的场景是商品推荐和精准广告投放，二是大数据风控，典型的场景是互联网金融的大数</description>
       </item>
       
+      <item>
+        <title>使用 R 语言开发评分卡模型</title>
+        <link>http://shichen.name/post/scorecard/</link>
+        <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
+        <guid>http://shichen.name/post/scorecard/</guid>
+        <description>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱</description>
+      </item>
+      
     
   </channel>
 </rss>
