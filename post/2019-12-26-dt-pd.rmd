@@ -12,13 +12,20 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率，是开展数据分析工作的基础。
+数据分析项目通常分解为以下过程，数据加载-数据清洗-(特征处理、可视化、模型训练)-结论交流。其中，数据清洗与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率，是开展数据分析工作的基础。
 ![](https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png)
 
-数据框（data frame）是我们接触最多的数据形式，其每一列都是向量且长度一致。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 [Database-like ops benchmark](https://h2oai.github.io/db-benchmark/) 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 [data.table](http://r-datatable.com) 与 [pandas](https://pandas.pydata.org/pandas-docs/stable/) 实现常见的数据分析任务[^1][^2]。
+数据框（data frame）是我们接触最多的数据格式，它的每一列都是长度相等的向量。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 [Database-like ops benchmark](https://h2oai.github.io/db-benchmark/) 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 [data.table](http://r-datatable.com) 与 [pandas](https://pandas.pydata.org/pandas-docs/stable/) 实现常见的数据分析任务[^1][^2]。
+
+对数据框的操作可分为行与列两个维度，总共有以下五类原子操作，其中英文均为 dplyr 包[^2]里面的对应函数。这些操作均可以与 group_by 结合使用，从而实现分组计算。除了这几类操作，还包括行列转换、以及多个数据框合并。具体的案例见如下代码。
+
+- 行：选择 filter、排序 arrange
+- 列：选择 select、新建 mutate、计算 summarise
+
 
 [^1]: [Data Manipulation with Python Pandas and R Data.Table](https://datascience-enthusiast.com/R/pandas_datatable.html)
 [^2]: [R for Data Science](https://r4ds.had.co.nz/)
+[^3]: [A data.table and dplyr tour](https://atrebas.github.io/post/2019-03-03-datatable-dplyr/)
 
 ### 探索数据
 #### 读取 csv 文件

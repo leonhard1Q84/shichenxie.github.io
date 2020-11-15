@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Post on Shichen</title>
-    <link>/post/</link>
+    <link>http://shichen.name/post/</link>
     <description>Recent content in Post on Shichen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -11,72 +11,72 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://shichen.name/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     
       
       <item>
         <title>data.table 与 pandas</title>
-        <link>/post/dt-pd/</link>
+        <link>http://shichen.name/post/dt-pd/</link>
         <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/dt-pd/</guid>
+        <guid>http://shichen.name/post/dt-pd/</guid>
         <description>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间</description>
       </item>
       
       <item>
         <title>[转]互联网金融的大数据风控</title>
-        <link>/post/fintech_credit/</link>
+        <link>http://shichen.name/post/fintech_credit/</link>
         <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/fintech_credit/</guid>
+        <guid>http://shichen.name/post/fintech_credit/</guid>
         <description>大数据能够进行数据变现的商业模式目前主要包括，一是精准营销，典型的场景是商品推荐和精准广告投放，二是大数据风控，典型的场景是互联网金融的大数</description>
       </item>
       
       <item>
-        <title>使用 R 语言开发评分卡模型</title>
-        <link>/post/scorecard/</link>
-        <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
-        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/scorecard/</guid>
-        <description>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱</description>
-      </item>
-      
-      <item>
         <title>stringr 与 regex 函数对应关系</title>
-        <link>/post/stringr_regex/</link>
+        <link>http://shichen.name/post/stringr_regex/</link>
         <pubDate>Tue, 25 Jul 2017 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/stringr_regex/</guid>
+        <guid>http://shichen.name/post/stringr_regex/</guid>
         <description>stringr 是 Hadley 大神写的 tidyverse1 系列数据处理包中专门用于处理文本数据的，其函数命名统一易于记忆。而 R 基础包中的文本处理函数 (regex) 的命名规则不是特别统一。下表给出</description>
       </item>
       
       <item>
         <title>Markdown相关资料</title>
-        <link>/post/markdown/</link>
+        <link>http://shichen.name/post/markdown/</link>
         <pubDate>Wed, 05 Apr 2017 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/markdown/</guid>
+        <guid>http://shichen.name/post/markdown/</guid>
         <description>John Gruber&#39;s Markdown syntax (中文翻译) John MacFarlane&#39;s Pandoc Markdown (中文翻译) Blackfriday Markdown (github) RMarkdown (github) MathJax (中文版)</description>
       </item>
       
       <item>
         <title>在ubuntu上配置vnpy</title>
-        <link>/post/ubuntu-vnpy/</link>
+        <link>http://shichen.name/post/ubuntu-vnpy/</link>
         <pubDate>Tue, 04 Apr 2017 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/ubuntu-vnpy/</guid>
+        <guid>http://shichen.name/post/ubuntu-vnpy/</guid>
         <description>vnpy是基于python的中文开源交易平台开发框架，该项目相关信息参见github主页、官方主页、项目知乎专栏、官方社区维恩派、作者知乎主</description>
       </item>
       
       <item>
         <title>博客搭建过程</title>
-        <link>/post/new-site/</link>
+        <link>http://shichen.name/post/new-site/</link>
         <pubDate>Tue, 21 Mar 2017 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/new-site/</guid>
+        <guid>http://shichen.name/post/new-site/</guid>
         <description>在“我网故我在”的召唤下，我使用 R 语言的 blogdown 包1 和 GitHubPages 在一小时内搭建了本博客。搭建过程分为三个步骤：编辑网站文件、创建 GitHub Pages 仓库、域名绑定。 编辑网</description>
+      </item>
+      
+      <item>
+        <title></title>
+        <link>http://shichen.name/post/2018-01-05-scorecard/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
+        <guid>http://shichen.name/post/2018-01-05-scorecard/</guid>
+        <description>使用 R 语言开发评分卡模型 /*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */ !function(a,b){&#34;object&#34;==typeof module&amp;&amp;&#34;object&#34;==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error(&#34;jQuery requires a window with a document&#34;);return b(a)}:b(a)}(&#34;undefined&#34;!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l=&#34;1.11.3&#34;,m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:&#34;&#34;,length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0a?b:0);return this.pushStack(c=0&amp;&amp;bc?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for(&#34;boolean&#34;==typeof g&amp;&amp;(j=g,g=arguments[h]||{},h++),&#34;object&#34;==typeof g||m.isFunction(g)||(g={}),h===i&amp;&amp;(g=this,h--);ih;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&amp;&amp;(j&amp;&amp;c&amp;&amp;(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&amp;&amp;m.isArray(a)?a:[]):f=a&amp;&amp;m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&amp;&amp;(g[d]=c));return g},m.extend({expando:&#34;jQuery&#34;+(l+Math.random()).replace(/\D/g,&#34;&#34;),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return&#34;function&#34;===m.type(a)},isArray:Array.isArray||function(a){return&#34;array&#34;===m.type(a)},isWindow:function(a){return null!=a&amp;&amp;a==a.window},isNumeric:function(a){return!m.isArray(a)&amp;&amp;a-parseFloat(a)+1=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||&#34;object&#34;!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&amp;&amp;!j.call(a,&#34;constructor&#34;)&amp;&amp;!j.call(a.constructor.prototype,&#34;isPrototypeOf&#34;))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+&#34;&#34;:&#34;object&#34;==typeof a||&#34;</description>
       </item>
       
     

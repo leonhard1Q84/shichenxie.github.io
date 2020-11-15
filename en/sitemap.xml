@@ -3,58 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/en/categories/</loc>
+    <loc>http://shichen.name/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/categories/"
+                href="http://shichen.name/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/"
+                href="http://shichen.name/en/categories/"
                 />
   </url>
   
   <url>
-    <loc>/en/series/</loc>
+    <loc>http://shichen.name/en/series/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/series/"
+                href="http://shichen.name/series/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/series/"
+                href="http://shichen.name/en/series/"
                 />
   </url>
   
   <url>
-    <loc>/en/</loc>
+    <loc>http://shichen.name/en/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/"
+                href="http://shichen.name/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/"
+                href="http://shichen.name/en/"
                 />
   </url>
   
   <url>
-    <loc>/en/tags/</loc>
+    <loc>http://shichen.name/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/"
+                href="http://shichen.name/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/"
+                href="http://shichen.name/en/tags/"
                 />
   </url>
   

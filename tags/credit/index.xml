@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>credit on Shichen</title>
-    <link>/tags/credit/</link>
+    <link>http://shichen.name/tags/credit/</link>
     <description>Recent content in credit on Shichen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
@@ -11,27 +11,18 @@
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     <lastBuildDate>Wed, 10 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/credit/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://shichen.name/tags/credit/index.xml" rel="self" type="application/rss+xml" />
     
     
     
       
       <item>
         <title>[转]互联网金融的大数据风控</title>
-        <link>/post/fintech_credit/</link>
+        <link>http://shichen.name/post/fintech_credit/</link>
         <pubDate>Wed, 10 Jan 2018 00:00:00 +0000</pubDate>
         <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/fintech_credit/</guid>
+        <guid>http://shichen.name/post/fintech_credit/</guid>
         <description>大数据能够进行数据变现的商业模式目前主要包括，一是精准营销，典型的场景是商品推荐和精准广告投放，二是大数据风控，典型的场景是互联网金融的大数</description>
-      </item>
-      
-      <item>
-        <title>使用 R 语言开发评分卡模型</title>
-        <link>/post/scorecard/</link>
-        <pubDate>Fri, 05 Jan 2018 00:00:00 +0000</pubDate>
-        <author>xie#shichen.name (#-&gt;@) (Shichen Xie)</author>
-        <guid>/post/scorecard/</guid>
-        <description>为了提高评分卡模型的开发效率，我为 R 语言社区贡献了一个开源项目 scorecard 包 (HomePage, Github, CRAN)。该 R 包提供了评分卡开发过程中的常用功能，包括变量粗筛、分箱</description>
       </item>
       
     

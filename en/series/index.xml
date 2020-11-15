@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Series on Shichen</title>
-    <link>/en/series/</link>
+    <link>http://shichen.name/en/series/</link>
     <description>Recent content in Series on Shichen</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
@@ -10,7 +10,7 @@
     <webMaster>xie#shichen.name (#-&gt;@) (Shichen Xie)</webMaster>
     <copyright>&amp;copy;{year}, All Rights Reserved</copyright>
     
-        <atom:link href="/en/series/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://shichen.name/en/series/index.xml" rel="self" type="application/rss+xml" />
     
     
     

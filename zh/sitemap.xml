@@ -3,144 +3,144 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
+    <loc>http://shichen.name/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/"
+                href="http://shichen.name/en/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/"
+                href="http://shichen.name/"
                 />
   </url>
   
   <url>
-    <loc>/post/dt-pd/</loc>
+    <loc>http://shichen.name/post/dt-pd/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>http://shichen.name/post/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/python/</loc>
+    <loc>http://shichen.name/tags/python/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
+    <loc>http://shichen.name/tags/r/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>http://shichen.name/tags/</loc>
     <lastmod>2019-12-26T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/tags/"
+                href="http://shichen.name/en/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/tags/"
+                href="http://shichen.name/tags/"
                 />
   </url>
   
   <url>
-    <loc>/archive/</loc>
+    <loc>http://shichen.name/archive/</loc>
     <lastmod>2019-10-19T11:44:14+09:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/fintech_credit/</loc>
+    <loc>http://shichen.name/post/fintech_credit/</loc>
     <lastmod>2018-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/credit/</loc>
+    <loc>http://shichen.name/tags/credit/</loc>
     <lastmod>2018-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/scorecard/</loc>
-    <lastmod>2018-01-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/stringr_regex/</loc>
+    <loc>http://shichen.name/post/stringr_regex/</loc>
     <lastmod>2017-07-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/markdown/</loc>
+    <loc>http://shichen.name/post/markdown/</loc>
     <lastmod>2017-04-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/invest/</loc>
+    <loc>http://shichen.name/tags/invest/</loc>
     <lastmod>2017-04-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/ubuntu-vnpy/</loc>
+    <loc>http://shichen.name/post/ubuntu-vnpy/</loc>
     <lastmod>2017-04-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/new-site/</loc>
+    <loc>http://shichen.name/post/new-site/</loc>
     <lastmod>2017-03-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/about/</loc>
+    <loc>http://shichen.name/about/</loc>
     <lastmod>2017-03-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/donate/</loc>
+    <loc>http://shichen.name/donate/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>http://shichen.name/post/2018-01-05-scorecard/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://shichen.name/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/categories/"
+                href="http://shichen.name/en/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/categories/"
+                href="http://shichen.name/categories/"
                 />
   </url>
   
   <url>
-    <loc>/project/</loc>
+    <loc>http://shichen.name/project/</loc>
   </url>
   
   <url>
-    <loc>/series/</loc>
+    <loc>http://shichen.name/series/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="/en/series/"
+                href="http://shichen.name/en/series/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="zh"
-                href="/series/"
+                href="http://shichen.name/series/"
                 />
   </url>
   
   <url>
-    <loc>/slide/</loc>
+    <loc>http://shichen.name/slide/</loc>
   </url>
   
 </urlset>

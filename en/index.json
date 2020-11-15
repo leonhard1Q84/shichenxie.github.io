@@ -1,6 +1,6 @@
 [
 {
-	"uri": "/en/categories/",
+	"uri": "http://shichen.name/en/categories/",
 	"title": "Categories",
 	"tags": [],
 	"categories": [],
@@ -9,7 +9,7 @@
 	"content": ""
 },
 {
-	"uri": "/en/series/",
+	"uri": "http://shichen.name/en/series/",
 	"title": "Series",
 	"tags": [],
 	"categories": [],
@@ -18,7 +18,7 @@
 	"content": ""
 },
 {
-	"uri": "/en/",
+	"uri": "http://shichen.name/en/",
 	"title": "Shichen",
 	"tags": [],
 	"categories": [],
@@ -27,7 +27,7 @@
 	"content": ""
 },
 {
-	"uri": "/en/tags/",
+	"uri": "http://shichen.name/en/tags/",
 	"title": "Tags",
 	"tags": [],
 	"categories": [],

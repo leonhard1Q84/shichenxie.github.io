@@ -14,7 +14,7 @@
   
   var runSearch = function() {
     
-        var baseurl = "\/";
+        var baseurl = "http:\/\/shichen.name";
     
     
     var searchResults = null;
@@ -182,13 +182,13 @@
 
 <meta property="og:site_name" content="Shichen">
 <meta property="og:title" content="data.table 与 pandas">
-<meta property="og:url" content="/post/dt-pd/">
+<meta property="og:url" content="http://shichen.name/post/dt-pd/">
 <meta property="og:type" content="article">
 
 <meta name="generator" content="Hugo 0.62.0" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
-<link rel="canonical" href="/post/dt-pd/">
+<link rel="canonical" href="http://shichen.name/post/dt-pd/">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -203,7 +203,7 @@
     "headline": "data.table 与 pandas",
     "datePublished": "2019-12-26T00:00:00Z",
     "dateModified": "2019-12-26T00:00:00Z",
-    "url" : "/post/dt-pd/",
+    "url" : "http://shichen.name/post/dt-pd/",
     "description": "常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间",
     "keywords": ["R","python"],
     "author": {
@@ -212,12 +212,12 @@
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "/"
+      "@id": "http://shichen.name"
     },
     "publisher": {
       "@type": "Organization",
       "name": "Shichen",
-      "url": "/"
+      "url": "http://shichen.name"
     }
   }
 </script>
@@ -336,9 +336,9 @@
       </a>        
       <div class="navbar__dropdown--content">
         
-        <a href="http://shichen.name/pedquant/" class="navbar__dropdown--item">pedquant</a>        
+        <a href="/pedquant/" class="navbar__dropdown--item">pedquant</a>        
         
-        <a href="http://shichen.name/scorecard/" class="navbar__dropdown--item">scorecard</a>        
+        <a href="/scorecard/" class="navbar__dropdown--item">scorecard</a>        
         
       </div>
     </div>
@@ -373,21 +373,21 @@
   
   <li >    
     
-      <a href="/">Shichen</a>            
+      <a href="http://shichen.name/">Shichen</a>            
         
   </li>
   
   
   <li >    
     
-      <a href="/post/">Post</a>
+      <a href="http://shichen.name/post/">Post</a>
         
   </li>
   
   
   <li  class="is-active" >    
     
-      <a href="/post/dt-pd/">data.table 与 pandas</a>
+      <a href="http://shichen.name/post/dt-pd/">data.table 与 pandas</a>
         
   </li>
   
@@ -435,6 +435,15 @@
 <p>常见的数据分析项目过程包括加载数据-清洗数据-(特征处理、可视化、模型模拟)-交流成果。其中，清洗数据与特征处理一般占据整个项目的大部分时间。熟练掌握相关工具，提高数据处理的效率，是开展数据分析工作的基础。
 <img src="https://d33wubrfki0l68.cloudfront.net/571b056757d68e6df81a3e3853f54d3c76ad6efc/32d37/diagrams/data-science.png" /></p>
 <p>数据框（data frame）是我们接触最多的数据形式，其每一列都是向量且长度一致。在 R 中我通常使用 data.table 包对数据框进行处理分析，而在 python 环境中 pandas 最为常用的。根据 <a href="https://h2oai.github.io/db-benchmark/">Database-like ops benchmark</a> 显示，data.table 在大部分任务中性能表现最好，而且其语法也相对简洁统一。为了方便大家对比学习，本文将分别用 <a href="http://r-datatable.com">data.table</a> 与 <a href="https://pandas.pydata.org/pandas-docs/stable/">pandas</a> 实现常见的数据分析任务<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
+<p>数据框的操作包括以下五类，其中英文均为 dplyr 包里面的对应函数：</p>
+<ul>
+<li>行选择 filter</li>
+<li>行排序 arrange</li>
+<li>列选择 select</li>
+<li>列新建 mutate</li>
+<li>列计算 summarise</li>
+</ul>
+<p>这些操作均可以与 group_by 结合使用，从而实现分组计算。除了这几类操作，还包括行列转换、以及多个数据框合并。具体的案例见如下代码。</p>
 <div id="探索数据" class="section level3">
 <h3>探索数据</h3>
 <div id="读取-csv-文件" class="section level4">
@@ -450,7 +459,7 @@ dt = fread(url)</code></pre>
 <div class="column-right">
 <pre class="python"><code>import pandas as pd
 pd.__version__</code></pre>
-<pre><code>## &#39;0.25.3&#39;</code></pre>
+<pre><code>## &#39;1.0.1&#39;</code></pre>
 <pre class="python"><code>url = &quot;https://vincentarelbundock.github.io/Rdatasets/csv/datasets/HairEyeColor.csv&quot;
 df = pd.read_csv(url)</code></pre>
 </div>
@@ -849,10 +858,6 @@ df_con = pd.concat(df_lst, axis=0)</code></pre>
     <ul class="related-ul">
         
         <li>
-          <a href="/post/scorecard/" class="related__link">使用 R 语言开发评分卡模型</a>
-        </li>
-        
-        <li>
           <a href="/post/stringr_regex/" class="related__link">stringr 与 regex 函数对应关系</a>
         </li>
         
@@ -866,7 +871,7 @@ df_con = pd.concat(df_lst, axis=0)</code></pre>
     <div class="grow"></div>
 <nav class="pagination-single">
   
-    <a href="/post/fintech_credit/" class="pagination-single__left">
+    <a href="http://shichen.name/post/fintech_credit/" class="pagination-single__left">
       <div class="pagination-single__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="currentColor" d="M19 11H7.83l4.88-4.88c.39-.39.39-1.03 0-1.42-.39-.39-1.02-.39-1.41 0l-6.59 6.59c-.39.39-.39 1.02 0 1.41l6.59 6.59c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41L7.83 13H19c.55 0 1-.45 1-1s-.45-1-1-1z"/></svg>
       </div>
